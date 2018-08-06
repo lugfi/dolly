@@ -206,7 +206,7 @@
     },
     loadCuatriData: function(file){
       $("#loading").show();
-      $.getJSON("http://raw.githubusercontent.com/lugfi/organizador-fiuba/master/"+file, function(data,st){
+      $.getJSON("https://raw.githubusercontent.com/lugfi/organizador-fiuba/master/"+file, function(data,st){
         if (st != "success")
           return;
 
