@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <!--
+###############################################################################
+# OpenLP - Open Source Lyrics Projection                                      #
+# --------------------------------------------------------------------------- #
+# Copyright (c) 2008-2017 OpenLP Developers                                   #
+# --------------------------------------------------------------------------- #
+# This program is free software; you can redistribute it and/or modify it     #
+# under the terms of the GNU General Public License as published by the Free  #
+# Software Foundation; version 2 of the License.                              #
+#                                                                             #
+# This program is distributed in the hope that it will be useful, but WITHOUT #
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or       #
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for    #
+# more details.                                                               #
+#                                                                             #
+# You should have received a copy of the GNU General Public License along     #
+# with this program; if not, write to the Free Software Foundation, Inc., 59  #
+# Temple Place, Suite 330, Boston, MA 02111-1307 USA                          #
+###############################################################################
+-->
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+  <title>Encuestas de Cursos</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css"./>
+  <link rel="stylesheet" href="./css/grid-radio.css"./>
+  <script src="./js/jquery-3.3.1.min.js"></script>
+  <script src="./js/popper.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+
+
+  <!-- bootstrap-select -->
+  <link rel="stylesheet" href="./css/bootstrap-select.min.css">
+  <script src="./js/bootstrap-select.min.js"></script>
+  <script src="./js/i18n/defaults-es_ES.min.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="./css/all.css"./>
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+
+</head>
+<body>
+  <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
+    <span><h3>Dolly</h3><small>Sistema Automatizado de Encuestas Fiubenses</small></span>
+
+
+    <!-- options menu -->
+    <!--<button type="button" class="btn btn-outline-default btn-circle"><img class="img-circle" src="files/img/note.png"./></button>-->
+    <div class="navbar-nav dropdown">
+      <button type="button" class="btn btn-warning mr-1" data-toggle="modal" data-target="#bibleModal"><i class="fas fa-book"></i> Ver resultados</button>
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Opciones
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-inclusivo">Usar lenguaje inclusivo</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- alerts -->
+    <div class="alert alert-warning alert-dismissible collapse" role="alert" id="loading">
+      <strong>¡Uacho!</strong> Estamos cargando los datos, bancá...
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="alert alert-success alert-dismissible collapse" role="alert" id="loaded">
+      <strong>Todo piola!</strong> Ya podés seguir
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="alert alert-danger alert-dismissible collapse" role="alert" id="load-fail">
+      <strong>¡Cagamo' Fuego!</strong> Llamá al nerd más cercano, no puedo bajar los datos de GitHub
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="modal-inclusivo">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h1>No.</h1>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Patriarcado</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- form -->
+    <form>
+      <div class="form-group">
+        <label class="col-sm-2 col-form-label" for="cuatri">Cuatrimestre</label>
+        <select id="cuatri" class="col-sm-10 custom-select custom-select-lg mb-3">
+          <option value="" hidden >Elija el cuatrimestre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="materia" class="col-sm-2 col-form-label">Materia</label>
+        <select id="materia" class="col-sm-10 selectpicker show-tick bookSelector" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="curso" class="col-sm-2 col-form-label">Curso</label>
+        <select id="curso" class="col-sm-10 selectpicker show-tick bookSelector" data-live-search="true" data-style="btn-primary" title="Elegí el curso" disabled>
+        </select>
+      </div>
+    </form>
+
+
+    <!-- test -->
+
+
+
+    <!-- end test -->
+    <div id="testpool">
+    </div>
+
+    <!-- encuesta -->
+    <div id="accordion">
+    </div>
+  </div>
+
+
+  <script>
+  Pool = {
+    question_html: '<div class="grid-row">\
+      <div class="flex-item">TXT</div>\
+      <label class="flex-item">\
+        <input type="radio" value="1" name="NAME"> <span></span>\
+      </label>\
+      <label class="flex-item">\
+        <input type="radio" value="2" name="NAME"> <span></span>\
+      </label>\
+      <label class="flex-item">\
+        <input type="radio" value="3" name="NAME"> <span></span>\
+      </label>\
+      <label class="flex-item">\
+        <input type="radio" value="4" name="NAME"> <span></span>\
+      </label>\
+      <label class="flex-item">\
+        <input type="radio" value="5" name="NAME"> <span></span>\
+      </label>\
+    </div>',
+    header_html: '<fieldset>\
+          <div class="wrapper">\
+            <div class="grid-header">\
+              <div class="header-item"></div>\
+              <div class="header-item">\
+                <div><i class="far fa-angry"></i></div>\
+              </div>\
+              <div class="header-item"><i class="far fa-frown"></i></div>\
+              <div class="header-item"><i class="far fa-meh"></i></div>\
+              <div class="header-item"><i class="far fa-smile"></i></div>\
+              <div class="header-item"><i class="far fa-heart"></i></div>\
+            </div>',
+    footer_html: '</div></fieldset>',
+
+    addPool: function(id, identifier, questions){
+      // questions = ["lalala", "lalalal", "lalallalala"]
+      let html = ""
+      html += this.header_html;
+      questions.forEach(function(q, i){
+        html += Pool.question_html.replace(/NAME/g, identifier+"_"+i).replace("TXT", q);
+      });
+
+      html += this.footer_html;
+
+      $(id).append(html);
+    }
+  }
+
+
+  const json_list = {
+    "Horarios_2Q2014.json": "2º Cuat 2014",
+    "Horarios_1Q2015.json": "1º Cuat 2015",
+    "Horarios_2Q2015.json": "2º Cuat 2015",
+    "Horarios_1Q2016.json": "1º Cuat 2016",
+    "Horarios_2Q2016.json": "2º Cuat 2016",
+    "Horarios_1Q2017.json": "1º Cuat 2017",
+    "Horarios_2Q2017.json": "2º Cuat 2017"
+  };
+  $(function(){
+    let html = "";
+    Object.entries(json_list).forEach(x => html += '<option value="' + x[0] + '">' + x[1] + '</option>');
+    $("#cuatri").append(html);
+    $("#materia").attr("disabled", true);
+    $("#curso").attr("disabled", true);
+  });
+
+
+  FormMannager = {
+    onSelectCuatri: function(){
+      console.log("cuatri selected");
+    },
+    loadCuatriData: function(file){
+      $("#loading").show();
+      $.getJSON("http://raw.githubusercontent.com/lugfi/organizador-fiuba/master/"+file, function(data,st){
+        if (st != "success")
+          return;
+
+        FormMannager.data = data;
+        let html="";
+        data.materias.forEach(function(x,i){
+          html += '<option class="option" value="' + i + '">' + x.codigo + " " + x.nombre + '</option>'
+        });
+        $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
+        $("#curso").selectpicker('val','').attr("disabled", true).selectpicker('refresh');
+
+
+        // Alerts
+        $("#loading").slideUp(1000);
+        $("#loaded").slideDown(1000);
+        setTimeout(function(){
+          $("#loaded").slideUp(1000);
+        }, 2000);
+      }).fail(function(e){
+        console.log(e);
+        $("#load-fail").slideDown(1000);
+      });
+    },
+    loadCursos: function(){
+      const materia_idx = Number($("#materia").val());
+      const cursos = this.data.materias[materia_idx].cursos;
+
+      let html = "";
+      cursos.forEach(function(x,i){
+        html += '<option class="option" value="' + i + '">' + x.docentes.replace(/-/g, " - ") + '</option>'
+      });
+      $("#curso").empty();
+      $("#curso").append(html).selectpicker('refresh');
+      $("#curso").selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
+    },
+    loadDocentes(){
+      const materia_idx = Number($("#materia").val());
+      const curso_idx = Number($("#curso").val());
+      const curso = this.data.materias[materia_idx].cursos[curso_idx];
+      const docentes = curso.docentes.split("-");
+
+      docentes.forEach(function(x,i){
+        MyAccordion.addCard(x,"la encuesta va aqui: "+i);
+        // Necesitaría un script para generar el formulario de la encuesta
+      });
+    },
+    cambiarDocente: function(e){
+      const docente_idx = Number($(this).data("idx"));
+
+      console.log("Cambiar docente: "+docente_idx);
+    }
+
+  }
+
+  MyAccordion = {
+    card_idx: 0,
+    addCard: function(title,body){
+      const html = this.cardhtml.replace('TITLE',title).replace('BODY', body).replace('INDEX',this.card_idx).replace(/One/g,this.card_idx);
+      console.log(html)
+      $("#accordion").append(html);
+      $(".fulano[data-idx=" + this.card_idx + "]").click(FormMannager.cambiarDocente);
+      this.card_idx++;
+    },
+    cardhtml: '<div class="card">\
+            <div class="card-header d-flex justify-content-between" id="headingOne">\
+              <span class="h5 mb-0 col">\
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">\
+                  TITLE \
+                </button>\
+              </span>\
+              <a href="#" class="form-text text-muted fulano" data-idx="INDEX">No conozco a este fulano</a>\
+            </div>\
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">\
+              <div class="card-body">\
+              BODY \
+              </div>\
+            </div>\
+          </div>'
+  }
+
+  // Triggers
+  $("#cuatri").change(function(e){
+    FormMannager.loadCuatriData($(this).val());
+  });
+
+  $("#materia").change(function(e){
+    FormMannager.loadCursos($(this).val());
+  });
+
+  $("#curso").change(function(e){
+    FormMannager.loadDocentes($(this).val());
+  });
+  </script>
+</body>
+</html>
