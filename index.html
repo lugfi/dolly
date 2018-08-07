@@ -40,6 +40,10 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="./css/all.css"./>
 
+  <!-- Scripts -->
+  <script src="./js/form_mannager.js"></script>
+  <script src="./js/pool.js"></script>
+
   <meta name="theme-color" content="#ffffff">
   <link rel="manifest" href="./manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -120,84 +124,7 @@
 
 
   <script>
-  Pool = {
-    questions: [
-      {question: "Asiste normalmente a clase", short: "Asistencia a clase"},
-      {question: "Cumple con los horarios establecidos", short: "Cumple los horarios"},
-      {question: "Mantiene un trato adecuado con los alumnos", short: "Mantiene un trato adecuado"},
-      {question: "Parece dominar la asignatura que imparte", short: "Sabe de la materia"},
-      {question: "Sus clases están bien organizadas"},
-      {question: "Explica con claridad"},
-      {question: "Varía las estrategias de enseñanza para asegurar la comprensión, aclarar dudas o atender necesidades individuales"},
-      {question: "Presenta un panorama amplio de su asignatura"},
-      {question: "Intenta que los alumnos participen en las clases", short: "Fomenta la participación en clase"},
-      {question: "Responde con exactitud y precisión a las preguntas que le hacen"},
-      {question: "Acepta la crítica fundamentada"},
-      {question: "Utiliza en clase un material didáctico que ayuda a comprender las explicaciones"},
-      {question: "Responde dudas por mail/campus"}
-    ],
-    question_html: '<fieldset name="NAME"><div class="grid-row">\
-      <div class="flex-item"><i class="fas fa-question-circle mr-2" data-toggle="tooltip" title="TOOLTIP"></i>TXT</div>\
-      <label class="flex-item">\
-        <input type="radio" value="1" name="NAME"> <span></span>\
-      </label>\
-      <label class="flex-item">\
-        <input type="radio" value="2" name="NAME"> <span></span>\
-      </label>\
-      <label class="flex-item">\
-        <input type="radio" value="3" name="NAME"> <span></span>\
-      </label>\
-      <label class="flex-item">\
-        <input type="radio" value="4" name="NAME"> <span></span>\
-      </label>\
-      <label class="flex-item">\
-        <input type="radio" value="5" name="NAME"> <span></span>\
-      </label>\
-    </div></fieldset>',
-    header_html: '<form>\
-          <div class="wrapper">\
-            <div class="grid-header">\
-              <div class="header-item"></div>\
-              <div class="header-item">\
-                <div><p><i class="far fa-frown"></i></p>1</div>\
-              </div>\
-              <div class="header-item">2</div>\
-              <div class="header-item">3</div>\
-              <div class="header-item">4</div>\
-              <div class="header-item"><p><i class="far fa-smile"></i></p>5</div>\
-            </div>',
-    footer_html: '</div><button type="submit" class="btn btn-primary send">Listo</button></form>',
-
-    createPoolHTML: function(){
-      // question = ["question 1", "question 2", ...]
-      let html = ""
-      html += this.header_html;
-      this.questions.forEach(function(q, i){
-        const short = q.short ? q.short : q.question;
-        html += Pool.question_html.replace(/NAME/g, i).replace("TXT", short).replace("TOOLTIP", q.question);
-      });
-
-      html += this.footer_html;
-
-      return html;
-    },
-
-    addPool(div, idx){
-      // add Pool and all triggers and validations
-      const place = $(div);
-
-      place.html(this.createPoolHTML());
-      $(place).find(".send").click(function(event){
-        xthis = this;
-
-        event.preventDefault();
-        return false;
-      });
-    }
-  }
-
-
-  const json_list = {
+    const json_list = {
     "Horarios_2Q2014.json": "2º Cuat 2014",
     "Horarios_1Q2015.json": "1º Cuat 2015",
     "Horarios_2Q2015.json": "2º Cuat 2015",
@@ -222,94 +149,6 @@
     $('[data-toggle="tooltip"]').tooltip();
   }
 
-
-  FormMannager = {
-    onSelectCuatri: function(){
-      console.log("cuatri selected");
-    },
-    loadCuatriData: function(file){
-      // Loads JSON data and fills course select form
-      $("#loading").show();
-      $.getJSON("https://raw.githubusercontent.com/lugfi/organizador-fiuba/master/"+file, function(data,st){
-        if (st != "success")
-          return;
-
-        // Adds Materias to the selector
-        FormMannager.data = data;
-        let html="";
-        data.materias.forEach(function(x,i){
-          html += '<option class="option" value="' + i + '">' + x.codigo + " " + x.nombre + '</option>'
-        });
-        $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
-        $("#curso").selectpicker('val','').attr("disabled", true).selectpicker('refresh');
-
-        // Show couse selection form
-        $("#course-gruop").collapse('show');
-
-        // Alerts
-        $("#loading").slideUp(500);
-      }).fail(function(e){
-        console.log(e);
-        $("#load-fail").slideDown(1000);
-      });
-    },
-    loadCursos: function(){
-      const materia_idx = Number($("#materia").val());
-      const cursos = this.data.materias[materia_idx].cursos;
-
-      let html = "";
-      cursos.forEach(function(x,i){
-        html += '<option class="option" value="' + i + '">' + x.docentes.replace(/-/g, " - ") + '</option>'
-      });
-      $("#curso").empty();
-      $("#curso").append(html).selectpicker('refresh');
-      $("#curso").selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
-    },
-    loadDocentes(){
-      const materia_idx = Number($("#materia").val());
-      const curso_idx = Number($("#curso").val());
-      const curso = this.data.materias[materia_idx].cursos[curso_idx];
-      const docentes = curso.docentes.split("-");
-
-      docentes.forEach(function(x,i){
-        MyAccordion.addCard(x);
-      });
-
-      //$("#form-pool").collapse('show');
-    },
-    cambiarDocente: function(e){
-      const docente_idx = Number($(this).data("idx"));
-      console.log("Cambiar docente: "+docente_idx);
-    }
-
-  }
-
-  MyAccordion = {
-    card_idx: 0,
-    addCard: function(title){
-      const html = this.cardhtml.replace(/TITLE/g,title).replace(/INDEX/g,this.card_idx).replace(/One/g,this.card_idx);
-
-      $("#accordion").append(html);
-      Pool.addPool($("#collapse"+this.card_idx+" > .card-body"), this.card_idx);
-      $(".fulano[data-idx=" + this.card_idx + "]").click(FormMannager.cambiarDocente);
-      this.card_idx++;
-      onDomChange();
-    },
-    cardhtml: '<div class="card">\
-            <div class="card-header d-flex justify-content-between" id="headingOne">\
-              <span class="h5 mb-0 col">\
-                <button class="btn btn-link">\
-                  TITLE \
-                </button>\
-              </span>\
-              <a href="#" class="form-text text-muted fulano" data-idx="INDEX">No conozco a este fulano</a>\
-            </div>\
-            <div id="collapseOne">\
-              <div class="card-body">\
-            </div>\
-          </div>'
-  }
-
   // Triggers
   $("#cuatri").change(function(e){
     FormMannager.loadCuatriData($(this).val());
@@ -322,6 +161,8 @@
   $("#curso").change(function(e){
     FormMannager.loadDocentes($(this).val());
   });
+
+  Pool.onSubmit = FormMannager.onSubmitForms;
   </script>
 </body>
 </html>
