@@ -28,9 +28,9 @@
   <link rel="stylesheet" href="./css/bootstrap.min.css"./>
   <link rel="stylesheet" href="./css/grid-radio.css"./>
   <script src="./js/jquery-3.3.1.min.js"></script>
+  <script src="./js/jquery.scrollTo.min.js"></script>
   <script src="./js/popper.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
-
 
   <!-- bootstrap-select -->
   <link rel="stylesheet" href="./css/bootstrap-select.min.css">
@@ -64,26 +64,6 @@
   </nav>
 
   <div class="container">
-    <!-- alerts -->
-    <div class="alert alert-warning alert-dismissible collapse" role="alert" id="loading">
-      <strong>¡Uacho!</strong> Estamos cargando los datos, bancá...
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="alert alert-success alert-dismissible collapse" role="alert" id="loaded">
-      <strong>Todo piola!</strong> Ya podés seguir
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="alert alert-danger alert-dismissible collapse" role="alert" id="load-fail">
-      <strong>¡Cagamo' Fuego!</strong> Llamá al nerd más cercano, no puedo bajar los datos de GitHub
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-
     <!-- modal -->
     <div class="modal" tabindex="-1" role="dialog" id="modal-inclusivo">
       <div class="modal-dialog" role="document">
@@ -99,44 +79,65 @@
     </div>
 
     <!-- form -->
-    <form>
+
+    <form id="form-course">
       <div class="form-group">
         <label class="col-sm-2 col-form-label" for="cuatri">Cuatrimestre</label>
         <select id="cuatri" class="col-sm-10 custom-select custom-select-lg mb-3">
           <option value="" hidden >Elija el cuatrimestre</option>
         </select>
       </div>
-      <div class="form-group">
+      <!-- alerts -->
+      <div class="alert alert-warning alert-dismissible collapse" role="alert" id="loading">
+        <strong>¡Uacho!</strong> Estamos cargando los datos, bancá...
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="alert alert-danger alert-dismissible collapse" role="alert" id="load-fail">
+        <strong>¡Cagamo' Fuego!</strong> Llamá al nerd más cercano, no puedo bajar los datos de GitHub
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- couse selector -->
+      <div class="form-group collapse" id="course-gruop">
         <label for="materia" class="col-sm-2 col-form-label">Materia</label>
         <select id="materia" class="col-sm-10 selectpicker show-tick bookSelector" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled>
         </select>
-      </div>
-      <div class="form-group">
         <label for="curso" class="col-sm-2 col-form-label">Curso</label>
         <select id="curso" class="col-sm-10 selectpicker show-tick bookSelector" data-live-search="true" data-style="btn-primary" title="Elegí el curso" disabled>
         </select>
       </div>
     </form>
 
-
-    <!-- test -->
-
-
-
-    <!-- end test -->
-    <div id="testpool">
-    </div>
-
     <!-- encuesta -->
     <div id="accordion">
     </div>
-  </div>
+
+
+
 
 
   <script>
   Pool = {
-    question_html: '<div class="grid-row">\
-      <div class="flex-item">TXT</div>\
+    questions: [
+      {question: "Asiste normalmente a clase", short: "Asistencia a clase"},
+      {question: "Cumple con los horarios establecidos", short: "Cumple los horarios"},
+      {question: "Mantiene un trato adecuado con los alumnos", short: "Mantiene un trato adecuado"},
+      {question: "Parece dominar la asignatura que imparte", short: "Sabe de la materia"},
+      {question: "Sus clases están bien organizadas"},
+      {question: "Explica con claridad"},
+      {question: "Varía las estrategias de enseñanza para asegurar la comprensión, aclarar dudas o atender necesidades individuales"},
+      {question: "Presenta un panorama amplio de su asignatura"},
+      {question: "Intenta que los alumnos participen en las clases", short: "Fomenta la participación en clase"},
+      {question: "Responde con exactitud y precisión a las preguntas que le hacen"},
+      {question: "Acepta la crítica fundamentada"},
+      {question: "Utiliza en clase un material didáctico que ayuda a comprender las explicaciones"},
+      {question: "Responde dudas por mail/campus"}
+    ],
+    question_html: '<fieldset name="NAME"><div class="grid-row">\
+      <div class="flex-item"><i class="fas fa-question-circle mr-2" data-toggle="tooltip" title="TOOLTIP"></i>TXT</div>\
       <label class="flex-item">\
         <input type="radio" value="1" name="NAME"> <span></span>\
       </label>\
@@ -152,32 +153,46 @@
       <label class="flex-item">\
         <input type="radio" value="5" name="NAME"> <span></span>\
       </label>\
-    </div>',
-    header_html: '<fieldset>\
+    </div></fieldset>',
+    header_html: '<form>\
           <div class="wrapper">\
             <div class="grid-header">\
               <div class="header-item"></div>\
               <div class="header-item">\
-                <div><i class="far fa-angry"></i></div>\
+                <div><p><i class="far fa-frown"></i></p>1</div>\
               </div>\
-              <div class="header-item"><i class="far fa-frown"></i></div>\
-              <div class="header-item"><i class="far fa-meh"></i></div>\
-              <div class="header-item"><i class="far fa-smile"></i></div>\
-              <div class="header-item"><i class="far fa-heart"></i></div>\
+              <div class="header-item">2</div>\
+              <div class="header-item">3</div>\
+              <div class="header-item">4</div>\
+              <div class="header-item"><p><i class="far fa-smile"></i></p>5</div>\
             </div>',
-    footer_html: '</div></fieldset>',
+    footer_html: '</div><button type="submit" class="btn btn-primary send">Listo</button></form>',
 
-    addPool: function(id, identifier, questions){
-      // questions = ["lalala", "lalalal", "lalallalala"]
+    createPoolHTML: function(){
+      // question = ["question 1", "question 2", ...]
       let html = ""
       html += this.header_html;
-      questions.forEach(function(q, i){
-        html += Pool.question_html.replace(/NAME/g, identifier+"_"+i).replace("TXT", q);
+      this.questions.forEach(function(q, i){
+        const short = q.short ? q.short : q.question;
+        html += Pool.question_html.replace(/NAME/g, i).replace("TXT", short).replace("TOOLTIP", q.question);
       });
 
       html += this.footer_html;
 
-      $(id).append(html);
+      return html;
+    },
+
+    addPool(div, idx){
+      // add Pool and all triggers and validations
+      const place = $(div);
+
+      place.html(this.createPoolHTML());
+      $(place).find(".send").click(function(event){
+        xthis = this;
+
+        event.preventDefault();
+        return false;
+      });
     }
   }
 
@@ -192,12 +207,20 @@
     "Horarios_2Q2017.json": "2º Cuat 2017"
   };
   $(function(){
+    // Fill JSON list
     let html = "";
     Object.entries(json_list).forEach(x => html += '<option value="' + x[0] + '">' + x[1] + '</option>');
     $("#cuatri").append(html);
     $("#materia").attr("disabled", true);
     $("#curso").attr("disabled", true);
+
+    // Tooltips and others hooks
+    onDomChange();
   });
+
+  function onDomChange(){
+    $('[data-toggle="tooltip"]').tooltip();
+  }
 
 
   FormMannager = {
@@ -205,11 +228,13 @@
       console.log("cuatri selected");
     },
     loadCuatriData: function(file){
+      // Loads JSON data and fills course select form
       $("#loading").show();
       $.getJSON("https://raw.githubusercontent.com/lugfi/organizador-fiuba/master/"+file, function(data,st){
         if (st != "success")
           return;
 
+        // Adds Materias to the selector
         FormMannager.data = data;
         let html="";
         data.materias.forEach(function(x,i){
@@ -218,13 +243,11 @@
         $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
         $("#curso").selectpicker('val','').attr("disabled", true).selectpicker('refresh');
 
+        // Show couse selection form
+        $("#course-gruop").collapse('show');
 
         // Alerts
-        $("#loading").slideUp(1000);
-        $("#loaded").slideDown(1000);
-        setTimeout(function(){
-          $("#loaded").slideUp(1000);
-        }, 2000);
+        $("#loading").slideUp(500);
       }).fail(function(e){
         console.log(e);
         $("#load-fail").slideDown(1000);
@@ -249,13 +272,13 @@
       const docentes = curso.docentes.split("-");
 
       docentes.forEach(function(x,i){
-        MyAccordion.addCard(x,"la encuesta va aqui: "+i);
-        // Necesitaría un script para generar el formulario de la encuesta
+        MyAccordion.addCard(x);
       });
+
+      //$("#form-pool").collapse('show');
     },
     cambiarDocente: function(e){
       const docente_idx = Number($(this).data("idx"));
-
       console.log("Cambiar docente: "+docente_idx);
     }
 
@@ -263,26 +286,26 @@
 
   MyAccordion = {
     card_idx: 0,
-    addCard: function(title,body){
-      const html = this.cardhtml.replace('TITLE',title).replace('BODY', body).replace('INDEX',this.card_idx).replace(/One/g,this.card_idx);
-      console.log(html)
+    addCard: function(title){
+      const html = this.cardhtml.replace(/TITLE/g,title).replace(/INDEX/g,this.card_idx).replace(/One/g,this.card_idx);
+
       $("#accordion").append(html);
+      Pool.addPool($("#collapse"+this.card_idx+" > .card-body"), this.card_idx);
       $(".fulano[data-idx=" + this.card_idx + "]").click(FormMannager.cambiarDocente);
       this.card_idx++;
+      onDomChange();
     },
     cardhtml: '<div class="card">\
             <div class="card-header d-flex justify-content-between" id="headingOne">\
               <span class="h5 mb-0 col">\
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">\
+                <button class="btn btn-link">\
                   TITLE \
                 </button>\
               </span>\
               <a href="#" class="form-text text-muted fulano" data-idx="INDEX">No conozco a este fulano</a>\
             </div>\
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">\
+            <div id="collapseOne">\
               <div class="card-body">\
-              BODY \
-              </div>\
             </div>\
           </div>'
   }
