@@ -1,11 +1,14 @@
 FormMannager = {
+  cursoActual: {},
+  formStatus:{},
   onSelectCuatri: function(){
     console.log("cuatri selected");
   },
-  loadCuatriData: function(file){
+  loadCuatriData: function(ref){
     // Loads JSON data and fills course select form
+    const file = "Horarios_" + ref + ".json";
     $("#loading").show();
-    $.getJSON("https://raw.githubusercontent.com/lugfi/organizador-fiuba/master/"+file, function(data,st){
+    $.getJSON("./data/"+file, function(data,st){
       if (st != "success")
         return;
 
@@ -39,12 +42,27 @@ FormMannager = {
     $("#curso").empty();
     $("#curso").append(html).selectpicker('refresh');
     $("#curso").selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
+
+    // CLear
+    $("#curso").selectpicker('val','').selectpicker('refresh');
+    MyAccordion.clear();
+    $("#cardSend").collapse("hide");
   },
   loadDocentes(){
     const materia_idx = Number($("#materia").val());
     const curso_idx = Number($("#curso").val());
+    const cuatri = $("#cuatri").val();
+    const codMateria = this.data.materias[materia_idx].codigo;
     const curso = this.data.materias[materia_idx].cursos[curso_idx];
     const docentes = curso.docentes.split("-");
+
+    this.cursoActual = {
+      materia: codMateria,
+      cuatri: cuatri,
+      docentes: docentes
+    };
+
+    MyAccordion.clear();
 
     docentes.forEach(function(x,i){
       MyAccordion.addCard(x);
@@ -57,11 +75,61 @@ FormMannager = {
     console.log("Cambiar docente: "+docente_idx);
   },
   onSubmitForms: function(idx, data){
-    // data
-    console.log(idx,data);
     $("#collapse"+idx).collapse('hide');
-  }
+    FormMannager.formStatus[idx] = true;
 
+    // Must show button?
+    let completed = true;
+    FormMannager.cursoActual.docentes.forEach(function(e,i){
+      completed &= FormMannager.formStatus[i];
+    });
+
+    if (completed){
+      $("#cardSend").collapse("show");
+    }
+  },
+  createCSV: function(idx){
+    data = Pool.getPoolData(idx);
+    let str = FormMannager.cursoActual.docentes[idx] + "|" + FormMannager.cursoActual.materia + "|" + FormMannager.cursoActual.cuatri + "|";
+    data.forEach(function(elem){
+      str += "" + elem.value + "|"
+    });
+    str += Date.now();
+
+    return str;
+  },
+  sendForm:function(){
+    let csvData = "";
+    let number_ok = 0;
+    this.cursoActual.docentes.forEach(function(d,i){
+      csvData += FormMannager.createCSV(i) + "\n";
+      number_ok++;
+    });
+
+    if (number_ok != this.cursoActual.docentes.length){
+      throw "Pool data mismatch.";
+    }
+    csvData = csvData.trim();
+
+    console.log("sending: ```" + csvData + "```");
+
+    // Send CSV data
+    $.post("http://web.fi.uba.ar/~fdanko/test.php",
+    {
+       pio: csvData
+    },
+    function(data, status){
+       if(data.trim() == csvData){
+         $("#okModal").modal("show");
+         $("#materia").selectpicker('val','').selectpicker('refresh');
+         $("#curso").selectpicker('val','').selectpicker('refresh');
+         MyAccordion.clear();
+         $("#cardSend").collapse("hide");
+       }else{
+         $("#errorModal").modal("show");
+       }
+    });
+  }
 }
 
 MyAccordion = {
@@ -74,6 +142,10 @@ MyAccordion = {
     $(".fulano[data-idx=" + this.card_idx + "]").click(FormMannager.cambiarDocente);
     this.card_idx++;
     window.onDomChange();
+  },
+  clear: function(){
+    this.card_idx = 0;
+    $("#accordion").empty();
   },
   cardhtml: '<div class="card">\
           <div class="card-header d-flex justify-content-between" id="headingOne">\

@@ -32,7 +32,7 @@ Pool = {
       <input type="radio" value="5" name="NAME"> <span></span>\
     </label>\
   </div></fieldset>',
-  header_html: '<form>\
+  header_html: '<form id="formIDX">\
         <div class="wrapper">\
           <div class="grid-header">\
             <div class="header-item"></div>\
@@ -46,10 +46,10 @@ Pool = {
           </div>',
   footer_html: '</div><button type="submit" class="btn btn-primary send">Listo</button></form>',
 
-  createPoolHTML: function(){
+  createPoolHTML: function(idx){
     // question = ["question 1", "question 2", ...]
     let html = ""
-    html += this.header_html;
+    html += this.header_html.replace(/IDX/g, idx);
     this.questions.forEach(function(q, i){
       const short = q.short ? q.short : q.question;
       html += Pool.question_html.replace(/NAME/g, i).replace("TXT", short).replace("TOOLTIP", q.question);
@@ -64,7 +64,7 @@ Pool = {
     // add Pool and all triggers and validations
     const place = $(div);
 
-    place.html(this.createPoolHTML());
+    place.html(this.createPoolHTML(idx));
     $(place).find(".send").click(function(event){
       // Validate form on submit
       event.preventDefault();
@@ -96,5 +96,13 @@ Pool = {
   },
   _isCompleted: function(row){
     return $(row).find("input").filter(":checked").length > 0;
+  },
+  getPoolData: function(idx){
+    const form = $("#form"+idx);
+    if(! Pool._validateForm(form)){
+      throw "Form Not Completed";
+    }
+
+    return form.serializeArray()
   }
 }

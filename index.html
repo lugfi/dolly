@@ -24,7 +24,13 @@
 -->
 
   <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Last-Modified" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+
   <title>Encuestas de Cursos</title>
+
   <link rel="stylesheet" href="./css/bootstrap.min.css"./>
   <link rel="stylesheet" href="./css/grid-radio.css"./>
   <script src="./js/jquery-3.3.1.min.js"></script>
@@ -119,24 +125,67 @@
     <div id="accordion">
     </div>
 
+    <!-- send button-->
+    <div id="cardSend" class="card text-white bg-info mb-3 collapse mt-4" style="max-width: 35rem;">
+      <h5 class="card-header">Ya casi estamos</h5>
+      <div class="card-body">
+        <p class="card-text">Podés revisar si todo está bien. Si es así, presioná el botón de abajo.</p>
+        <a href="#" id="sendButton" class="btn btn-light mt-3">Enviar encuesta</a>
+      </div>
+    </div>
 
+    <!-- modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="okModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Encuesta enviada</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Se registraron los datos correctamente, ¡muchas gracias!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Ver Resultados</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cargar Otra Encuesta</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
+    <div class="modal" tabindex="-1" role="dialog" id="errorModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ocurrió un problema</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>No se pudieron registrar los datos, intente nuevamente más tarde.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <script>
-    const json_list = {
-    "Horarios_2Q2014.json": "2º Cuat 2014",
-    "Horarios_1Q2015.json": "1º Cuat 2015",
-    "Horarios_2Q2015.json": "2º Cuat 2015",
-    "Horarios_1Q2016.json": "1º Cuat 2016",
-    "Horarios_2Q2016.json": "2º Cuat 2016",
-    "Horarios_1Q2017.json": "1º Cuat 2017",
-    "Horarios_2Q2017.json": "2º Cuat 2017"
-  };
+    const json_list = [
+    {name: "2º Cuat 2014", ref: "2Q2014"},
+    {name: "1º Cuat 2015", ref: "1Q2015"},
+    {name: "2º Cuat 2015", ref: "2Q2015"},
+    {name: "1º Cuat 2016", ref: "1Q2016"},
+    {name: "2º Cuat 2016", ref: "2Q2016"},
+    {name: "1º Cuat 2017", ref: "1Q2017"},
+    {name: "2º Cuat 2017", ref: "2Q2017"} ];
   $(function(){
     // Fill JSON list
     let html = "";
-    Object.entries(json_list).forEach(x => html += '<option value="' + x[0] + '">' + x[1] + '</option>');
+    json_list.forEach(function(elem,i){
+      html += '<option value="' + elem.ref + '">' + elem.name + '</option>'
+    });
     $("#cuatri").append(html);
     $("#materia").attr("disabled", true);
     $("#curso").attr("disabled", true);
@@ -160,6 +209,10 @@
 
   $("#curso").change(function(e){
     FormMannager.loadDocentes($(this).val());
+  });
+
+  $("#sendButton").click(function(e){
+    FormMannager.sendForm();
   });
 
   Pool.onSubmit = FormMannager.onSubmitForms;
