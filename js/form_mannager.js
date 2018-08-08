@@ -71,8 +71,26 @@ FormMannager = {
     //$("#form-pool").collapse('show');
   },
   cambiarDocente: function(e){
+    e.preventDefault();
     const docente_idx = Number($(this).data("idx"));
-    console.log("Cambiar docente: "+docente_idx);
+    const docente = FormMannager.cursoActual.docentes[docente_idx];
+    if (!docente){
+      return false;
+    }
+
+    console.log("Cambiar docente: "+docente);
+
+    ChangeDocentes.change(docente, function(newDocente, action){
+      if (newDocente){
+        $("#heading" + docente_idx).find(".docenteName").html(newDocente+'<i class="fas fa-helicopter ml-3"></i>');
+        FormMannager.cursoActual.docentes[docente_idx] = newDocente;
+      }else if (action == 'delete') {
+        delete FormMannager.cursoActual.docentes[docente_idx];
+        $("#collapse" + docente_idx).empty().collapse("hide");
+        $("#heading" + docente_idx).find(".docenteName").html('<del>' + docente + '</del>');
+        $("#heading" + docente_idx).find(".docenteName").prop('disabled', true);
+      }
+    });
   },
   onSubmitForms: function(idx, data){
     $("#collapse"+idx).collapse('hide');
@@ -100,15 +118,11 @@ FormMannager = {
   },
   sendForm:function(){
     let csvData = "";
-    let number_ok = 0;
+
     this.cursoActual.docentes.forEach(function(d,i){
       csvData += FormMannager.createCSV(i) + "\n";
-      number_ok++;
     });
 
-    if (number_ok != this.cursoActual.docentes.length){
-      throw "Pool data mismatch.";
-    }
     csvData = csvData.trim();
 
     console.log("sending: ```" + csvData + "```");
@@ -150,7 +164,7 @@ MyAccordion = {
   cardhtml: '<div class="card">\
           <div class="card-header d-flex justify-content-between" id="headingOne">\
             <span class="h5 mb-0 col">\
-              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"  aria-controls="collapseOne">\
+              <button class="btn btn-link docenteName" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"  aria-controls="collapseOne">\
                 TITLE \
               </button>\
             </span>\

@@ -49,6 +49,7 @@
   <!-- Scripts -->
   <script src="./js/form_mannager.js"></script>
   <script src="./js/pool.js"></script>
+  <script src="./js/change_docentes.js"></script>
 
   <meta name="theme-color" content="#ffffff">
   <link rel="manifest" href="./manifest.json">
@@ -63,7 +64,7 @@
     <!-- options menu -->
     <!--<button type="button" class="btn btn-outline-default btn-circle"><img class="img-circle" src="files/img/note.png"./></button>-->
     <div class="navbar-nav dropdown">
-      <button type="button" class="btn btn-warning mr-1" data-toggle="modal" data-target="#bibleModal"><i class="fas fa-book"></i> Ver resultados</button>
+      <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Ver resultados</a>
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Opciones
       </button>
@@ -113,10 +114,10 @@
       <!-- couse selector -->
       <div class="form-group collapse" id="course-gruop">
         <label for="materia" class="col-sm-2 col-form-label">Materia</label>
-        <select id="materia" class="col-sm-10 selectpicker show-tick bookSelector" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled>
+        <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled>
         </select>
         <label for="curso" class="col-sm-2 col-form-label">Curso</label>
-        <select id="curso" class="col-sm-10 selectpicker show-tick bookSelector" data-live-search="true" data-style="btn-primary" title="Elegí el curso" disabled>
+        <select id="curso" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí el curso" disabled>
         </select>
       </div>
     </form>
@@ -166,6 +167,36 @@
           </div>
           <div class="modal-body">
             <p>No se pudieron registrar los datos, intente nuevamente más tarde.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="changeDocenteModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cambiar Docente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>A veces hay errores u omisiones en los listados que publica la Facultad.
+            Si en lugar de <strong class="docentePlace">X</strong> cursaste con otra persona, podés
+            buscar a dicho docente en la lista de abajo:</p>
+            <fieldset>
+              <label for="newDocente" class="col-sm-2 col-form-label">Reemplazo:</label>
+              <select id="newDocente" class="col-sm-7 selectpicker show-tick" data-container="body" data-live-search="true" data-style="btn-primary" title="Buscá tu docente acá">
+              </select>
+              <button class="btn btn-primary col-sm-2" id="changeDocente" disabled>Cambiar</button>
+            </fieldset>
+          </div>
+          <div class="card-footer text-muted">
+            Si este docente está de más, podes eliminarlo de la encuesta:
+            <fieldset>
+              <button class="btn btn-danger" id="deleteDocente">Eliminar docente</button>
+            </fieldset>
           </div>
         </div>
       </div>
