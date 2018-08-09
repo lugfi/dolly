@@ -26,12 +26,18 @@ FormMannager = {
 
       // Alerts
       $("#loading").slideUp(500);
+
+      // Cleaning
+      FormMannager.clearForm();
+      FormMannager.cursoActual = {};
     }).fail(function(e){
       console.log(e);
       $("#load-fail").slideDown(1000);
     });
   },
   loadCursos: function(){
+    if (!$("#materia").val()) return;
+
     const materia_idx = Number($("#materia").val());
     const cursos = this.data.materias[materia_idx].cursos;
 
@@ -49,6 +55,9 @@ FormMannager = {
     $("#cardSend").collapse("hide");
   },
   loadDocentes(){
+    if (!$("#curso").val()) return;
+    console.log("loadDocentes:"+$("#curso").val());
+
     const materia_idx = Number($("#materia").val());
     const curso_idx = Number($("#curso").val());
     const cuatri = $("#cuatri").val();
