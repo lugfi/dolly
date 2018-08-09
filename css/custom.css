@@ -1,0 +1,5 @@
+.image-cropper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
