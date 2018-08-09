@@ -6,7 +6,7 @@ ChangeDocentes = {
     return Object.keys(gente);
   },
   loadDocentes: function(){
-    ChangeDocentes.docentes = ChangeDocentes.listDocentes();
+    ChangeDocentes.docentes = ChangeDocentes.data.docentes;
     let html = "";
     ChangeDocentes.docentes.forEach(function(x,i){
       html += '<option class="option" value="' + i + '">' + x + '</option>'
@@ -38,6 +38,14 @@ ChangeDocentes = {
       console.log("Docente deleted");
       ChangeDocentes.lastCallback(null, 'delete');
       $("#changeDocenteModal").modal("hide");
+    });
+
+    $.getJSON(Config.dataPath + "comun.json", function(data,st){
+      ChangeDocentes.data = data;
+    }).fail(function(){
+      ChangeDocentes.data = null;
+      console.log(e);
+      $("#load-fail").slideDown(1000);
     });
 
   },
