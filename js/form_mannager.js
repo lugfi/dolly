@@ -8,7 +8,7 @@ FormMannager = {
     // Loads JSON data and fills course select form
     const file = "Horarios_" + ref + ".json";
     $("#loading").show();
-    $.getJSON("./data/"+file, function(data,st){
+    $.getJSON(Config.dataPath + file, function(data,st){
       if (st != "success")
         return;
 
@@ -165,7 +165,7 @@ FormMannager = {
     console.log("sending: ```" + dataStr + "```");
 
     // Send CSV data
-    $.post("http://web.fi.uba.ar/~fdanko/test.php",
+    $.post(Config.submitURL,
     {
        pio: dataStr
     },

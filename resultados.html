@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <!--
+###############################################################################
+# OpenLP - Open Source Lyrics Projection                                      #
+# --------------------------------------------------------------------------- #
+# Copyright (c) 2008-2017 OpenLP Developers                                   #
+# --------------------------------------------------------------------------- #
+# This program is free software; you can redistribute it and/or modify it     #
+# under the terms of the GNU General Public License as published by the Free  #
+# Software Foundation; version 2 of the License.                              #
+#                                                                             #
+# This program is distributed in the hope that it will be useful, but WITHOUT #
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or       #
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for    #
+# more details.                                                               #
+#                                                                             #
+# You should have received a copy of the GNU General Public License along     #
+# with this program; if not, write to the Free Software Foundation, Inc., 59  #
+# Temple Place, Suite 330, Boston, MA 02111-1307 USA                          #
+###############################################################################
+-->
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Last-Modified" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+
+  <title>Encuestas de Cursos</title>
+
+  <link rel="stylesheet" href="./css/bootstrap.min.css"./>
+  <link rel="stylesheet" href="./css/grid-radio.css"./>
+  <script src="./js/jquery-3.3.1.min.js"></script>
+  <script src="./js/jquery.scrollTo.min.js"></script>
+  <script src="./js/popper.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+
+  <!-- bootstrap-select -->
+  <link rel="stylesheet" href="./css/bootstrap-select.min.css">
+  <script src="./js/bootstrap-select.min.js"></script>
+  <script src="./js/i18n/defaults-es_ES.min.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="./css/all.css"./>
+
+  <!-- scripts -->
+  <script src="./js/config.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/questions.js"></script>
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+
+</head>
+<body>
+  <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
+    <span><h3>Dolly</h3><small>Sistema Automatizado de Encuestas Fiubenses</small></span>
+
+
+    <!-- options menu -->
+    <!--<button type="button" class="btn btn-outline-default btn-circle"><img class="img-circle" src="files/img/note.png"./></button>-->
+    <div class="navbar-nav dropdown">
+      <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Deja tu opinión</a>
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Opciones
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-about">Acerca de</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="modal-about">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Creado para las necesidades del Ciudadano Fiubense. Info en el <a href="https://github.com/lugfi/dolly">repo</a>.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No hay easters eggs :(</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="modal-no-connection" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Problemas de conexión</h5>
+          </div>
+          <div class="modal-body">
+            <p>No tenemos conexión con el servidor. Intente nuevamente más tarde.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- form -->
+
+    <form id="form-course">
+      <!-- couse selector -->
+      <div class="form-group collapse" id="course-gruop">
+        <label for="materia" class="col-sm-2 col-form-label">Materia</label>
+        <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled>
+        </select>
+      </div>
+    </form>
+
+    <!-- encuesta -->
+    <div id="accordion">
+    </div>
+
+
+  <script>
+  Results = {
+    loadMateria: function(val){
+      console.log(val);
+    },
+    loadData: function(){
+      // Read and parse CSV data
+      $.get(Config.resultsURL, function(data){
+        const jsondata = data.split("\n").filter(x => x.length).map(x => JSON.parse(b64_to_utf8(x)));
+        console.log(jsondata);
+      }).fail(function(e){
+        $("#modal-no-connection").modal("show");
+      });
+    },
+    init: function(){
+      Results.loadData();
+    }
+  };
+
+  $(function(){
+    Results.init();
+
+
+    // Tooltips and others hooks
+    onDomChange();
+  });
+
+  function onDomChange(){
+    $('[data-toggle="tooltip"]').tooltip();
+  }
+
+  // Triggers
+  $("#materia").change(function(e){
+    Results.loadMateria($(this).val());
+  });
+
+  </script>
+</body>
+</html>
