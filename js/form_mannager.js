@@ -86,13 +86,28 @@ FormMannager = {
         FormMannager.cursoActual.docentes[docente_idx] = newDocente;
       }else if (action == 'delete') {
         delete FormMannager.cursoActual.docentes[docente_idx];
+
+        // Working with deleted array is very difficult
+        let len = 0;
+        FormMannager.cursoActual.docentes.forEach(function(){len++});
+        if(!len){
+          // All docentes deleted
+          FormMannager.clearForm();
+          return;
+        }
+
+        FormMannager.onSubmitForms(docente_idx);
         $("#collapse" + docente_idx).empty().collapse("hide");
         $("#heading" + docente_idx).find(".docenteName").html('<del>' + docente + '</del>');
         $("#heading" + docente_idx).find(".docenteName").prop('disabled', true);
+
+
       }
     });
   },
   onSubmitForms: function(idx, data){
+    // This is called by Pool.onSubmit when a pool is completed (and validated).
+    // data is unused
     $("#collapse"+idx).collapse('hide');
     FormMannager.formStatus[idx] = true;
 
@@ -134,6 +149,10 @@ FormMannager = {
 
     dataStr = dataStr.trim();
 
+    if (!dataStr.length){
+      throw "Empty form";
+    }
+
     console.log("sending: ```" + dataStr + "```");
 
     // Send CSV data
@@ -144,10 +163,7 @@ FormMannager = {
     function(data, status){
        if(status == "success"){
          $("#okModal").modal("show");
-         $("#materia").selectpicker('val','').selectpicker('refresh');
-         $("#curso").selectpicker('val','').selectpicker('refresh');
-         MyAccordion.clear();
-         $("#cardSend").collapse("hide");
+         FormMannager.clearForm();
          console.log("ok!");
        }else{
          $("#errorModal").modal("show");
@@ -156,6 +172,12 @@ FormMannager = {
          console.log("status",status);
        }
     });
+  },
+  clearForm(){
+    $("#materia").selectpicker('val','').selectpicker('refresh');
+    $("#curso").selectpicker('val','').selectpicker('refresh');
+    $("#cardSend").collapse("hide");
+    MyAccordion.clear();
   }
 }
 
