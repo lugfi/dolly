@@ -18,7 +18,7 @@ Questions = {
     {id: 11, question: "Utiliza en clase un material didáctico que ayuda a comprender las explicaciones"},
     {id: 12, question: "Responde dudas por mail/campus"}
   ],
-  activeQuestions: [0,1,2],//,3,4,5,6,7,8,9,10,11,12],
+  activeQuestions: [0,1,2,3,4,5,6,7,8,9,10,11,12],
   getQuestions: function(){
     return Questions.questions.filter(q => Questions.activeQuestions.includes(q.id));
   }
