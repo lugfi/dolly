@@ -2,26 +2,6 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <!--
-###############################################################################
-# OpenLP - Open Source Lyrics Projection                                      #
-# --------------------------------------------------------------------------- #
-# Copyright (c) 2008-2017 OpenLP Developers                                   #
-# --------------------------------------------------------------------------- #
-# This program is free software; you can redistribute it and/or modify it     #
-# under the terms of the GNU General Public License as published by the Free  #
-# Software Foundation; version 2 of the License.                              #
-#                                                                             #
-# This program is distributed in the hope that it will be useful, but WITHOUT #
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or       #
-# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for    #
-# more details.                                                               #
-#                                                                             #
-# You should have received a copy of the GNU General Public License along     #
-# with this program; if not, write to the Free Software Foundation, Inc., 59  #
-# Temple Place, Suite 330, Boston, MA 02111-1307 USA                          #
-###############################################################################
--->
 
   <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
   <meta http-equiv="Expires" content="0">
@@ -64,7 +44,7 @@
     <!-- options menu -->
     <!--<button type="button" class="btn btn-outline-default btn-circle"><img class="img-circle" src="files/img/note.png"./></button>-->
     <div class="navbar-nav dropdown">
-      <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Deja tu opinión</a>
+      <a href="index.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Deja tu opinión</a>
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Opciones
       </button>
@@ -113,47 +93,27 @@
       </div>
     </form>
 
+    <div class="alert alert-warning alert-dismissible collapse show" role="alert" id="loading">
+      <strong>¡Uacho!</strong> Estamos cargando los datos, bancá...
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
     <!-- encuesta -->
     <div id="accordion">
     </div>
 
 
   <script>
-  Results = {
-    loadMateria: function(val){
-      console.log(val);
-    },
-    loadData: function(){
-      // Read and parse CSV data
-      $.get(Config.resultsURL, function(data){
-        const jsondata = data.split("\n").filter(x => x.length).map(x => JSON.parse(b64_to_utf8(x)));
-        console.log(jsondata);
-      }).fail(function(e){
-        $("#modal-no-connection").modal("show");
-      });
-    },
-    init: function(){
-      Results.loadData();
-    }
-  };
-
-  $(function(){
-    Results.init();
-
-
-    // Tooltips and others hooks
-    onDomChange();
-  });
-
-  function onDomChange(){
-    $('[data-toggle="tooltip"]').tooltip();
-  }
-
-  // Triggers
-  $("#materia").change(function(e){
-    Results.loadMateria($(this).val());
-  });
-
+    // Triggers
+    $("#materia").change(function(e){
+      Cards.clear();
+      Results.onSelectMateria();
+    });
+    $(function(){
+      Results.init();
+    });
   </script>
 </body>
 </html>
