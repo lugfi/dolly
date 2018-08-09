@@ -1,19 +1,6 @@
+// Be sure questions.js is loaded previously
 Pool = {
-  questions: [
-    {question: "Asiste normalmente a clase", short: "Asistencia a clase"},
-    {question: "Cumple con los horarios establecidos", short: "Cumple los horarios"},
-    {question: "Mantiene un trato adecuado con los alumnos", short: "Mantiene un trato adecuado"},
-    {question: "Parece dominar la asignatura que imparte", short: "Sabe de la materia"},
-    {question: "Sus clases están bien organizadas"},
-    {question: "Explica con claridad"},
-    {question: "Varía las estrategias de enseñanza para asegurar la comprensión, aclarar dudas o atender necesidades individuales"},
-    {question: "Intenta que los alumnos participen en las clases", short: "Fomenta la participación en clase"},
-    {question: "Presenta un panorama amplio de su asignatura"},
-    {question: "Responde con exactitud y precisión a las preguntas que le hacen"},
-    {question: "Acepta la crítica fundamentada"},
-    {question: "Utiliza en clase un material didáctico que ayuda a comprender las explicaciones"},
-    {question: "Responde dudas por mail/campus"}
-  ],
+  questions: Questions.getQuestions(), //ES6 module maybe?
   question_html: '<fieldset name="NAME"><div class="grid-row">\
     <div class="flex-item"><i class="fas fa-question-circle mr-2" data-toggle="tooltip" title="TOOLTIP"></i>TXT</div>\
     <label class="flex-item">\
@@ -44,7 +31,14 @@ Pool = {
             <div class="header-item">4</div>\
             <div class="header-item"><p><i class="far fa-smile"></i></p>5</div>\
           </div>',
-  footer_html: '</div><button type="submit" class="btn btn-primary send">Listo</button></form>',
+  footer_html: '\
+  <div class="input-group">\
+    <div class="input-group-prepend">\
+      <span class="input-group-text">Comentarios (opcional)</span>\
+    </div>\
+    <textarea class="form-control" name="comments" aria-label="Comentarios"></textarea>\
+  </div>\
+  </div><button type="submit" class="btn btn-primary send">Listo</button></form>',
 
   createPoolHTML: function(idx){
     // question = ["question 1", "question 2", ...]
@@ -52,7 +46,7 @@ Pool = {
     html += this.header_html.replace(/IDX/g, idx);
     this.questions.forEach(function(q, i){
       const short = q.short ? q.short : q.question;
-      html += Pool.question_html.replace(/NAME/g, i).replace("TXT", short).replace("TOOLTIP", q.question);
+      html += Pool.question_html.replace(/NAME/g, q.id).replace("TXT", short).replace("TOOLTIP", q.question);
     });
 
     html += this.footer_html;

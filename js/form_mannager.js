@@ -106,41 +106,54 @@ FormMannager = {
       $("#cardSend").collapse("show");
     }
   },
-  createCSV: function(idx){
+  packData: function(idx){
     data = Pool.getPoolData(idx);
-    let str = FormMannager.cursoActual.docentes[idx] + "|" + FormMannager.cursoActual.materia + "|" + FormMannager.cursoActual.cuatri + "|";
-    data.forEach(function(elem){
-      str += "" + elem.value + "|"
-    });
-    str += Date.now();
+    const jsondata = {
+      curso: FormMannager.cursoActual.docentes[idx],
+      materia: FormMannager.cursoActual.materia,
+      cuatri: FormMannager.cursoActual.cuatri,
+      timestamp: Date.now(),
+      questions: {}
+    };
 
-    return str;
+    data.forEach(function(elem){
+      jsondata.questions[elem.name] = elem.value;
+    });
+
+    return jsondata;
+  },
+  createDataString: function(idx){
+    return utf8_to_b64(JSON.stringify(FormMannager.packData(idx)));
   },
   sendForm:function(){
-    let csvData = "";
+    let dataStr = "";
 
     this.cursoActual.docentes.forEach(function(d,i){
-      csvData += FormMannager.createCSV(i) + "\n";
+      dataStr += FormMannager.createDataString(i) + "\n";
     });
 
-    csvData = csvData.trim();
+    dataStr = dataStr.trim();
 
-    console.log("sending: ```" + csvData + "```");
+    console.log("sending: ```" + dataStr + "```");
 
     // Send CSV data
     $.post("http://web.fi.uba.ar/~fdanko/test.php",
     {
-       pio: csvData
+       pio: dataStr
     },
     function(data, status){
-       if(data.trim() == csvData){
+       if(status == "success"){
          $("#okModal").modal("show");
          $("#materia").selectpicker('val','').selectpicker('refresh');
          $("#curso").selectpicker('val','').selectpicker('refresh');
          MyAccordion.clear();
          $("#cardSend").collapse("hide");
+         console.log("ok!");
        }else{
          $("#errorModal").modal("show");
+         console.log("Error on sending data!");
+         console.log("data",data);
+         console.log("status",status);
        }
     });
   }
