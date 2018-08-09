@@ -10,7 +10,7 @@ Questions = {
     {id: 3, question: "Parece dominar la asignatura que imparte", short: "Sabe de la materia"},
     {id: 4, question: "Sus clases están bien organizadas"},
     {id: 5, question: "Explica con claridad"},
-    {id: 6, question: "Varía las estrategias de enseñanza para asegurar la comprensión, aclarar dudas o atender necesidades individuales"},
+    {id: 6, question: "Varía las estrategias de enseñanza para asegurar la comprensión, aclarar dudas o atender necesidades individuales", short: "Varia la forma de enseñar según se necesite"},
     {id: 7, question: "Intenta que los alumnos participen en las clases", short: "Fomenta la participación en clase"},
     {id: 8, question: "Presenta un panorama amplio de su asignatura"},
     {id: 9, question: "Responde con exactitud y precisión a las preguntas que le hacen"},
