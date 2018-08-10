@@ -22,3 +22,11 @@ Stats = {
     return {mean: mean, variance: variance};
   }
 }
+
+function printCSV(x){
+  const d = Config.CSVDelim;
+  let l = x.curso+d+x.materia+d+x.cuatri+d+x.timestamp;
+  Object.keys(x.questions).forEach(i => (!isNaN(Number(i)) && (l+=d+x.questions[i])));
+  l += d+utf8_to_b64(x.questions["comments"]);
+  return l;
+}
