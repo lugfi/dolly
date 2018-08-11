@@ -153,7 +153,7 @@ FormMannager = {
     let dataStr = "";
 
     this.cursoActual.docentes.forEach(function(d,i){
-      dataStr += FormMannager.createDataString(i) + "\n";
+      dataStr += printCSV(FormMannager.packData(i)) + "\n";
     });
 
     dataStr = dataStr.trim();

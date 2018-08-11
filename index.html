@@ -44,10 +44,13 @@
 </head>
 <body>
   <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
-    <a class="navbar-brand" href="./index.html">
-      <img style="width: 10%; height: 10%"  src="./img/DOLLY_imagen.png" width="100">
-      <span class="d-inline-block align-top">  <img style="width: 45%; height: 45%" src="./img/DOLLY_LOGO.png" ><font size="-2"> <p><b>Sistema Automatizado de Encuestas Fiubenses</b></p></small></font></span>
-    </a>
+    <div class="navbar-brand" href="./index.html">
+      <img style="width: 64px; height: 64px"  src="./img/DOLLY_imagen.png" width="100">
+      <span class="d-inline-block align-top">
+        <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
+        <small><p class="pb-0 mb-0">Sistema Automatizado de Encuestas Fiubenses</p></small>
+      </span>
+    </div>
 
 
     <!-- options menu -->
@@ -58,7 +61,7 @@
         Opciones
       </button>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Ovejas Simpsons</a>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
       </div>
     </div>
   </nav>
@@ -70,6 +73,7 @@
         <div class="modal-content">
           <div class="modal-body" align="center"  >
             <img src="./img/ovejas_simpsons.gif" align="center" >
+            <p>Más <strike>deliciosa</strike> tierna info en el <a href="https://github.com/lugfi/dolly">repo</a>.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Owww</button>
