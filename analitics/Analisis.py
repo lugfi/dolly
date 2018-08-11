@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 # In[50]:
@@ -6,14 +5,15 @@
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+import sys
 
 # Voy a sanitizar la tabla, por si aparece algun registro con menos campos o texto
 
-questioncols = ['asistencia', 'cumple_horarios', 'buen_trato', 'clase_organizada', 'claridad', 'fomenta_participacion', 'panorama_amplio', 'acepta_critica', 'responde_mails']
+questioncols = ['asistencia', 'cumple_horarios', 'buen_trato', 'calse_organizada', 'claridad', 'fomenta_participacion', 'panorama_amplio', 'acepta_critica', 'responde_mails']
 usecols = ['doc', 'mat'] + questioncols
 
-df_raw = pd.read_csv("../db_dolly.txt", usecols=usecols, header=0)
+df_raw = pd.read_csv("../gente.txt", usecols=usecols, header=0)
 for index in questioncols:
     df_raw[index] = pd.to_numeric(df_raw[index], errors='coerce') # Furzo estos campos a numerico
     
@@ -33,7 +33,7 @@ df = df[df['doc']!="A Designar"] # Elimino el docente "A Designar"
 pesos = {
     'asistencia': 1,
     'cumple_horarios': 1,
-    'clase_organizada': .7,
+    'calse_organizada': .7,
     'claridad': .7,
     'buen_trato': 0.5,
     'acepta_critica': 0.5,
@@ -98,7 +98,8 @@ def float_format(x):
 html = grouped.to_html(float_format=float_format)
 
 now = datetime.datetime.now()
-header = "<h4>Actualizado: " + str(now) +"<h3>"
-with open('datos.html', 'w') as f:
-    print(header,html, file=f)
+header = "<h4>Actualizado: " + str(now) +"</h4>"
+
+with open("datos.html", mode="w", encoding="utf8") as f:
+    f.write(header+html)
 
