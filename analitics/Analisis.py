@@ -1,18 +1,24 @@
 
 # coding: utf-8
 
-# In[316]:
+# In[50]:
 
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-from decimal import Decimal
+# Voy a sanitizar la tabla, por si aparece algun registro con menos campos o texto
 
-df_raw = pd.read_csv("db_dolly.txt", index_col=False, error_bad_lines=False)
-df = df_raw[df_raw['doc']!="A Designar"]
-df.head()
+questioncols = ['asistencia', 'cumple_horarios', 'buen_trato', 'clase_organizada', 'claridad', 'fomenta_participacion', 'panorama_amplio', 'acepta_critica', 'responde_mails']
+usecols = ['doc', 'mat'] + questioncols
+
+df_raw = pd.read_csv("../db_dolly.txt", usecols=usecols, header=0)
+for index in questioncols:
+    df_raw[index] = pd.to_numeric(df_raw[index], errors='coerce') # Furzo estos campos a numerico
+    
+df = data=df_raw.dropna() # Elimino campos con errores
+df = df[df['doc']!="A Designar"] # Elimino el docente "A Designar"
 #materias = df.mat.unique()
 
 
@@ -21,7 +27,7 @@ df.head()
 # A fin de poder ordenar los docentes, para que los "mejores" aparezcan primero, es necesario obtener una métrica.
 # Voy a utilizar una norma 2 pero con coeficientes de ponderación dados consignados en la siguiente tabla.
 
-# In[317]:
+# In[51]:
 
 
 pesos = {
@@ -45,7 +51,7 @@ np.sqrt(np.square(df[features].values) @ wn)
 # 
 # Tomando la media de cada feature, analizando para docente y materia por separado
 
-# In[318]:
+# In[52]:
 
 
 # Para un docente particular
@@ -53,7 +59,7 @@ docentes = list(df['doc'].unique()) # pss... lista de docentes
 df[df['doc']=='Acero'][features].mean()
 
 
-# In[319]:
+# In[53]:
 
 
 # Para una materia en particular
@@ -65,7 +71,7 @@ puntajes.head()
 # Tendría que repetir el procedimiento para cada materia, pero si uso un indice múltiple (de la forma (materia,docente))
 # me ahorro todo ese trabajo.
 
-# In[320]:
+# In[54]:
 
 
 counts = df.groupby(['mat','doc']).size().to_frame(name='respuestas')
@@ -74,20 +80,25 @@ grouped = df.groupby(['mat','doc'])[features].mean().join(counts)
 grouped
 
 
-# In[321]:
+# In[55]:
 
 
 grouped.reset_index().to_json(orient='index')
 
 
-# In[324]:
+# In[56]:
 
+
+from decimal import Decimal
+import datetime
 
 def float_format(x):
     return str(round(Decimal(x),1))
 
 html = grouped.to_html(float_format=float_format)
 
+now = datetime.datetime.now()
+header = "<h4>Actualizado: " + str(now) +"<h3>"
 with open('datos.html', 'w') as f:
-    print(html, file=f)
+    print(header,html, file=f)
 
