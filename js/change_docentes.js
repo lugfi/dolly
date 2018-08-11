@@ -55,6 +55,3 @@ ChangeDocentes = {
     $("#changeDocente").prop('disabled',true);
   }
 }
-$(function(){
-  ChangeDocentes.init();
-});
