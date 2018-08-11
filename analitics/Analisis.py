@@ -8,12 +8,15 @@ import numpy as np
 #import matplotlib.pyplot as plt
 import sys
 
+outfile =  "datos.html"
+datafile = "../gente.txt"
+
 # Voy a sanitizar la tabla, por si aparece algun registro con menos campos o texto
 
 questioncols = ['asistencia', 'cumple_horarios', 'buen_trato', 'calse_organizada', 'claridad', 'fomenta_participacion', 'panorama_amplio', 'acepta_critica', 'responde_mails']
 usecols = ['doc', 'mat'] + questioncols
 
-df_raw = pd.read_csv("../gente.txt", usecols=usecols, header=0)
+df_raw = pd.read_csv(datafile, usecols=usecols, header=0)
 for index in questioncols:
     df_raw[index] = pd.to_numeric(df_raw[index], errors='coerce') # Furzo estos campos a numerico
     
@@ -100,6 +103,6 @@ html = grouped.to_html(float_format=float_format)
 now = datetime.datetime.now()
 header = "<h4>Actualizado: " + str(now) +"</h4>"
 
-with open("datos.html", mode="w", encoding="utf8") as f:
+with open(outfile, mode="w", encoding="utf8") as f:
     f.write(header+html)
 
