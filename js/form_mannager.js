@@ -212,7 +212,7 @@ MyAccordion = {
                 TITLE \
               </button>\
             </span>\
-            <a href="#" class="form-text text-muted fulano" data-idx="INDEX">No conozco a este fulano</a>\
+            <a href="#" class="form-text text-muted fulano" data-idx="INDEX">No conozco a esta persona</a>\
           </div>\
           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">\
             <div class="card-body collapse show">\
