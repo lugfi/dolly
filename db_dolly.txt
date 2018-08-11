@@ -1,4 +1,4 @@
-doc,mat,cuat,tstamp,asistencia,cumple_horarios,buen_trato,calse_organizada,claridad,fomenta_participacion,panorama_amplio,acepta_critica,responde_mails,comentarios
+doc,mat,cuat,tstamp,asistencia,cumple_horarios,buen_trato,clase_organizada,claridad,fomenta_participacion,panorama_amplio,acepta_critica,responde_mails,comentarios
 Garcia,6109,1Q2018,1533839977934,5,5,5,5,5,5,5,5,5,VW5hIGdlbmlhIHRvdGFsLCByZXNwb25kZSBhIHRvZG9zIGxvcyBlbWFpbHMsIHkgc2llbXByZSBlc3RhIHByZXNlbnRlLiA=
 Travesaro,6109,1Q2018,1533839977936,5,5,5,5,5,5,5,5,5,
 Pastor,6109,1Q2018,1533839977937,5,5,5,5,4,5,5,5,5,
