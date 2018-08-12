@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[334]:
+# In[359]:
 
 
 import pandas as pd
@@ -23,7 +23,8 @@ df_raw = pd.read_csv(datafile, usecols=usecols, header=0)
 for index in questioncols:
     df_raw[index] = pd.to_numeric(df_raw[index], errors='coerce') # Furzo estos campos a numerico
     
-df = data=df_raw.dropna() # Elimino campos con errores
+df=df_raw.dropna(subset=['doc', 'mat'] + questioncols) # Elimino campos con errores, excepto comentarios nulos
+
 df = df[df['doc']!="A Designar"] # Elimino el docente "A Designar"
 #materias = df.mat.unique()
 df.head()
@@ -34,7 +35,7 @@ df.head()
 # A fin de poder ordenar los docentes, para que los "mejores" aparezcan primero, es necesario obtener una métrica.
 # Voy a utilizar una norma 2 pero con coeficientes de ponderación dados consignados en la siguiente tabla.
 
-# In[335]:
+# In[360]:
 
 
 pesos = {
@@ -73,17 +74,16 @@ def calc_score(row):
 # Tendría que repetir el procedimiento para cada materia, pero si uso un indice múltiple (de la forma (materia,docente))
 # me ahorro todo ese trabajo.
 
-# In[336]:
+# In[361]:
 
 
 counts = df.groupby(['mat','doc']).size().to_frame(name='respuestas')
 grouped = df.groupby(['mat','doc'])[features].mean().join(counts)
 
 with open(out_valoraciones, mode="w", encoding="utf8") as f:
-    f.write(grouped.to_json(orient='index'))
+    f.write(grouped.reset_index().to_json(orient='records'))
     
 comentarios = df.groupby(['mat','doc'])['comentarios'].apply(list).to_frame("comentarios")
 with open(out_comentarios, mode="w", encoding="utf8") as f:
-    f.write(comentarios.to_json(orient='index'))
-    
+    f.write(comentarios.reset_index().to_json(orient='records'))    
 

@@ -11,3 +11,11 @@
 .zebra:nth-child(odd) {
     background-color: #f2f2f2
 }
+
+.puntaje {
+  width: 20px;
+  max-width: 20px;
+  padding: 1px;
+  margin:1px;
+  display: inline-block;
+}
