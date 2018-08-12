@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="./css/grid-radio.css"./>
   <script src="./js/jquery-3.3.1.min.js"></script>
   <script src="./js/jquery.scrollTo.min.js"></script>
+  <script src="./js/jquery.getUrlParam.js"></script>
+
   <script src="./js/popper.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
 
@@ -81,18 +83,144 @@
         </div>
       </div>
     </div>
+      <table class="table table-condensed" style="border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>Score</th>
+          <th>Docente</th>
+          <th>Resultados</th>
+          <th>#Resp (Coment)</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr><td>Cargando...</td></tr>
+      </tbody>
+  </table>
   </div>
-    <iframe src="./analitics/datos.html" style="width:100%; height:400px">
-      <center>
-          <h1>¡Pasó algo raro!</h1>
-        <img style="width: 40%; height: 40%"  src="./img/ovejas_gif.gif" >
 
+<script>
+  Results = {};
 
-          <h3>No se pudo cargar las estadísticas</h3>
+  // Load data JSON
+  $.getJSON("analitics/valoraciones_docentes.json", function(data,st){
+    // Prepare keys
+    Results.materias = get_indexes('mat',data);
+    Results.docentes = get_indexes('doc',data);
+    Results.data = data;
+    console.log("data loaded");
+    Table.init();
+    Table.filterMateria($(document).getUrlParam("mat"));
+  }).fail(function(err){
+    console.log("error loading data");
+    throw err;
+  });
 
-          <p>Las encuestas que completaron estan seguras, pueden completar mas de mientras, van a aparecer cuando lo arreglemos</p>
-      </center>
-    </iframe>
+  function get_indexes(index_name, data){
+    let conj = {};
+    data.forEach(function(x){
+      conj[x[index_name]] = true;
+    });
+    return Object.keys(conj);
+  }
+
+  Calc = {
+    score(data){
+      let tot = 0;
+      Object.keys(Calc.pesos).forEach(function(k){
+        tot += data[k]*Calc.pesos[k];
+      });
+      return tot/Calc.sum(Calc.pesos);
+    },
+    pesos: {
+      'asistencia': 1,
+      'cumple_horarios': 1,
+      'clase_organizada': .7,
+      'claridad': .7,
+      'buen_trato': 0.5,
+      'acepta_critica': 0.5,
+      'fomenta_participacion': 0.5,
+      'responde_mails': 0.5,
+      'panorama_amplio': 0.5
+    },
+    roundScore: function(x){
+      return Math.round(10*x)/10;
+    },
+    sum: function(arr){
+      return Object.values(arr).reduce((a,b)=>a+b)
+    },
+    mean: function(arr){
+      return Object.values(arr).reduce((a,b)=>a+b)/Object.values(arr).length;
+    },
+  }
+
+  Table = {
+    lastrow:0,
+    init: function(){
+      Table.clearTable();
+    },
+    filterMateria(mat){
+      const rows = Results.data.filter(row => (row.mat == mat))
+      Table.loadTable(rows);
+    },
+    loadTable(rows){
+      // Calculate Score
+      rows.map(function(row){
+        row.score = Calc.score(row);
+        return row;
+      });
+
+      const sorted_rows = rows.sort((a,b) => (b.score-a.score));
+
+      sorted_rows.forEach(function(row){
+
+        Table.addRow([
+          {text: Calc.roundScore(row.score), class:"bg-warning"},
+          {text: row.doc, class:"bg-info"},
+          {text: "resultados", class:"bg-success"},
+          {text: "cantidad", class:"bg-primary"},
+        ],["a","b",334]);
+      });
+    },
+    clearTable(){
+      $("#tbody").empty();
+      Table.lastrow = 0;
+    },
+    addRow(row, comments){
+      // row = [{text:"", class:""}...{}]
+      // comments = []
+      const id = Table.lastrow++;
+
+      // Create comments html
+      let comments_items = "";
+      comments && comments.forEach(function(comment){
+        comments_items += Table.comment_html.replace("COMMENT", comment);
+      });
+
+      // Create row html
+      let row_html = "";
+      row.forEach(function(elem){
+        row_html += Table.row_html.replace("TEXT", elem.text || "").replace("CLASS", elem.class || "");
+      });
+
+      const raw_html = Table.html_item + (comments? Table.comment_div : "");
+      const html = raw_html.replace(/ID/g, id).replace("DATA_ROW",row_html).replace("COMMENT_LIST", comments_items || "");
+
+      $("#tbody").append(html);
+    },
+    html_item: '<tr data-toggle="collapse" data-target="#demoID" class="accordion-toggle">\
+      DATA_ROW\
+    </tr>',
+    comment_div:'<tr>\
+        <td colspan="6" class="hiddenRow">\
+            <div id="demoID" class="accordian-body collapse ml-3">\
+            COMMENT_LIST\
+            </div>\
+        </td>\
+    </tr>',
+    row_html: '<td class="CLASS">TEXT</td>',
+    comment_html: '<div class="col-12 zebra">COMMENT</div>'
+  }
+</script>
 
 </body>
 </html>
