@@ -153,7 +153,7 @@ FormMannager = {
     let dataStr = "";
 
     this.cursoActual.docentes.forEach(function(d,i){
-      dataStr += FormMannager.createDataString(i) + "\n";
+      dataStr += printCSV(FormMannager.packData(i)) + "\n";
     });
 
     dataStr = dataStr.trim();
@@ -170,7 +170,7 @@ FormMannager = {
        pio: dataStr
     },
     function(data, status){
-       if(status == "success"){
+       if(status == "success" && data.trim() == dataStr.trim()){
          $("#okModal").modal("show");
          FormMannager.clearForm();
          console.log("ok!");

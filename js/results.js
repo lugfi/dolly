@@ -1,119 +1,200 @@
-Results = {
-  pooldata: {},
-  loadMateria: function(val){
-    //console.log(val);
-  },
-  loadData: function(){
-    // Read and parse CSV data
-    $.ajaxSetup({ cache: false });
-    $.get(Config.resultsURL, function(data){
-      Results.pooldata = data.split("\n").filter(x => x.length).map(x => JSON.parse(b64_to_utf8(x)));
-      $.getJSON(Config.dataPath + "comun.json", function(commondata){
-        // I need to filter only the materias in commondata listed in pooldata
-        c=commondata;
-        p=Results.pooldatapooldata;
-        usedMaterias = new Set(Results.pooldata.map(x=>x.materia));
-        const availableMaterias = commondata.materias.filter(m => usedMaterias.has(m.codigo));
+Results = {};
 
-        let html = "";
-        availableMaterias.forEach(function(elem,i){
-          html += '<option value="' + elem.codigo + '">' + elem.codigo + "-" + elem.nombre + '</option>'
-        });
-        $("#materia").append(html).prop("disabled", false).selectpicker('refresh');
-        $("#course-gruop").collapse("show");
-        $("#loading").collapse("hide");
-
-      }).fail(function(e){
-        $("#modal-no-connection").modal("show");
-      });
-    }).fail(function(e){
-      $("#modal-no-connection").modal("show");
-    });
-  },
-  onSelectMateria: function(){
-    // If i want to use materias aliases, put the code here
-    const data = Results.pooldata.filter(x => (x.materia==$("#materia").val()));
-
-    // Groups responses by docente's name
+// Load data JSON
+getJSON("analitics/valoraciones_docentes.json", function(data,st){
+  // Prepare keys
+  Results.materias = get_indexes('mat',data);
+  Results.docentes = get_indexes('doc',data);
+  Results.data = data;
+  console.log("data loaded");
+  // Load comments
+  getJSON("analitics/comentarios_docentes.json", function(data,st){
+    // Decode
     d=data;
-    const docente = {};
-    data.forEach(function(elem){
-      if(docente[elem.curso]===undefined) docente[elem.curso] = [];
-        docente[elem.curso].push(elem);
+    Results.comentarios = data.map(function(x){
+      x.comentarios = x.comentarios.filter(x=>x).map(b64_to_utf8);
+      return x;
     });
+    console.log("comments loaded");
 
-    doc = docente;
-    // Calc stats
-    Object.keys(docente).forEach(function(name){
-      Results.addStats(docente[name]);
-    });
-  },
-  addStats: function(data){
-    const features = this._compactResponses(data);
-    const stats = Object.keys(features).filter(f => f!=="comments").map(k => Stats.stats(features[k]));
-    const globalstats = Stats.stats(Object.keys(stats).map(x=>stats[x].mean))
-    const name = data[0].curso;
-    //console.log(name, globalstats, stats, features.comments);
-    Cards.addCard(name, globalstats, stats, features.comments);
-  },
-  _compactResponses: function(data){
-    const rows = {};
-    data.forEach(function(q){
-      //console.log(q);
-      const keys = Object.keys(q.questions);
-      keys.forEach(function(k){
-        if(rows[k]===undefined) rows[k]=[];
-        // Convert to numeric if valid
-        rows[k].push(isNaN(Number(q.questions[k]))?q.questions[k]:Number(q.questions[k]));
-      });
-    });
-    return rows;
-  },
-  init: function(){
-    Results.loadData();
-  }
-};
+    Table.init();
+    Table.filterMateria($(document).getUrlParam("mat"));
+  }).fail(function(err){
+    console.log("error loading comments");
+    $("#load-fail").slideDown(1000);
+  });
+}).fail(function(err){
+  console.log("error loading data");
+  $("#load-fail").slideDown(1000);
+});
 
-
-
-Cards = {
-  card_idx: 0,
-  addCard: function(name, globalstats, stats, comments){
-    const html = this.cardhtml.replace(/INDEX/g,this.card_idx).replace(/One/g,this.card_idx).replace(/TITLE/g,name).replace(/GLOBALMEAN/g, globalstats.mean.toFixed(2)).replace(/GLOBARVAR/g, globalstats.variance.toFixed(2));
-
-    $("#accordion").append(html);
-    Object.keys(stats).forEach(function(k){
-      const quest = Questions.questions.find(q=>q.id==Number(k));
-      const questTxt = quest.short? quest.short: quest.question;
-
-      $("#accordion").find(".questions").append('<li>'+questTxt+': '+stats[k].mean.toFixed(2)+'&plusmn; '+stats[k].variance.toFixed(2)+'</li>');
-    });
-
-    comments.forEach(c => c && $("#accordion").find(".comments").append('<li>'+c+'</li>'));
-
-    this.card_idx++;
-  },
-  clear: function(){
-    this.card_idx = 0;
-    $("#accordion").empty();
-  },
-  cardhtml: '<div class="card">\
-          <div class="card-header d-flex justify-content-between" id="headingOne">\
-            <span class="h5 mb-0 col">\
-              <button class="btn btn-link docenteName" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"  aria-controls="collapseOne">\
-                TITLE \
-                Puntaje: GLOBALMEAN &plusmn; GLOBARVAR\
-              </button>\
-            </span>\
-          </div>\
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne">\
-            <div class="card-body">\
-            <h4>Estadísticas</h4>\
-            <ul class="questions">\
-            </ul>\
-            <h4>Comentarios</h4>\
-            <ul class="comments">\
-            </ul>\
-          </div>\
-        </div>'
+function get_indexes(index_name, data){
+  let conj = {};
+  data.forEach(function(x){
+    conj[x[index_name]] = true;
+  });
+  return Object.keys(conj);
 }
+
+Calc = {
+  detalle(data){
+    const res = Object.keys(Calc.pesos).map(k => data[k]);
+    colors = res.map(x => Calc.colors[Math.floor(Math.abs(x-0.001))]);
+
+    const number_html = "<span class='m-0 p-1' style='background-color: COLOR' data-toggle='tooltip' data-placement='bottom' title='TOOLTIP'>NUMBER</span>";
+    let html="";
+    res.forEach(function(n,i){
+      html += number_html.replace("COLOR", colors[i]).replace("NUMBER", Calc.roundScoreFix(n)).replace("TOOLTIP", Calc.tooltips[i]);
+    });
+    return html;
+  },
+  tooltips: [ // Link to questions.js
+    "Asistencia a clase",
+    "Cumple los horarios",
+    "Sus clases están bien organizadas",
+    "Explica con claridad",
+    "Mantiene un trato adecuado",
+    "Acepta la crítica fundamentada",
+    "Fomenta la participación",
+    "Responde por mail o Campus",
+    "Presenta un panorama amplio"
+  ],
+  score(data){
+    let tot = 0;
+    Object.keys(Calc.pesos).forEach(function(k){
+      tot += data[k]*Calc.pesos[k];
+    });
+    return tot/Calc.sum(Calc.pesos);
+  },
+  colors:[
+    '#ff0000', //:(
+    '#ff8000',
+    '#ffff33', //:|
+    '#b2ff66',
+    '#33ff33'  //:D
+  ],
+  pesos: {
+    'asistencia': 1,
+    'cumple_horarios': 1,
+    'clase_organizada': .7,
+    'claridad': .7,
+    'buen_trato': 0.5,
+    'acepta_critica': 0.5,
+    'fomenta_participacion': 0.5,
+    'responde_mails': 0.5,
+    'panorama_amplio': 0.5
+  },
+
+  roundScore: function(x){
+    return Math.round(10*x)/10;
+  },
+  roundScoreFix: function(x){
+    let str = "" + (Math.round(10*x)/10);
+    str += (str.length==1)?".0":"";
+    return str;
+  },
+  sum: function(arr){
+    return Object.values(arr).reduce((a,b)=>a+b)
+  },
+  mean: function(arr){
+    return Object.values(arr).reduce((a,b)=>a+b)/Object.values(arr).length;
+  },
+}
+
+Table = {
+  lastrow:0,
+  init: function(){
+    Table.clearTable();
+  },
+  filterMateria(mat){
+    const rows = Results.data.filter(row => (row.mat == mat));
+    const comments = Results.comentarios.filter(x => (x.mat == mat));
+    Table.loadTable(rows, comments);
+  },
+  loadTable(rows, comments){
+    // Calculate Score
+    rows.map(function(row){
+      row.score = Calc.score(row);
+      return row;
+    });
+
+    // Sort table by score
+    const sorted_rows = rows.sort((a,b) => (b.score-a.score));
+
+    // Populate table
+    sorted_rows.forEach(function(row){
+      const comm = comments.filter(x => x.doc==row.doc);
+      const comms = comm && comm[0].comentarios;
+
+      const txt_resp = ""+row.respuestas+" <i class='fas fa-users'></i>" + (comms?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
+      const class_colors = (row.respuestas<5)?((row.respuestas<2)?"bg-danger":"bg-warning"):"bg-success";
+      Table.addRow([
+        {text: Calc.roundScore(row.score), class:""},
+        {text: txt_resp, class: class_colors},
+        {text: row.doc, class:""},
+        {text: Calc.detalle(row), class:""}
+      ],comms);
+    });
+
+
+    $('[data-toggle="tooltip"]').tooltip();
+  },
+  clearTable(){
+    $("#tbody").empty();
+    Table.lastrow = 0;
+  },
+  addRow(row, comments){
+    // row = [{text:"", class:""}...{}]
+    // comments = []
+    const id = Table.lastrow++;
+
+    // Create comments html
+    let comments_items = "";
+    comments && comments.forEach(function(comment){
+      comments_items += Table.comment_html.replace("COMMENT", comment);
+    });
+
+    // Create row html
+    let row_html = "";
+    row.forEach(function(elem){
+      row_html += Table.row_html.replace("TEXT", elem.text || "").replace("CLASS", elem.class || "");
+    });
+
+    const raw_html = Table.html_item + (comments? Table.comment_div : "");
+    const html = raw_html.replace(/ID/g, id).replace("DATA_ROW",row_html).replace("COMMENT_LIST", comments_items || "");
+
+    $("#tbody").append(html);
+  },
+  html_item: '<tr data-toggle="collapse" data-target="#demoID" class="accordion-toggle">\
+    DATA_ROW\
+  </tr>',
+  comment_div:'<tr>\
+      <td colspan="6" class="hiddenRow">\
+          <div id="demoID" class="accordian-body collapse ml-3">\
+          COMMENT_LIST\
+          </div>\
+      </td>\
+  </tr>',
+  row_html: '<td class="CLASS">TEXT</td>',
+  comment_html: '<div class="col-12 zebra">COMMENT</div>'
+}
+
+// Selectpicker
+getJSON("data/comun.json", function(data,st){
+  console.log("cursos loaded!");
+  let html="";
+  data.materias.forEach(function(x,i){
+    html += '<option class="option" value="' + x.codigo + '">' + x.codigo + " " + x.nombre + '</option>'
+  });
+  $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
+
+  $("#materia").val($(document).getUrlParam("mat")).selectpicker('refresh');
+
+  $("#materia").on('changed.bs.select',function(e){
+    const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
+    $(location).attr('href', url);
+  })
+}).fail(function(e){
+  console.log("Error loading cursos");
+  $("#load-fail").slideDown(1000);
+});

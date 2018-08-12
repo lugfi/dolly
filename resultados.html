@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="./css/grid-radio.css"./>
   <script src="./js/jquery-3.3.1.min.js"></script>
   <script src="./js/jquery.scrollTo.min.js"></script>
+  <script src="./js/jquery.getUrlParam.js"></script>
+
   <script src="./js/popper.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
 
@@ -32,10 +34,7 @@
   <!-- Scripts -->
   <script src="./js/config.js"></script>
   <script src="./js/utils.js"></script>
-  <script src="./js/form_mannager.js"></script>
-  <script src="./js/questions.js"></script>
-  <script src="./js/pool.js"></script>
-  <script src="./js/change_docentes.js"></script>
+  <script src="./js/results.js"></script>
 
   <meta name="theme-color" content="#ffffff">
   <link rel="manifest" href="./manifest.json">
@@ -44,11 +43,13 @@
 </head>
 <body>
   <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
-    <a class="navbar-brand" href="./index.html">
-      <img style="width: 10%; height: 10%"  src="./img/DOLLY_imagen.png" width="100">
-      <span class="d-inline-block align-top">  <img style="width: 45%; height: 45%" src="./img/DOLLY_LOGO.png" ><font size="-2"> <p><b>Sistema Automatizado de Encuestas Fiubenses</b></p></small></font></span>
-    </a>
-
+    <div class="navbar-brand" href="./index.html">
+      <img style="width: 64px; height: 64px"  src="./img/DOLLY_imagen.png" width="100">
+      <span class="d-inline-block align-top">
+        <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
+        <small><p class="pb-0 mb-0">Sistema Automatizado de Encuestas Fiubenses</p></small>
+      </span>
+    </div>
 
 
     <!-- options menu -->
@@ -59,7 +60,7 @@
         Opciones
       </button>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Ovejas Simpsons</a>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
       </div>
     </div>
   </nav>
@@ -71,6 +72,7 @@
         <div class="modal-content">
           <div class="modal-body" align="center"  >
             <img src="./img/ovejas_simpsons.gif" align="center" >
+            <p>Más <strike>deliciosa</strike> tierna info en el <a href="https://github.com/lugfi/dolly">repo</a>.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Owww</button>
@@ -78,15 +80,40 @@
         </div>
       </div>
     </div>
-<center>
-    <h1>Oveja trabajando!</h1>
-  <img style="width: 40%; height: 40%"  src="./img/ovejas_gif.gif" >
+    <div class="alert alert-danger alert-dismissible collapse" role="alert" id="load-fail">
+      <strong>¡Problemas de Conexión!</strong> Llamá al nerd más cercano, no puedo bajar los datos del server
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
+    <div>
+      <label for="materia" class="col-sm-2 col-form-label">Materia</label>
+      <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
+    </div>
 
-    <h3>Habia un error en la visualización de los comentarios. Estamos trabajando, volvemos pronto</h3>
-
-    <p>Las encuestas que completaron estan seguras, pueden completar mas de mientras, van a aparecer cuando terminemos</p>
-</center>
+      <table class="table table-condensed" style="border-collapse:collapse;">
+      <thead>
+        <tr>
+          <th>Score</th>
+          <th>#Resp</th>
+          <th>Docente</th>
+          <th><i class="fas fa-calendar-check puntaje" data-toggle="tooltip" data-placement="bottom" title="Asistencia a clase"></i>
+              <i class="far fa-clock puntaje" data-toggle="tooltip" data-placement="bottom" title="Cumple los horarios"></i>
+              <i class="fas fa-sitemap puntaje" data-toggle="tooltip" data-placement="bottom" title="Sus clases están bien organizadas"></i>
+              <i class="fas fa-glasses puntaje" data-toggle="tooltip" data-placement="bottom" title="Explica con claridad"></i>
+              <i class="fas fa-heart puntaje" data-toggle="tooltip" data-placement="bottom" title="Mantiene un trato adecuado"></i>
+              <i class="fas fa-hands-helping puntaje" data-toggle="tooltip" data-placement="bottom" title="Acepta la crítica fundamentada"></i>
+              <i class="far fa-comments puntaje" data-toggle="tooltip" data-placement="bottom" title="Fomenta la participación"></i>
+              <i class="far fa-envelope-open puntaje" data-toggle="tooltip" data-placement="bottom" title="Responde por mail o Campus"></i>
+              <i class="fas fa-star puntaje" data-toggle="tooltip" data-placement="bottom" title="Presenta un panorama amplio"></i></th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr><td>Contando ovejas...</td></tr>
+      </tbody>
+  </table>
+  </div>
 
 </body>
 </html>
