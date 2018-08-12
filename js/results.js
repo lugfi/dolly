@@ -184,7 +184,7 @@ getJSON("data/comun.json", function(data,st){
   console.log("cursos loaded!");
   let html="";
   data.materias.forEach(function(x,i){
-    html += '<option class="option" value="' + x.codigo + '">' + x.codigo + " " + x.nombre + '</option>'
+    html += '<option class="option" value="' + x.codigo + '">' + x.codigo + " " + remove_acentos(x.nombre) + '</option>'
   });
   $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
 

@@ -39,3 +39,7 @@ function getJSON(url, fn){
     success: fn
   });
 }
+
+function remove_acentos(str){
+  return str.replace(/ñ/g, "~n").replace(/Ñ/g,"~N").normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/~n/g,"ñ").replace(/~N/g, "Ñ");
+}

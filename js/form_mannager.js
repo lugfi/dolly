@@ -16,7 +16,7 @@ FormMannager = {
       FormMannager.data = data;
       let html="";
       data.materias.forEach(function(x,i){
-        html += '<option class="option" value="' + i + '">' + x.codigo + " " + x.nombre + '</option>'
+        html += '<option class="option" value="' + i + '">' + x.codigo + " " + remove_acentos(x.nombre) + '</option>'
       });
       $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
       $("#curso").selectpicker('val','').attr("disabled", true).selectpicker('refresh');
