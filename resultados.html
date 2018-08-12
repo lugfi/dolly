@@ -83,17 +83,23 @@
         </div>
       </div>
     </div>
+
+    <div>
+      <label for="materia" class="col-sm-2 col-form-label">Materia</label>
+      <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
+    </div>
+
       <table class="table table-condensed" style="border-collapse:collapse;">
       <thead>
         <tr>
           <th>Score</th>
+          <th>#Resp</th>
           <th>Docente</th>
           <th>Resultados</th>
-          <th>#Resp (Coment)</th>
         </tr>
       </thead>
       <tbody id="tbody">
-        <tr><td>Cargando...</td></tr>
+        <tr><td>Contando ovejas...</td></tr>
       </tbody>
   </table>
   </div>
@@ -102,17 +108,28 @@
   Results = {};
 
   // Load data JSON
-  $.getJSON("analitics/valoraciones_docentes.json", function(data,st){
+  getJSON("analitics/valoraciones_docentes.json", function(data,st){
     // Prepare keys
     Results.materias = get_indexes('mat',data);
     Results.docentes = get_indexes('doc',data);
     Results.data = data;
     console.log("data loaded");
-    Table.init();
-    Table.filterMateria($(document).getUrlParam("mat"));
+    // Load comments
+    getJSON("analitics/comentarios_docentes.json", function(data,st){
+      // Decode
+      Results.comentarios = data.map(function(x){
+        x.comentarios = x.comentarios.map(b64_to_utf8);
+        return x;
+      });
+      console.log("comments loaded");
+
+      Table.init();
+      Table.filterMateria($(document).getUrlParam("mat"));
+    }).fail(function(err){
+      console.log("error loading comments");
+    });
   }).fail(function(err){
     console.log("error loading data");
-    throw err;
   });
 
   function get_indexes(index_name, data){
@@ -124,6 +141,17 @@
   }
 
   Calc = {
+    detalle(data){
+      const res = Object.keys(Calc.pesos).map(k => data[k]);
+      colors = res.map(x => Calc.colors[Math.floor(Math.abs(x-0.001))]);
+
+      const number_html = "<span class='m-0 p-1' style='background-color: COLOR'>NUMBER</span>";
+      let html="";
+      res.forEach(function(n,i){
+        html += number_html.replace("COLOR", colors[i]).replace("NUMBER", Calc.roundScoreFix(n));
+      });
+      return html;
+    },
     score(data){
       let tot = 0;
       Object.keys(Calc.pesos).forEach(function(k){
@@ -131,6 +159,13 @@
       });
       return tot/Calc.sum(Calc.pesos);
     },
+    colors:[
+      '#ff0000', //:(
+      '#ff8000',
+      '#ffff33', //:|
+      '#b2ff66',
+      '#33ff33'  //:D
+    ],
     pesos: {
       'asistencia': 1,
       'cumple_horarios': 1,
@@ -144,6 +179,11 @@
     },
     roundScore: function(x){
       return Math.round(10*x)/10;
+    },
+    roundScoreFix: function(x){
+      let str = "" + (Math.round(10*x)/10);
+      str += (str.length==1)?".0":"";
+      return str;
     },
     sum: function(arr){
       return Object.values(arr).reduce((a,b)=>a+b)
@@ -159,26 +199,33 @@
       Table.clearTable();
     },
     filterMateria(mat){
-      const rows = Results.data.filter(row => (row.mat == mat))
-      Table.loadTable(rows);
+      const rows = Results.data.filter(row => (row.mat == mat));
+      const comments = Results.comentarios.filter(x => (x.mat == mat));
+      Table.loadTable(rows, comments);
     },
-    loadTable(rows){
+    loadTable(rows, comments){
       // Calculate Score
       rows.map(function(row){
         row.score = Calc.score(row);
         return row;
       });
 
+      // Sort table by score
       const sorted_rows = rows.sort((a,b) => (b.score-a.score));
 
+      // Populate table
       sorted_rows.forEach(function(row){
+        const comm = comments.filter(x => x.doc==row.doc);
+        const comms = comm && comm[0].comentarios;
 
+        const txt_resp = ""+row.respuestas+" <i class='fas fa-users'></i>" + (comms?"<span class='ml-1'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
+        const class_colors = (row.respuestas<5)?((row.respuestas<2)?"bg-danger":"bg-warning"):"bg-success";
         Table.addRow([
-          {text: Calc.roundScore(row.score), class:"bg-warning"},
-          {text: row.doc, class:"bg-info"},
-          {text: "resultados", class:"bg-success"},
-          {text: "cantidad", class:"bg-primary"},
-        ],["a","b",334]);
+          {text: Calc.roundScore(row.score), class:""},
+          {text: txt_resp, class: class_colors},
+          {text: row.doc, class:""},
+          {text: Calc.detalle(row), class:""}
+        ],comms);
       });
     },
     clearTable(){
@@ -207,7 +254,7 @@
 
       $("#tbody").append(html);
     },
-    html_item: '<tr data-toggle="collapse" data-target="#demoID" class="accordion-toggle">\
+    html_item: '<tr data-toggle="collapse" data-target="#demoID" class="accordion-toggle zebra">\
       DATA_ROW\
     </tr>',
     comment_div:'<tr>\
@@ -220,6 +267,25 @@
     row_html: '<td class="CLASS">TEXT</td>',
     comment_html: '<div class="col-12 zebra">COMMENT</div>'
   }
+
+  // Selectpicker
+  getJSON("data/comun.json", function(data,st){
+    console.log("cursos loaded!");
+    let html="";
+    data.materias.forEach(function(x,i){
+      html += '<option class="option" value="' + x.codigo + '">' + x.codigo + " " + x.nombre + '</option>'
+    });
+    $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
+
+    $("#materia").val($(document).getUrlParam("mat")).selectpicker('refresh');
+
+    $("#materia").on('changed.bs.select',function(e){
+      const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
+      $(location).attr('href', url);
+    })
+  }).fail(function(e){
+    console.log("Error loading cursos");
+  });
 </script>
 
 </body>

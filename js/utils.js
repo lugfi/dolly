@@ -30,3 +30,12 @@ function printCSV(x){
   l += d+utf8_to_b64(x.questions["comments"]);
   return l;
 }
+
+function getJSON(url, fn){
+  return $.ajax({
+    dataType: "json",
+    url: url,
+    mimeType: "application/json",
+    success: fn
+  });
+}
