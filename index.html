@@ -211,8 +211,10 @@
     // Tooltips and others hooks
     onDomChange();
     ChangeDocentes.init();
-    Equivalency.init(function(){
-      $("#errorModal").modal("show");
+    Equivalency.init(function(st){
+      if (st!="success"){
+        $("#load-fail").slideDown(1000);
+      }
     });
   });
 
