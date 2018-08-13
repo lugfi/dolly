@@ -40,7 +40,7 @@ ChangeDocentes = {
       $("#changeDocenteModal").modal("hide");
     });
 
-    $.getJSON(Config.dataPath + "comun.json", function(data,st){
+    getJSON(Config.dataPath + "comun.json", function(data,st){
       ChangeDocentes.data = data;
     }).fail(function(){
       ChangeDocentes.data = null;

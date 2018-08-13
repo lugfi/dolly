@@ -8,7 +8,7 @@ FormMannager = {
     // Loads JSON data and fills course select form
     const file = "Horarios_" + ref + ".json";
     $("#loading").show();
-    $.getJSON(Config.dataPath + file, function(data,st){
+    getJSON(Config.dataPath + file, function(data,st){
       if (st != "success")
         return;
 
@@ -16,7 +16,7 @@ FormMannager = {
       FormMannager.data = data;
       let html="";
       data.materias.forEach(function(x,i){
-        html += '<option class="option" value="' + i + '">' + x.codigo + " " + remove_acentos(x.nombre) + '</option>'
+        html += '<option class="option" value="' + i + '">' + x.codigo + " " + Utils.remove_acentos(x.nombre) + '</option>'
       });
       $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
       $("#curso").selectpicker('val','').attr("disabled", true).selectpicker('refresh');
@@ -134,7 +134,7 @@ FormMannager = {
     data = Pool.getPoolData(idx);
     const jsondata = {
       curso: FormMannager.cursoActual.docentes[idx],
-      materia: FormMannager.cursoActual.materia,
+      materia: Equivalency.getEquivalent(FormMannager.cursoActual.materia),
       cuatri: FormMannager.cursoActual.cuatri,
       timestamp: Date.now(),
       questions: {}

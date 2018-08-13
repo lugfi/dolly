@@ -36,6 +36,7 @@
   <script src="./js/questions.js"></script>
   <script src="./js/pool.js"></script>
   <script src="./js/change_docentes.js"></script>
+  <script src="./js/equivalency.js"></script>
 
   <meta name="theme-color" content="#ffffff">
   <link rel="manifest" href="./manifest.json">
@@ -210,6 +211,9 @@
     // Tooltips and others hooks
     onDomChange();
     ChangeDocentes.init();
+    Equivalency.init(function(){
+      $("#errorModal").modal("show");
+    });
   });
 
 

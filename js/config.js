@@ -1,7 +1,8 @@
 Config = {
-  resultsURL: "http://dollyfiuba.com/gente.txt", //deprecated
-  submitURL: "http://dollyfiuba.com/test.php",
+  //resultsURL: "http://dollyfiuba.com/gente.txt", //deprecated
+  submitURL: "test.php",
   dataPath: "./data/",
+  equivalencyData: "equivalencias.json",
   json_list: [  // File names: Horarios_REF.json
     {name: "2º Cuat 2014", ref: "2Q2014"},
     {name: "1º Cuat 2015", ref: "1Q2015"},

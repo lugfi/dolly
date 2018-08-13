@@ -1,3 +1,11 @@
+# test db
+gente.txt*
+analitics/comentarios_docentes.json
+analitics/valoraciones_docentes.json
+
+# Vim
+*~
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

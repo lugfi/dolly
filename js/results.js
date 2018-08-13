@@ -1,41 +1,5 @@
 Results = {};
 
-// Load data JSON
-getJSON("analitics/valoraciones_docentes.json", function(data,st){
-  // Prepare keys
-  Results.materias = get_indexes('mat',data);
-  Results.docentes = get_indexes('doc',data);
-  Results.data = data;
-  console.log("data loaded");
-  // Load comments
-  getJSON("analitics/comentarios_docentes.json", function(data,st){
-    // Decode
-    d=data;
-    Results.comentarios = data.map(function(x){
-      x.comentarios = x.comentarios.filter(x=>x).map(b64_to_utf8);
-      return x;
-    });
-    console.log("comments loaded");
-
-    Table.init();
-    Table.filterMateria($(document).getUrlParam("mat"));
-  }).fail(function(err){
-    console.log("error loading comments");
-    $("#load-fail").slideDown(1000);
-  });
-}).fail(function(err){
-  console.log("error loading data");
-  $("#load-fail").slideDown(1000);
-});
-
-function get_indexes(index_name, data){
-  let conj = {};
-  data.forEach(function(x){
-    conj[x[index_name]] = true;
-  });
-  return Object.keys(conj);
-}
-
 Calc = {
   detalle(data){
     const res = Object.keys(Calc.pesos).map(k => data[k]);
@@ -151,7 +115,7 @@ Table = {
     // Create comments html
     let comments_items = "";
     comments && comments.forEach(function(comment){
-      comments_items += Table.comment_html.replace("COMMENT", comment);
+      comments_items += Table.comment_html.replace("COMMENT", Utils.escapeHtml(comment));
     });
 
     // Create row html
@@ -179,22 +143,61 @@ Table = {
   comment_html: '<div class="col-12 zebra">COMMENT</div>'
 }
 
-// Selectpicker
-getJSON("data/comun.json", function(data,st){
-  console.log("cursos loaded!");
-  let html="";
-  data.materias.forEach(function(x,i){
-    html += '<option class="option" value="' + x.codigo + '">' + x.codigo + " " + remove_acentos(x.nombre) + '</option>'
+// Hooks and init
+$(function(){
+  Equivalency.init(function(st){
+    if (st!="success"){
+      $("#errorModal").modal("show");
+      return;
+    }
+    // Equivalency loaded
+
+    // Populate Selectpicker
+    getJSON("data/comun.json", function(data,st){
+      console.log("cursos loaded!");
+      let html="";
+      data.materias.forEach(function(x,i){
+        html += '<option class="option" value="' + x.codigo + '">' + x.codigo + " " + Utils.remove_acentos(x.nombre) + '</option>'
+      });
+      $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
+
+      $("#materia").val($(document).getUrlParam("mat")).selectpicker('refresh');
+
+      $("#materia").on('changed.bs.select',function(e){
+        const url = $(location).attr('href').split("?")[0] + "?mat="+Equivalency.getEquivalent($("#materia").val());
+        $(location).attr('href', url);
+      });
+
+      // Load encuestas data JSON
+      getJSON("analitics/valoraciones_docentes.json", function(data,st){
+        // Prepare keys
+        Results.materias = Utils.get_indexes('mat',data);
+        Results.docentes = Utils.get_indexes('doc',data);
+        Results.data = data;
+        console.log("data loaded");
+        // Load comments
+        getJSON("analitics/comentarios_docentes.json", function(data,st){
+          // Decode
+          d=data;
+          Results.comentarios = data.map(function(x){
+            x.comentarios = x.comentarios.filter(x=>x).map(b64_to_utf8);
+            return x;
+          });
+          console.log("comments loaded");
+
+          Table.init();
+          Table.filterMateria(Equivalency.getEquivalent($(document).getUrlParam("mat")));
+        }).fail(function(err){
+          console.log("error loading comments");
+          $("#load-fail").slideDown(1000);
+        });
+      }).fail(function(err){
+        console.log("error loading data");
+        $("#load-fail").slideDown(1000);
+      });
+    }).fail(function(e){
+      console.log("Error loading cursos");
+      $("#load-fail").slideDown(1000);
+    });
   });
-  $("#materia").empty().append(html).selectpicker('val','').removeAttr("disabled").selectpicker('refresh'); //important!
-
-  $("#materia").val($(document).getUrlParam("mat")).selectpicker('refresh');
-
-  $("#materia").on('changed.bs.select',function(e){
-    const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
-    $(location).attr('href', url);
-  })
-}).fail(function(e){
-  console.log("Error loading cursos");
-  $("#load-fail").slideDown(1000);
 });

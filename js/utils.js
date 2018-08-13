@@ -36,10 +36,39 @@ function getJSON(url, fn){
     dataType: "json",
     url: url,
     mimeType: "application/json",
+    cache: false,
     success: fn
   });
 }
 
-function remove_acentos(str){
-  return str.replace(/ñ/g, "~n").replace(/Ñ/g,"~N").normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/~n/g,"ñ").replace(/~N/g, "Ñ");
+
+Utils = {
+  remove_acentos: function(str){
+    return str.replace(/ñ/g, "~n").replace(/Ñ/g,"~N").normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/~n/g,"ñ").replace(/~N/g, "Ñ");
+  },
+  escapeHtml: function(string){
+    // Taken from https://stackoverflow.com/questions/24816/escaping-html-strings-with-jquery
+    // Gracias Emiliano!
+    const entityMap = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '/': '&#x2F;',
+      '`': '&#x60;',
+      '=': '&#x3D;'
+    };
+
+    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+      return entityMap[s];
+    });
+  },
+  get_indexes: function(index_name, data){
+    let conj = {};
+    data.forEach(function(x){
+      conj[x[index_name]] = true;
+    });
+    return Object.keys(conj);
+  }
 }
