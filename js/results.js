@@ -164,7 +164,7 @@ $(function(){
       $("#materia").val($(document).getUrlParam("mat")).selectpicker('refresh');
 
       $("#materia").on('changed.bs.select',function(e){
-        const url = $(location).attr('href').split("?")[0] + "?mat="+Equivalency.getEquivalent($("#materia").val());
+        const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
         $(location).attr('href', url);
       });
 
@@ -186,6 +186,7 @@ $(function(){
           console.log("comments loaded");
 
           Table.init();
+          // Load equivalent code instead real code - user transparent [sic]
           Table.filterMateria(Equivalency.getEquivalent($(document).getUrlParam("mat")));
         }).fail(function(err){
           console.log("error loading comments");
