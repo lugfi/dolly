@@ -38,3 +38,6 @@ en los archivos ``analitics/valoraciones_docentes.json`` y
 ``analitics/comentarios_docentes.json``. Cuando el usuario quiere ver
 los resultados, dichos json son levantados por el frontend, y con el 
 selector de materias, se filtra la información correspondiente.
+
+## Decisiones de diseño
+Hay información en la [wiki](https://github.com/lugfi/dolly/wiki).
