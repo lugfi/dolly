@@ -11,7 +11,8 @@ Config = {
     {name: "2º Cuat 2016", ref: "2Q2016"},
     {name: "1º Cuat 2017", ref: "1Q2017"},
     {name: "2º Cuat 2017", ref: "2Q2017"},
-    {name: "1º Cuat 2018", ref: "1Q2018"}
+    {name: "1º Cuat 2018", ref: "1Q2018"},
+    {name: "2º Cuat 2019", ref: "2Q2019"}
   ],
   CSVDelim: ","
 }
