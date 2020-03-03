@@ -2,7 +2,7 @@
 checksum=/var/www/html/checksum-gente.md5
 gente=/var/www/html/gente.txt
 if md5sum -c $checksum; then
-    echo "El archivo gente.tx no fue modificado"
+    echo "El archivo gente.txt no fue modificado"
 else
     echo "Se modifico el archivo gente.txt"
     cd /var/www/html/analitics
