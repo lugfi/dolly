@@ -90,11 +90,16 @@ Table = {
       const comm = comments.filter(x => x.doc==row.doc);
       const comms = comm && comm[0].comentarios;
 
-      const txt_resp = ""+row.respuestas+" <i class='fas fa-users'></i>" + (comms?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
-      const class_colors = (row.respuestas<5)?((row.respuestas<2)?"bg-danger":"bg-warning"):"bg-success";
+      // Use apropiate users glyphs as row.respuestas grows
+      const users_glyph = (row.respuestas<3)?"fas fa-user":
+                          (
+                            (row.respuestas<10)?"fa-user-friends":"fas fa-users"
+                          );
+                            
+      const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
       Table.addRow([
         {text: Calc.roundScore(row.score), class:""},
-        {text: txt_resp, class: class_colors},
+        {text: txt_resp, class: ""},
         {text: row.doc, class:""},
         {text: Calc.detalle(row), class:""}
       ],comms);
