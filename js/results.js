@@ -93,7 +93,7 @@ Table = {
       // Use apropiate users glyphs as row.respuestas grows
       const users_glyph = (row.respuestas<3)?"fas fa-user":
                           (
-                            (row.respuestas<10)?"fa-user-friends":"fas fa-users"
+                            (row.respuestas<10)?"fas fa-user-friends":"fas fa-users"
                           );
                             
       const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
