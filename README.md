@@ -44,6 +44,9 @@ Hay información en la [wiki](https://github.com/lugfi/dolly/wiki).
 
 ## Colaboradores y diseñadores
 Vero: [verosupervero](https://github.com/verosupervero)
+
 Fer: [fndk](https://github.com/fdnk)
+
 Lucas: [sotlucas](https://github.com/sotlucas)
+
 Luis: [LuisCusihuaman](https://github.com/LuisCusihuaman)
