@@ -1,6 +1,7 @@
 Config = {
   //resultsURL: "http://dollyfiuba.com/gente.txt", //deprecated
-  submitURL: "test.php",
+  // submitURL: "test.php",
+  submitURL: "http://192.168.1.103:3000/test",
   dataPath: "./data/",
   equivalencyData: "equivalencias.json",
   json_list: [  // File names: Horarios_REF.json

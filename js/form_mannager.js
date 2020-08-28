@@ -165,22 +165,24 @@ FormMannager = {
     console.log("sending: ```" + dataStr + "```");
 
     // Send CSV data
-    $.post(Config.submitURL,
-    {
-       pio: dataStr
-    },
-    function(data, status){
-       if(status == "success" && data.trim() == dataStr.trim()){
-         $("#okModal").modal("show");
-         FormMannager.clearForm();
-         console.log("ok!");
-       }else{
-         $("#errorModal").modal("show");
-         console.log("Error on sending data!");
-         console.log("data",data);
-         console.log("status",status);
-       }
-    });
+    $.ajax({
+      url: Config.submitURL,
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ pio: dataStr }),
+      success: function (data, status) {
+        if (status == 'success') {
+          $('#okModal').modal('show')
+          FormMannager.clearForm()
+          console.log('ok!')
+        } else {
+          $('#errorModal').modal('show')
+          console.log('Error on sending data!')
+          console.log('data', data)
+          console.log('status', status)
+        }
+      },
+    })
   },
   clearForm(){
     $("#materia").selectpicker('val','').selectpicker('refresh');
