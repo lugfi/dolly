@@ -158,7 +158,7 @@ $(function(){
     // Equivalency loaded
 
     // Populate Selectpicker
-    getJSON("data/comun.json", function(data,st){
+    getJSON("http://192.168.1.103:3000/comun", function(data,st){
       console.log("cursos loaded!");
       let html="";
       data.materias.forEach(function(x,i){
@@ -174,14 +174,14 @@ $(function(){
       });
 
       // Load encuestas data JSON
-      getJSON("analitics/valoraciones_docentes.json", function(data,st){
+      getJSON("http://192.168.1.103:3000/valoraciones", function(data,st){
         // Prepare keys
         Results.materias = Utils.get_indexes('mat',data);
         Results.docentes = Utils.get_indexes('doc',data);
         Results.data = data;
         console.log("data loaded");
         // Load comments
-        getJSON("analitics/comentarios_docentes.json", function(data,st){
+        getJSON("http://192.168.1.103:3000/comentarios", function(data,st){
           // Decode
           d=data;
           Results.comentarios = data.map(function(x){

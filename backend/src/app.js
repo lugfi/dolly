@@ -1,6 +1,10 @@
 const express = require('express')
 const app = express()
 const fs = require('fs')
+const comentariosJSON = require("../analitics/comentarios_docentes.json");
+const valoracionesJSON = require("../analitics/valoraciones_docentes.json");
+const comunJSON = require("../data/comun.json");
+const equivalenciasJSON = require("../data/equivalencias.json");
 
 // middlewares
 app.use(express.json())
@@ -32,6 +36,26 @@ app.post('/test', (req, res) => {
     }
   })
   res.json(req.body)
+})
+
+app.get('/comentarios', (req, res) => {
+  console.log('NOS PIDIERON LOS COMENTARIOS')
+  res.send(comentariosJSON)
+})
+
+app.get('/comun', (req, res) => {
+  console.log('NOS PIDIERON LOS COMUN')
+  res.send(comunJSON)
+})
+
+app.get('/equivalencias', (req, res) => {
+  console.log('NOS PIDIERON LAS EQUIVALENCIAS')
+  res.send(equivalenciasJSON)
+})
+
+app.get('/valoraciones', (req, res) => {
+  console.log('NOS PIDIERON LaS VALORACIONES')
+  res.send(valoracionesJSON)
 })
 
 app.listen(3000, () => {

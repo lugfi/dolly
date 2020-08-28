@@ -1,6 +1,6 @@
 Equivalency = {
   init: function(cb){
-    getJSON(Config.dataPath + Config.equivalencyData, function(data,st){
+    getJSON("http://192.168.1.103:3000/equivalencias", function(data,st){
       Equivalency.data = data;
       console.log("Equivalencias cargadas!");
       cb("success");
