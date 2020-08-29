@@ -28,13 +28,22 @@ app.get('/', (req, res) => {
 
 app.post('/test', (req, res) => {
   console.log(req.body)
-  fs.appendFile('log.txt', JSON.stringify(req.body), (err) => {
-    if (err) {
-      console.log('ERROR al appendear')
-    } else {
-      console.log('SUCCESS')
-    }
-  })
+
+  const OUTPUT_FILE = 'log.txt' // Este tendría que ser el gente.txt creo
+
+  // Ordeno los datos antes de apendearlo a la db (lo copio tal cual del test.php)
+  const rowsNumber = 13
+  const data = req.body.pio
+  const cantidadDeComas = data.split(',').length - 1
+  if (cantidadDeComas % rowsNumber == 0) {
+    fs.appendFile(OUTPUT_FILE, `${data}\n`, (err) => {
+      if (err) {
+        console.log('ERROR al appendear')
+      } else {
+        console.log('SUCCESS')
+      }
+    })
+  }
   res.json(req.body)
 })
 
