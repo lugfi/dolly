@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 app.post('/test', (req, res) => {
   console.log(req.body)
 
-  const OUTPUT_FILE = 'log.txt' // Este tendría que ser el gente.txt creo
+  const OUTPUT_FILE = 'gente.txt'
 
   // Ordeno los datos antes de apendearlo a la db (lo copio tal cual del test.php)
   const rowsNumber = 13
