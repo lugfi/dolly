@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    web-service:
+        image: newdeveloper/apache-php
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8080:80"
+    analitycs:
+        build: .
+        volumes:
+            - .:/var/www/html #This is because the script search the files here.
+        working_dir: /var/www/html     
