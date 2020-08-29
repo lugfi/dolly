@@ -39,6 +39,11 @@ en los archivos ``analitics/valoraciones_docentes.json`` y
 los resultados, dichos json son levantados por el frontend, y con el 
 selector de materias, se filtra la información correspondiente.
 
+## Setup (Docker)
+* Instalar [Docker](https://docs.docker.com/engine/install/)
+* Instalar [Docker compose](https://docs.docker.com/compose/install/)
+* Correr `docker-compose up` en la carpeta root del proyecto.
+
 ## Decisiones de diseño
 Hay información en la [wiki](https://github.com/lugfi/dolly/wiki).
 
