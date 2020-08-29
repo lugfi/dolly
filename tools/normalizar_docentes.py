@@ -8,7 +8,7 @@ APELLIDO, NOMBRE NOMBRE - APELLIDO, NOMBRE NOMBRE -> Apellido-Apellido
 """
 
 DATA_DIR = Path(Path.cwd() / "data")
-HORARIOS_FILENAME = "Horarios_2Q2019.json" # Cambiar el archivo a usar
+HORARIOS_FILENAME = "Horarios_1Q2020.json" # Cambiar el archivo a usar
 
 with open(DATA_DIR / HORARIOS_FILENAME, 'r+') as f:
     data = json.load(f)
