@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Last-Modified" content="0">
+  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+
+  <title>Migración DB de JSON a CSV</title>
+
+  <!-- scripts -->
+  <script src="./js/config.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+
+<script>
+function migrate(file){
+  let str = "doc,mat,cuat,tstamp,asistencia,cumple_horarios,buen_trato,calse_organizada,claridad,fomenta_participacion,panorama_amplio,acepta_critica,responde_mails,comentarios<br/>";
+  $.ajaxSetup({ cache: false });
+  $.get(file, function(data){
+    pooldata = data.split("\n").filter(x => x.length).map(x => JSON.parse(b64_to_utf8(x)));
+    pooldata.forEach(p => (str+=(printCSV(p) + "<br/>")));
+    s = str;
+    $("body").html(str.trim());
+  });
+}
+
+$(function(){
+  console.log("use migrate('http://dollyfiuba.com/gente.txt')");
+})
+</script>
+
+</body>
+</html>

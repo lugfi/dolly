@@ -1,0 +1,113 @@
+/*Taken from https://codepen.io/thekrkn/pen/KzLXLw */
+/*@import url(https://fonts.googleapis.com/css?family=Cabin:700);
+@import url(https://fonts.googleapis.com/css?family=Roboto);*/
+
+.wrapper {
+  display:flex;
+  flex-direction:column;
+}
+.grid-row {
+  margin-bottom: 1em
+}
+.grid-row, .grid-header {
+  display:flex;
+/*   flex: 1 0 auto; */
+/*   height: auto; */
+}
+.sig-section-comments{
+  display: flex;
+  margin-top:1em;
+  justify-content: flex-end;
+}
+.sig-section-comments label{
+  width:180px;
+}
+.sig-section-comments textarea {
+  width:67%;
+}
+.grid-header {
+  align-items: flex-end;
+}
+.header-item {
+  width:100px;
+  text-align:center;
+/*   border:1px solid transparent; */
+}
+.header-item:nth-child(1) {
+  width:180px;
+}
+.subtitle {
+  font-size: 0.7em;
+}
+.flex-item:before {
+  content: '';
+  padding-top:26%;
+}
+.flex-item {
+  display:flex;
+/*   flex-basis:25%; */
+  width:100px;
+  border-bottom:1px solid #ccc;
+  justify-content: center;
+  align-items:center;
+/*   text-align:left; */
+  font-size: 1em;
+  font-weight:normal;
+  color:#999;
+}
+.flex-item:nth-child(1) {
+  border:none;
+  font-size:1.15em;
+  color:#000;
+  width:180px;
+  justify-content: left;
+}
+/* HTML5 Boilerplate accessible hidden styles */
+
+[type="radio"], [type="checkbox"] {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px; margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* One radio button per line */
+label {
+  /*display: block;*/
+  cursor: pointer;
+}
+
+/* the basic, unchecked style */
+[type="radio"] + span:before,
+[type="checkbox"] + span:before{
+  content: '';
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: -0.25em;
+  border-radius:.25em;
+  border: 0.125em solid #fff;
+  box-shadow: 0 0 0 0.15em #555;
+  transition: 0.5s ease all;
+}
+[type="checkbox"] + span:before {
+  margin-right: 0.75em;
+}
+
+/* the checked style using the :checked pseudo class */
+[type="radio"]:checked + span:before,
+[type="checkbox"]:checked + span:before{
+  background: #007bff;
+  box-shadow: 0 0 0 0.25em #6c757d;
+}
+
+/* never forget focus styling */
+[type="radio"]:focus span:after {
+  content: '\0020\2190';
+  font-size: 1.5em;
+  line-height: 1;
+  vertical-align: -0.125em;
+}

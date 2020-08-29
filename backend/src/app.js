@@ -58,6 +58,18 @@ app.get('/valoraciones', (req, res) => {
   res.send(valoracionesJSON)
 })
 
+app.get('/horarios/:cuatri/:anio', (req, res) => {
+  console.log("CUATRI: ", req.params.cuatri)
+  console.log("ANIO: ", req.params.anio)
+  fs.readFile(`./data/Horarios_${req.params.cuatri}Q${req.params.anio}.json`, (err, data) => {
+    // If error send a 500 status
+    if (err) res.status(500).send(err);
+
+    // Else parse the JSON file and send it
+    else res.send(JSON.parse(data));
+  });
+})
+
 app.listen(3000, () => {
   console.log('Server on port 3000')
 })
