@@ -1,15 +1,21 @@
 #!/bin/bash
-checksum=/var/www/html/checksum-gente.md5
-gente=/var/www/html/gente.txt
-log=/var/www/html/analitics/analisis.log
-if md5sum -c $checksum; then
-    echo "El archivo gente.txt no fue modificado"
-else
-    cd /var/www/html/analitics
-    echo -------- >> $log
-    date >> $log
-    /usr/bin/python3 Analisis.py 2 >> $log
-    echo "El archivo gente.txt fue modificado" >> $log
-    md5sum $gente > $checksum
-fi
+# checksum=/var/www/html/checksum-gente.md5
+# gente=/var/www/html/gente.txt
+# log=/var/www/html/analitics/analisis.log
+# if md5sum -c $checksum; then
+    # echo "El archivo gente.txt no fue modificado"
+# else
+    # cd /var/www/html/analitics
+    # echo -------- >> $log
+    # date >> $log
+    # /usr/bin/python3 Analisis.py 2 >> $log
+    # echo "El archivo gente.txt fue modificado" >> $log
+    # md5sum $gente > $checksum
+# fi
 
+# Para probar por ahora
+log=./analisis.log
+echo -------- >> $log
+date >> $log
+/usr/bin/python3 Analisis.py 2 >> $log
+echo "El archivo gente.txt fue modificado" >> $log
