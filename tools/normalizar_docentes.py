@@ -19,5 +19,5 @@ with open(DATA_DIR / HORARIOS_FILENAME, 'r+') as f:
             docentes_apellidos = [d.split(',')[0].title() for d in docentes] # Me quedo solo con el apellido
             docentes_final = '-'.join(docentes_apellidos)
             curso['docentes'] = docentes_final
-    json.dump(data, f)
+    json.dump(data, f, ensure_ascii=False)
     f.truncate()
