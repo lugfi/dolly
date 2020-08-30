@@ -8,7 +8,7 @@ else
     cd /var/www/html/analitics
     echo -------- >> $log
     date >> $log
-    /usr/bin/python3 Analisis.py 2 >> $log
+    /usr/local/bin/python3.8 Analisis.py 2 >> $log
     echo "El archivo gente.txt fue modificado" >> $log
     md5sum $gente > $checksum
 fi
