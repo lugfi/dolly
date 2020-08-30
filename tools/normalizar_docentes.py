@@ -8,7 +8,7 @@ APELLIDO, NOMBRE NOMBRE - APELLIDO, NOMBRE NOMBRE -> Apellido-Apellido
 """
 
 DATA_DIR = Path(Path.cwd() / "data")
-HORARIOS_FILENAME = "Horarios_2Q2019.json" # Cambiar el archivo a usar
+HORARIOS_FILENAME = "Horarios_1Q2020.json" # Cambiar el archivo a usar
 
 with open(DATA_DIR / HORARIOS_FILENAME, 'r+') as f:
     data = json.load(f)
@@ -19,5 +19,5 @@ with open(DATA_DIR / HORARIOS_FILENAME, 'r+') as f:
             docentes_apellidos = [d.split(',')[0].title() for d in docentes] # Me quedo solo con el apellido
             docentes_final = '-'.join(docentes_apellidos)
             curso['docentes'] = docentes_final
-    json.dump(data, f)
+    json.dump(data, f, ensure_ascii=False)
     f.truncate()
