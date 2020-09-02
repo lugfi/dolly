@@ -19,3 +19,11 @@
   margin:1px;
   display: inline-block;
 }
+
+.table-header-icons {
+  display: flex;
+}
+
+.table-header-icons span {
+  padding: 4px;
+}
