@@ -5,10 +5,10 @@ Calc = {
     const res = Object.keys(Calc.pesos).map(k => data[k]);
     colors = res.map(x => Calc.colors[Math.floor(Math.abs(x-0.001))]);
 
-    const number_html = "<span class='m-0 p-1' style='background-color: COLOR' data-toggle='tooltip' data-placement='bottom' title='TOOLTIP'>NUMBER</span>";
+    const number_html = "<span class='m-0 p-1' style='background-color: FONDO; color: black;' data-toggle='tooltip' data-placement='bottom' title='TOOLTIP'>NUMBER</span>";
     let html="";
     res.forEach(function(n,i){
-      html += number_html.replace("COLOR", colors[i]).replace("NUMBER", Calc.roundScoreFix(n)).replace("TOOLTIP", Calc.tooltips[i]);
+      html += number_html.replace("FONDO", colors[i]).replace("NUMBER", Calc.roundScoreFix(n)).replace("TOOLTIP", Calc.tooltips[i]);
     });
     return html;
   },
@@ -95,7 +95,7 @@ Table = {
                           (
                             (row.respuestas<10)?"fas fa-user-friends":"fas fa-users"
                           );
-                            
+
       const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
       Table.addRow([
         {text: Calc.roundScore(row.score), class:""},
