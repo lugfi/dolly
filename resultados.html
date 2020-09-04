@@ -30,6 +30,8 @@
 
   <!-- custom -->
   <link rel="stylesheet" href="./css/custom.css"./>
+  <!-- Dark Mode -->
+  <link rel="stylesheet" href="./css/dark-mode.css">
 
   <!-- Scripts -->
   <script src="./js/config.js"></script>
@@ -46,13 +48,20 @@
   <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
     <div class="navbar-brand" href="./index.html">
       <img style="width: 64px; height: 64px"  src="./img/DOLLY_imagen.png" width="100">
-      <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
-      <small><p class="pb-0 mb-0">Sistema Automatizado de Encuestas Fiubenses</p></small>
+      <span class="d-inline-block align-top">
+        <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
+        <small><p class="pb-0 mb-0 cambiante">Sistema Automatizado de Encuestas Fiubenses</p></small>
+      </span>
     </div>
 
 
     <!-- options menu -->
     <!--<button type="button" class="btn btn-outline-default btn-circle"><img class="img-circle" src="files/img/note.png"./></button>-->
+    <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input" id="darkSwitch">
+      <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+    </div>
+    <script src="./js/dark-mode-switch.js"></script>
     <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
       <a href="index.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Cargar encuesta</a>
       <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
@@ -88,22 +97,22 @@
 
     <div class="table-responsive">
 
-      <table class="table" style="border-collapse:collapse; width: 0 auto;">
+      <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">
       <thead>
         <tr>
-          <th>Score</th>
-          <th>#Resp</th>
-          <th>Docente</th>
+          <th class="">Score</th>
+          <th class="">#Resp</th>
+          <th class="">Docente</th>
           <th class="table-header-icons">
-            <span><i class="fas fa-calendar-check puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Asistencia a clase"></i></span>
-            <span><i class="far fa-clock puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Cumple los horarios"></i></span>
-            <span><i class="fas fa-sitemap puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Sus clases están bien organizadas"></i></span>
-            <span><i class="fas fa-glasses puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Explica con claridad"></i></span>
-            <span><i class="fas fa-heart puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Mantiene un trato adecuado"></i></span>
-            <span><i class="fas fa-hands-helping puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Acepta la crítica fundamentada"></i></span>
-            <span><i class="far fa-comments puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Fomenta la participación"></i></span>
-            <span><i class="far fa-envelope-open puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Responde por mail o Campus"></i></span>
-            <span><i class="fas fa-star puntaje fa-fw" data-toggle="tooltip" data-placement="bottom" title="Presenta un panorama amplio"></i></span>
+            <span><i class="fas fa-calendar-check puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Asistencia a clase"></i></span>
+            <span><i class="far fa-clock puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Cumple los horarios"></i></span>
+            <span><i class="fas fa-sitemap puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Sus clases están bien organizadas"></i></span>
+            <span><i class="fas fa-glasses puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Explica con claridad"></i></span>
+            <span><i class="fas fa-heart puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Mantiene un trato adecuado"></i></span>
+            <span><i class="fas fa-hands-helping puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Acepta la crítica fundamentada"></i></span>
+            <span><i class="far fa-comments puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Fomenta la participación"></i></span>
+            <span><i class="far fa-envelope-open puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Responde por mail o Campus"></i></span>
+            <span><i class="fas fa-star puntaje fa-fw subtitulo" data-toggle="tooltip" data-placement="bottom" title="Presenta un panorama amplio"></i></span>
           </th>
         </tr>
 

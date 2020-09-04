@@ -1,0 +1,33 @@
+[data-theme="dark"] {
+  background-color: #4d4d4d !important;
+  color: #eee;
+}
+
+[data-theme="dark"] .bg-light {
+  background-color: #333 !important;
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: #4d4d4d !important;
+}
+
+[data-theme="dark"] .bg-black {
+  background-color: #eee !important;
+}
+
+[data-theme="dark"] .cambiante{
+  color: #f2f2f2;
+}
+
+[data-theme="dark"] .table {
+  color: #f2f2f2 !important;
+}
+
+[data-theme="dark"] .zebra:nth-child(odd) {
+    background-color: #333333
+    color: black !important;
+}
+
+[data-theme="dark"] .card {
+  background-color: #4d4d4d;
+}
