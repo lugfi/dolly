@@ -2,7 +2,7 @@
 Pool = {
   questions: Questions.getQuestions(), //ES6 module maybe?
   question_html: '<fieldset name="NAME"><div class="grid-row">\
-    <div class="flex-item"><i class="fas fa-question-circle mr-2" data-toggle="tooltip" title="TOOLTIP"></i>TXT</div>\
+    <div class="flex-item cambiante"><i class="fas fa-question-circle mr-2 cambiante" data-toggle="tooltip" title="TOOLTIP"></i>TXT</div>\
     <label class="flex-item">\
       <input type="radio" value="1" name="NAME"> <span></span>\
     </label>\

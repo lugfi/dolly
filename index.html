@@ -28,6 +28,8 @@
 
   <!-- custom -->
   <link rel="stylesheet" href="./css/custom.css"./>
+  <!-- Dark Mode -->
+  <link rel="stylesheet" href="./css/dark-mode.css">
 
   <!-- Scripts -->
   <script src="./js/config.js"></script>
@@ -47,16 +49,28 @@
   <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
     <div class="navbar-brand" href="./index.html">
       <img style="width: 64px; height: 64px"  src="./img/DOLLY_imagen.png" width="100">
-      <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
-      <small><p class="pb-0 mb-0">Sistema Automatizado de Encuestas Fiubenses</p></small>
+      <span class="d-inline-block align-top">
+        <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
+        <small><p class="pb-0 mb-0 cambiante">Sistema Automatizado de Encuestas Fiubenses</p></small>
+      </span>
     </div>
 
 
     <!-- options menu -->
     <!--<button type="button" class="btn btn-outline-default btn-circle"><img class="img-circle" src="files/img/note.png"./></button>-->
-    <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
+    <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input" id="darkSwitch">
+      <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+    </div>
+    <script src="./js/dark-mode-switch.js"></script>
+    <div class="navbar-nav dropdown">
       <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Ver resultados</a>
-      <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
+     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Opciones
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
+      </div>
     </div>
   </nav>
 
