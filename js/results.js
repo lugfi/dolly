@@ -5,7 +5,7 @@ Calc = {
     const res = Object.keys(Calc.pesos).map(k => data[k]);
     colors = res.map(x => Calc.colors[Math.floor(Math.abs(x-0.001))]);
 
-    const number_html = "<span class='m-0 p-1' style='background-color: FONDO; color: black;' data-toggle='tooltip' data-placement='bottom' title='TOOLTIP'>NUMBER</span>";
+    const number_html = "<div class='puntaje-detalle' style='background-color: FONDO; color: black;' data-toggle='tooltip' data-placement='bottom' title='TOOLTIP'>NUMBER</div>";
     let html="";
     res.forEach(function(n,i){
       html += number_html.replace("FONDO", colors[i]).replace("NUMBER", Calc.roundScoreFix(n)).replace("TOOLTIP", Calc.tooltips[i]);
