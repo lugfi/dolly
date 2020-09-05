@@ -30,3 +30,15 @@
 [data-theme="dark"] .card {
   background-color: #4d4d4d;
 }
+
+[data-theme='dark'] .modal-content {
+  background-color: #000;
+}
+
+[data-theme='dark'] button.close span {
+  color: #fff;
+}
+
+[data-theme='dark'] a.fulano {
+  color: #FFF !important;
+}
