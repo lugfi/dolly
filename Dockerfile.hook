@@ -1,0 +1,7 @@
+FROM node:latest
+
+RUN apt-get update -y
+RUN apt-get install git -y
+
+RUN npm -g i nodemon
+CMD ["/bin/bash", "/app/hook/server.sh"]
