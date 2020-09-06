@@ -2,8 +2,6 @@ FROM node:latest
 
 RUN apt-get update -y
 RUN apt-get install git -y
-COPY . /app
-WORKDIR /app/hook
-RUN npm i
+
 RUN npm -g i nodemon
-CMD ["nodemon", "index.js"]
+CMD ["/bin/bash", "/app/hook/server.sh"]
