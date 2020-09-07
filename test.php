@@ -3,14 +3,14 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header("Access-Control-Allow-Headers: X-Requested-With");
 
-#include('secret.inc');
+include './secret.inc';
 
 $fichero = 'gente.txt';
 $rows_number = 13;
 
 // Build POST request to get the reCAPTCHA v3 score from Google
 $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-$recaptcha_secret = '6LdWusgZAAAAACnTsuD2MnqpctlFjOOukxN7v60g'; // Insert your secret key here
+#$recaptcha_secret = 'included'; // Insert your secret key here
 $recaptcha_response = $_POST['recaptcha_response'];
  
 // Make the POST request
