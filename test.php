@@ -34,10 +34,6 @@ if ($recaptcha->success == true && $recaptcha->score >= 0.5 && $recaptcha->actio
 } else {
    // Score less than 0.5 indicates suspicious activity. Return an error
    echo "Something went wrong. Please try again later";
-   echo $recaptcha_response;
-   echo $recaptcha->success;
-   echo $recaptcha->score;
-   echo $recaptcha->action;
 }
 
 
