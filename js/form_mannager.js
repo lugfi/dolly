@@ -220,3 +220,4 @@ MyAccordion = {
           </div>\
         </div>'
 }
+console.log("RC on");
