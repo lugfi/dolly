@@ -180,6 +180,7 @@ FormMannager = {
          console.log("Error on sending data!");
          console.log("data",data);
          console.log("status",status);
+		 console.log(data.trim());
        }
     });
   },
