@@ -163,24 +163,30 @@ FormMannager = {
     }
 
     console.log("sending: ```" + dataStr + "```");
-
-    // Send CSV data
-    $.post(Config.submitURL,
-    {
-       pio: dataStr
-    },
-    function(data, status){
-       if(status == "success" && data.trim() == dataStr.trim()){
-         $("#okModal").modal("show");
-         FormMannager.clearForm();
-         console.log("ok!");
-       }else{
-         $("#errorModal").modal("show");
-         console.log("Error on sending data!");
-         console.log("data",data);
-         console.log("status",status);
-       }
-    });
+    grecaptcha.ready(function() {
+          grecaptcha.execute('6LdWusgZAAAAAH-x463_45udzKmTpyy8DO6t5tpi', {action: 'submit'}).then(function(token) {
+              // Add your logic to submit to your backend server here.
+              // Send CSV data
+                $.post(Config.submitURL,
+                {
+                   pio: dataStr,
+                   recaptcha_response: token
+                },
+                function(data, status){
+                   if(status == "success" && data.trim() == dataStr.trim()){
+                     $("#okModal").modal("show");
+                     FormMannager.clearForm();
+                     console.log("ok!");
+                   }else{
+                     $("#errorModal").modal("show");
+                     console.log("Error on sending data!");
+                     console.log("data",data);
+                     console.log("status",status);
+                     console.log(data.trim());
+                   }
+                });
+          });
+        });
   },
   clearForm(){
     $("#materia").selectpicker('val','').selectpicker('refresh');
@@ -219,3 +225,4 @@ MyAccordion = {
           </div>\
         </div>'
 }
+console.log("RC on");

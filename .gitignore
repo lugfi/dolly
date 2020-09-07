@@ -1,5 +1,6 @@
 # test db
 gente.txt*
+secret.inc
 analitics/comentarios_docentes.json
 analitics/valoraciones_docentes.json
 checksum-gente.md5
