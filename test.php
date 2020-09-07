@@ -8,10 +8,10 @@ include('secret.inc');
 $fichero = 'gente.txt';
 $rows_number = 13;
 
-$captcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$recaptcha_secret.'&response='.$_POST['response'].'&remoteip='.$_SERVER['REMOTE_ADDR']));
+$captcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.'6LdWusgZAAAAACnTsuD2MnqpctlFjOOukxN7v60g'.'&response='.$_POST['response'].'&remoteip='.$_SERVER['REMOTE_ADDR']));
 if ($captcha->success == false) {
     print_r(json_encode(array('status' => 'error', 'message' => 'No valid Captcha')));
-	echo "PHP is running".$recaptcha_secret.":o";
+	echo "PHP is running";
 } else {
     // Everything went ok...
 	if( isset($_POST["pio"]) ){
@@ -20,10 +20,10 @@ if ($captcha->success == false) {
 			file_put_contents($fichero, $data."\n", FILE_APPEND | LOCK_EX);
 			echo $_POST["pio"];
 		}else{
-			echo "PHP is not running".$recaptcha_secret.":o";
+			echo "PHP is not running";
 		}
 	}else{
-		echo "PHP is running".$recaptcha_secret.":o";
+		echo "PHP is running";
 	}
 }
 
