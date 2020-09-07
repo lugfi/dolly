@@ -167,7 +167,8 @@ FormMannager = {
     // Send CSV data
     $.post(Config.submitURL,
     {
-       pio: dataStr
+       pio: dataStr,
+	   recaptcha_response: $("recaptchaResponse").val()
     },
     function(data, status){
        if(status == "success" && data.trim() == dataStr.trim()){

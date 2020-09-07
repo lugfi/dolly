@@ -48,6 +48,18 @@
   <script src="./js/change_docentes.js"></script>
   <script src="./js/equivalency.js"></script>
 
+  <!-- Recaptcha -->
+  <script src='https://www.google.com/recaptcha/api.js?render=6LdWusgZAAAAAH-x463_45udzKmTpyy8DO6t5tpi'> 
+  </script>
+  <script>
+    grecaptcha.ready(function() {
+    grecaptcha.execute('6LdWusgZAAAAAH-x463_45udzKmTpyy8DO6t5tpi', {action: 'formulario'})
+    .then(function(token) {
+    var recaptchaResponse = document.getElementById('recaptchaResponse');
+    recaptchaResponse.value = token;
+    });});
+  </script>
+
   <meta name="theme-color" content="#ffffff">
   <link rel="manifest" href="./manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -134,6 +146,7 @@
       <div class="card-body">
         <p class="card-text">Podés revisar si todo está bien. Si es así, presioná el botón de abajo. Recordá que tus comentarios deben estar en un lenguaje respetuoso. Cualquier encuesta que no tenga estas características no será tomada en cuenta y se borrará. Por favor, colaboremos con este espacio que nos ayuda a todos de manera coherente.</p>
         <a href="#" id="sendButton" class="btn btn-light mt-3">Enviar encuesta</a>
+		<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
       </div>
     </div>
 
