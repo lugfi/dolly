@@ -1,5 +1,5 @@
 <?php
-include './secret.inc';
+include './nosecret.inc';
 
-echo $recaptcha_secret;
+echo $nosecret;
 ?>
