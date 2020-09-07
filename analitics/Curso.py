@@ -47,7 +47,7 @@ class Docente:
             for i in self.valoraciones[q]:
                 suma += i
                 cant += 1
-            self.valoraciones[q] = suma/cant
+            self.valoraciones[q] = round(suma/cant,1)
 
 
 class Materia:
