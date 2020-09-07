@@ -168,7 +168,7 @@ FormMannager = {
     $.post(Config.submitURL,
     {
        pio: dataStr,
-	   recaptcha_response: $("#recaptchaResponse").val()
+	   response: grecaptcha.getResponse()
     },
     function(data, status){
        if(status == "success" && data.trim() == dataStr.trim()){
