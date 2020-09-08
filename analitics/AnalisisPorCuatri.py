@@ -18,12 +18,14 @@ def emprolijar_docentes(docentes_raw):
 datafile = "../gente.txt"
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
-def escribir_log(cuatri,mensaje, materia, linea):
+def escribir_log(cuatri,mensaje, doc, cuat, mat, linea):
     with open(cuatri+'log.txt', 'a+') as log:
-        log.write(mensaje + ',' + materia + ',' + linea + '\n')
+        log.write(mensaje + ',' + doc + ',' + cuat + ',' + mat + ',' + linea + '\n')
 
 def escribir_json(cuatri,materias, docentes, cursos):
-    data = []
+    data = {}
+    lista = []
+    data['opciones'] = []
     for m in materias:
         mat = materias[m]
         #data['codigo'] =  mat.get_codigo()
@@ -31,13 +33,17 @@ def escribir_json(cuatri,materias, docentes, cursos):
         for c in mat.get_cursos():
             #materias['cursos'][c.get_index()] = {}
             curso = {}
+            curso['nombre'] = c.get_docentes_str()
+            curso['docentes'] = {}
             for d in c.get_docentes():
-                curso[d.get_nombre()] = d.get_valoraciones()
-            data.append(curso)
-        file_path = os.path.join(script_dir, 'cuatris/' +codigo + '.json')
+                curso['docentes'][d.get_nombre()] = d.get_valoraciones()
+            data['opciones'].append(curso)
+
+        file_path = os.path.join(script_dir, 'cursos/' +codigo + '.json')
         with open(file_path, 'w') as outfile:
             json.dump(data, outfile)
         data.clear()
+        data['opciones'] = []
 
 
 
@@ -89,13 +95,13 @@ def analizar_valoraciones(cuatri,archivo, materias):
                 line_count += 1
                 continue
             if row['mat'] not in materias:
-                escribir_log(cuatri, 'La siguiente materia no fue encontrada: ',row['mat'],str(line_count))
+                escribir_log(cuatri, 'La siguiente materia no fue encontrada: ',row['mat'], row['cuat'], row['mat'],str(line_count))
                 line_count += 1
                 continue
             mat = materias[row['mat']]
             docente = mat.get_docente(row['doc'])
             if docente is None:
-                escribir_log(cuatri,'El siguiente docente no se encontro: ',row['doc'], str(line_count))
+                escribir_log(cuatri,'El siguiente docente no se encontro: ',row['doc'], row['cuat'], row['mat'], str(line_count))
                 line_count += 1
                 continue
             for q in questions:

@@ -36,7 +36,6 @@ df = df[df['doc']!="A Designar"] # Elimino el docente "A Designar"
 
 # Para unir los comentarios con el cuatrimestre correspondiente
 df['cuat'].map(str)
-df['comentarios'].map(str)
 df['separador'] = ' - '
 df['comentarios_aux'] = df['cuat'] + df['separador']
 df['comments'] = df['comentarios_aux'] + df['comentarios']
@@ -111,6 +110,6 @@ grouped = df.groupby(['mat','doc'])[features].mean().join(counts)
 with open(out_valoraciones, mode="w", encoding="utf8") as f:
     f.write(grouped.reset_index().to_json(orient='records'))
 
-comentarios = df.groupby(['mat','doc'])['comments'].apply(list).to_frame("comments")
+comentarios = df.groupby(['mat','doc'])['comentarios'].apply(list).to_frame("comentarios")
 with open(out_comentarios, mode="w", encoding="utf8") as f:
     f.write(comentarios.reset_index().to_json(orient='records'))
