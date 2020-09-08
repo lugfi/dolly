@@ -9,7 +9,7 @@ Results = {
           </div>\
       </td>\
   </tr>',
-  row_docente: '<td class="" colspan="5">TEXT</td>',
+  row_docente: '<td class="" colspan="3">TEXT</td>',
   docente_html: '<div class="col-12 ">DOCENTE</div>'
 };
 
@@ -87,7 +87,6 @@ Table = {
     // Calculate Score
     var comments = Results.comentarios.filter(x => (x.doc == docente));
     row.score = Calc.score(row);
-
     if (row.respuestas == 0){
       return "";
     }
@@ -95,20 +94,7 @@ Table = {
     // Populate table
 
 
-    var largo = 0;
-    // console.log(largo);
-    // console.log(comments.lenght);
-    // if (comments.length){
-    //   const comms = comments[0].comments;
-    //   largo = comms.lenght;
-    //
-    // }else{
-    //   largo = 0;
-    // }
-    // console.log(largo)
-    //
-    // console.log('El comentario es:')
-    // console.log(comms)
+
       // Use apropiate users glyphs as row.respuestas grows
       const users_glyph = (row.respuestas<3)?"fas fa-user":
                           (
@@ -116,6 +102,7 @@ Table = {
                           );
 
       const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
+      $('[data-toggle="tooltip"]').tooltip();
       return Table.addRow(nombre,[
         {text: Calc.roundScore(row.score), class:""},
         {text: txt_resp, class: ""},
@@ -124,7 +111,7 @@ Table = {
       ],comms);
 
 
-    $('[data-toggle="tooltip"]').tooltip();
+
   },
   clearTable(){
     $("#tbody").empty();
@@ -215,7 +202,9 @@ $(function(){
           Results.data.opciones.forEach(function(x,i){
             let row_html = "";
             let raw_html = "";
+            row_html += Table.row_html.replace("TEXT",Calc.roundScore(Calc.score(x.promedio)));
             row_html += Results.row_docente.replace("TEXT", x.nombre || "");
+            //row_html += Table.row_html.replace("TEXT",Calc.detalle(x.promedio));
             raw_html = Results.html_docente.replace(/NRO/g, id);
             html_final += raw_html.replace("DATA_ROW",row_html);
             var docentes = x.docentes;
@@ -231,7 +220,7 @@ $(function(){
 
           Table.init();
           $("#tbody").append(html_final);
-
+          $('[data-toggle="tooltip"]').tooltip();
 
 
 

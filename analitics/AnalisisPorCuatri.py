@@ -34,6 +34,7 @@ def escribir_json(cuatri,materias, docentes, cursos):
             #materias['cursos'][c.get_index()] = {}
             curso = {}
             curso['nombre'] = c.get_docentes_str()
+            curso['promedio'] = c.get_promedios()
             curso['docentes'] = {}
             for d in c.get_docentes():
                 curso['docentes'][d.get_nombre()] = d.get_valoraciones()
