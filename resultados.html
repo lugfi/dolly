@@ -10,6 +10,14 @@
   <meta http-equiv="Pragma" content="no-cache">
 
   <title>Encuestas de Cursos</title>
+  <meta name="description" content="Sistema Automatizado de Encuestas Fiubenses" />
+  <link rel="icon" type="image/png" href="img/DOLLY_imagen.png">
+  <link rel=”canonical” href=”https://dollyfiuba.com/” />
+
+  <meta property="og:title" content="Dolly" />
+  <meta property="og:description" content="Sistema Automatizado de Encuestas Fiubenses" />
+  <meta property="og:image" content="https://dollyfiuba.com/img/DOLLY_imagen.png" />
+  <meta property="og:url" content="https://dollyfiuba.com/" />
 
   <link rel="stylesheet" href="./css/bootstrap.min.css"./>
   <link rel="stylesheet" href="./css/grid-radio.css"./>
@@ -48,10 +56,8 @@
   <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
     <div class="navbar-brand" href="./index.html">
       <img style="width: 64px; height: 64px"  src="./img/DOLLY_imagen.png" width="100">
-      <span class="d-inline-block align-top">
-        <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
-        <small><p class="pb-0 mb-0 cambiante">Sistema Automatizado de Encuestas Fiubenses</p></small>
-      </span>
+      <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
+      <small><p class="pb-0 mb-0 cambiante">Sistema Automatizado de Encuestas Fiubenses</p></small>
     </div>
 
 
@@ -62,14 +68,9 @@
       <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
     </div>
     <script src="./js/dark-mode-switch.js"></script>
-    <div class="navbar-nav dropdown">
+    <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
       <a href="index.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Cargar encuesta</a>
-     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Opciones
-      </button>
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
-      </div>
+      <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
   </nav>
 
   <div class="container">
@@ -127,6 +128,6 @@
   </table>
     </div>
   </div>
-
+<script id="chatBroEmbedCode">/* Chatbro Widget Embed Code Start */function ChatbroLoader(chats,async){async=!1!==async;var params={embedChatsParameters:chats instanceof Array?chats:[chats],lang:navigator.language||navigator.userLanguage,needLoadCode:'undefined'==typeof Chatbro,embedParamsVersion:localStorage.embedParamsVersion,chatbroScriptVersion:localStorage.chatbroScriptVersion},xhr=new XMLHttpRequest;xhr.withCredentials=!0,xhr.onload=function(){eval(xhr.responseText)},xhr.onerror=function(){console.error('Chatbro loading error')},xhr.open('GET','//www.chatbro.com/embed.js?'+btoa(unescape(encodeURIComponent(JSON.stringify(params)))),async),xhr.send()}/* Chatbro Widget Embed Code End */ChatbroLoader({encodedChatId: '96ieg'});</script>
 </body>
 </html>
