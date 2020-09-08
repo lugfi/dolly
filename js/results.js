@@ -1,5 +1,5 @@
 Results = {
-  html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="docNRO" class="accordion-toggle">\
+  html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="docNRO" class="accordion-toggle curso">\
     DATA_ROW\
   </tr>',
   docente_div:'<tr>\
@@ -90,9 +90,19 @@ Table = {
     if (row.respuestas == 0){
       return "";
     }
+    console.log(comments);
+    comments.forEach((item, i) => {
+      if(item.comentarios && item.editado == 0){
+        item.comentarios.forEach((c, j) => {
+          item.comentarios[j] = '(' + item.cuat + ')' + ' - ' + c;
+        });
+        item.editado = 1;
+      }
+    });
+
     const comms = comments && comments[0].comentarios;
     // Populate table
-
+    console.log(comms);
 
 
       // Use apropiate users glyphs as row.respuestas grows
@@ -179,8 +189,9 @@ $(function(){
         const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
         $(location).attr('href', url);
       });
-      const file = Equivalency.getEquivalent($(document).getUrlParam("mat")) + ".json";
-
+      var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
+      const file = materia + ".json";
+      console.log(file)
       // Load encuestas data JSON
       getJSON(Config.cursosPath + file, function(data,st){
 
