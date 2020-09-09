@@ -11,6 +11,7 @@ from Curso import questions
 from Curso import Docente
 from Curso import Curso
 from Curso import Materia
+from AnalisisPorCuatri import analizar_cuatri
 
 #import matplotlib.pyplot as plt
 
@@ -114,3 +115,5 @@ with open(out_valoraciones, mode="w", encoding="utf8") as f:
 comentarios = df.groupby(['mat','doc', 'cuat', 'editado'])['comentarios'].apply(list).to_frame("comentarios")
 with open(out_comentarios, mode="w", encoding="utf8") as f:
     f.write(comentarios.reset_index().to_json(orient='records'))
+
+analizar_cuatri('../data/Horarios_1Q2020.json')

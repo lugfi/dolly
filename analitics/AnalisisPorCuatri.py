@@ -8,6 +8,7 @@ from Curso import Docente
 from Curso import Curso
 from Curso import Materia
 
+
 def emprolijar_docentes(docentes_raw):
     docentes_raw = docentes_raw.split('-')
     if "A Designar" in docentes_raw:
@@ -112,4 +113,3 @@ def analizar_valoraciones(cuatri,archivo, materias):
             line_count += 1
     for d in docentes_valorados:
         d.calcular_puntaje()
-analizar_cuatri('../data/Horarios_1Q2020.json')
