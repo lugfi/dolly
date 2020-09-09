@@ -1,5 +1,5 @@
 Results = {
-  html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="docNRO" class="accordion-toggle curso">\
+  html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="docNRO" class="accordion-toggle curso">\
     DATA_ROW\
   </tr>',
   docente_div:'<tr>\
