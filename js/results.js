@@ -188,10 +188,17 @@ $(function(){
       $("#materia").on('changed.bs.select',function(e){
         const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
         $(location).attr('href', url);
+<<<<<<< HEAD
 
       });
       var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
       const file = materia + ".json";
+=======
+      });
+      var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
+      const file = materia + ".json";
+      console.log(file)
+>>>>>>> 3c7e930d83e100ec1c8573e34de6bb11d67bc085
       // Load encuestas data JSON
       getJSON(Config.cursosPath + file, function(data,st){
 

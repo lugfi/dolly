@@ -17,6 +17,27 @@
   max-width: 20px;
   padding: 1px;
   margin: 1px;
+<<<<<<< HEAD
+=======
+  display: inline-block;
+  *display: inline;
+}
+
+.puntaje-detalle {
+  width: 30px !important;
+  max-width: 30px;
+  padding: 1px;
+  margin: 0px;
+  display: inline-block;
+  *display: inline;
+  text-align: center;
+}
+
+.puntaje-container {
+  width: 20px !important;
+  max-width: 20px;
+  margin:1.5px !important;
+>>>>>>> 3c7e930d83e100ec1c8573e34de6bb11d67bc085
   display: inline-block;
   *display: inline;
 }
