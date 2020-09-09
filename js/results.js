@@ -1,5 +1,5 @@
 Results = {
-  html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="docNRO" class="accordion-toggle curso">\
+  html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="docNRO" class="accordion-toggle curso">\
     DATA_ROW\
   </tr>',
   docente_div:'<tr>\
@@ -83,14 +83,17 @@ Table = {
   init: function(){
     Table.clearTable();
   },
-  loadTable(nombre,docente, row){
+  loadTable(materia,nombre,docente, row){
     // Calculate Score
-    var comments = Results.comentarios.filter(x => (x.doc == docente));
+    var comments = Results.comentarios.filter(x => (x.doc == docente && x.mat == materia));
+    let blabla = "imprimiendo comments";
+    console.log(blabla);
+    console.log(comments);
     row.score = Calc.score(row);
     if (row.respuestas == 0){
       return "";
     }
-    console.log(comments);
+    const comms = [];
     comments.forEach((item, i) => {
       if(item.comentarios && item.editado == 0){
         item.comentarios.forEach((c, j) => {
@@ -98,11 +101,10 @@ Table = {
         });
         item.editado = 1;
       }
+      item.comentarios.forEach((c, i) => {
+        comms.push(c);
+      });
     });
-
-    const comms = comments && comments[0].comentarios;
-    // Populate table
-    console.log(comms);
 
 
       // Use apropiate users glyphs as row.respuestas grows
@@ -221,7 +223,7 @@ $(function(){
             var docentes = x.docentes;
             let html_doc = ""
             $.each(docentes, function( k, v ) {
-                html_doc += Table.loadTable(x.nombre,k,v);
+                html_doc += Table.loadTable(materia,x.nombre,k,v);
 
             });
             html_final += html_doc;
