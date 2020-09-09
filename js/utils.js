@@ -1,11 +1,23 @@
 // Base 64 UFT-8 friendly.
 // Taken from https://developer.mozilla.org/es/docs/Web/API/WindowBase64/Base64_codificando_y_decodificando
 function utf8_to_b64( str ) {
-  return window.btoa(unescape(encodeURIComponent( str )));
+  let res = "";
+  try{
+    res = window.btoa(unescape(encodeURIComponent( str )));
+  }catch(err){
+    console.log("Dolly encode error: ", str)
+  }
+  return res;
 }
 
 function b64_to_utf8( str ) {
-  return decodeURIComponent(escape(window.atob( str )));
+  let res = "";
+  try{
+    res = decodeURIComponent(escape(window.atob( str )));
+  }catch(err){
+    console.log("Dolly decode error: ", str)
+  }
+  return res;
 }
 
 Stats = {
