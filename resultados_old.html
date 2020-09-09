@@ -7,6 +7,7 @@
   <meta http-equiv="Expires" content="0">
   <meta http-equiv="Last-Modified" content="0">
   <meta http-equiv="expires" content="3600"/>
+
   <title>Encuestas de Cursos</title>
   <meta name="description" content="Sistema Automatizado de Encuestas Fiubenses" />
   <link rel="icon" type="image/png" href="img/DOLLY_imagen.png">
@@ -42,7 +43,7 @@
   <!-- Scripts -->
   <script src="./js/config.js"></script>
   <script src="./js/utils.js"></script>
-  <script src="./js/results.js"></script>
+  <script src="./js/results_old.js"></script>
   <script src="./js/equivalency.js"></script>
 
   <meta name="theme-color" content="#ffffff">
@@ -68,7 +69,7 @@
     <script src="./js/dark-mode-switch.js"></script>
     <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
       <a href="index.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Cargar encuesta</a>
-      <a href="resultados_old.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i>Resultados por docente</a>
+	  <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i>Resultados por curso</a>
       <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
   </nav>
 
@@ -93,13 +94,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="alert alert-warning alert-dismissible collapse" role="alert" id="advertencia">
-      <h6>Cursos ordenados segun 1Q 2020.</h6>
-      Proximamente Dolly te mostrara los cursos del 2Q 2020!!
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+
     <div>
       <label for="materia" class="col-sm-2 col-form-label">Materia</label>
       <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
@@ -108,13 +103,6 @@
     <div class="table-responsive">
 
       <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">
-      <thead>
-        <tr>
-          <h6>Cursos ordenados segun 1Q 2020</h6>
-          <p>Proximamente Dolly te mostrara los cursos del 2Q 2020!!</p>
-        </tr>
-
-      </thead>
       <thead>
         <tr>
           <th class="">Score</th>
