@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
   <meta http-equiv="Expires" content="0">
   <meta http-equiv="Last-Modified" content="0">
-  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-  <meta http-equiv="expires" content="Sun, 01 Jan 2014 00:00:00 GMT"/>
-  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="expires" content="3600"/>
 
   <title>Encuestas de Cursos</title>
   <meta name="description" content="Sistema Automatizado de Encuestas Fiubenses" />
@@ -75,7 +73,12 @@
     <script src="./js/dark-mode-switch.js"></script>
     <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
       <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Ver resultados</a>
-      <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
+     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Opciones
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
+      </div>
     </div>
   </nav>
 

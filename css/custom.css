@@ -36,6 +36,32 @@
   max-width: 20px;
   margin:1.5px !important;
   display: inline-block;
+  *display: inline;
+}
+
+.puntaje-detalle {
+  width: 30px !important;
+  max-width: 30px;
+  padding: 1px;
+  margin: 0px;
+  display: inline-block;
+  *display: inline;
+  text-align: center;
+}
+
+.puntaje-container {
+  width: 20px !important;
+  max-width: 20px;
+  margin:1.5px !important;
+  display: inline-block;
+}
+
+.table-header-icons {
+  display: flex;
+}
+
+.table-header-icons span {
+  padding: 4px;
 }
 
 .table-header-icons {

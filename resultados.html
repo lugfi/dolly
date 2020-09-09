@@ -6,9 +6,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
   <meta http-equiv="Expires" content="0">
   <meta http-equiv="Last-Modified" content="0">
-  <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-
+  <meta http-equiv="expires" content="3600"/>
   <title>Encuestas de Cursos</title>
   <meta name="description" content="Sistema Automatizado de Encuestas Fiubenses" />
   <link rel="icon" type="image/png" href="img/DOLLY_imagen.png">
@@ -94,7 +92,13 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-
+    <div class="alert alert-warning alert-dismissible collapse" role="alert" id="advertencia">
+      <h6>Cursos ordenados segun 1Q 2020.</h6>
+      Proximamente Dolly te mostrara los cursos del 2Q 2020!!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div>
       <label for="materia" class="col-sm-2 col-form-label">Materia</label>
       <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
@@ -103,6 +107,13 @@
     <div class="table-responsive">
 
       <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">
+      <thead>
+        <tr>
+          <h6>Cursos ordenados segun 1Q 2020</h6>
+          <p>Proximamente Dolly te mostrara los cursos del 2Q 2020!!</p>
+        </tr>
+
+      </thead>
       <thead>
         <tr>
           <th class="">Score</th>
