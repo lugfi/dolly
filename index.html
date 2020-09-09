@@ -75,7 +75,12 @@
     <script src="./js/dark-mode-switch.js"></script>
     <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
       <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Ver resultados</a>
-      <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
+     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Opciones
+      </button>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
+      </div>
     </div>
   </nav>
 

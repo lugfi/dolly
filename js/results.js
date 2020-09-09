@@ -1,4 +1,17 @@
-Results = {};
+Results = {
+  html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="docNRO" class="accordion-toggle curso">\
+    DATA_ROW\
+  </tr>',
+  docente_div:'<tr>\
+      <td colspan="6" class="hiddenRow">\
+          <div id="docID" class="accordian-body collapse ml-3">\
+          DOCENTES\
+          </div>\
+      </td>\
+  </tr>',
+  row_docente: '<td class="" colspan="3">TEXT</td>',
+  docente_html: '<div class="col-12 ">DOCENTE</div>'
+};
 
 Calc = {
   detalle(data){
@@ -70,25 +83,27 @@ Table = {
   init: function(){
     Table.clearTable();
   },
-  filterMateria(mat){
-    const rows = Results.data.filter(row => (row.mat == mat));
-    const comments = Results.comentarios.filter(x => (x.mat == mat));
-    Table.loadTable(rows, comments);
-  },
-  loadTable(rows, comments){
+  loadTable(nombre,docente, row){
     // Calculate Score
-    rows.map(function(row){
-      row.score = Calc.score(row);
-      return row;
+    var comments = Results.comentarios.filter(x => (x.doc == docente));
+    row.score = Calc.score(row);
+    if (row.respuestas == 0){
+      return "";
+    }
+    console.log(comments);
+    comments.forEach((item, i) => {
+      if(item.comentarios && item.editado == 0){
+        item.comentarios.forEach((c, j) => {
+          item.comentarios[j] = '(' + item.cuat + ')' + ' - ' + c;
+        });
+        item.editado = 1;
+      }
     });
 
-    // Sort table by score
-    const sorted_rows = rows.sort((a,b) => (b.score-a.score));
-
+    const comms = comments && comments[0].comentarios;
     // Populate table
-    sorted_rows.forEach(function(row){
-      const comm = comments.filter(x => x.doc==row.doc);
-      const comms = comm && comm[0].comentarios;
+    console.log(comms);
+
 
       // Use apropiate users glyphs as row.respuestas grows
       const users_glyph = (row.respuestas<3)?"fas fa-user":
@@ -97,24 +112,25 @@ Table = {
                           );
 
       const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
-      Table.addRow([
+      $('[data-toggle="tooltip"]').tooltip();
+      return Table.addRow(nombre,[
         {text: Calc.roundScore(row.score), class:""},
         {text: txt_resp, class: ""},
-        {text: row.doc, class:""},
+        {text: docente, class:""},
         {text: Calc.detalle(row), class:""}
       ],comms);
-    });
 
 
-    $('[data-toggle="tooltip"]').tooltip();
+
   },
   clearTable(){
     $("#tbody").empty();
     Table.lastrow = 0;
   },
-  addRow(row, comments){
+  addRow(doc_id,row, comments){
     // row = [{text:"", class:""}...{}]
     // comments = []
+
     const id = Table.lastrow++;
 
     // Create comments html
@@ -130,11 +146,12 @@ Table = {
     });
 
     const raw_html = Table.html_item + (comments? Table.comment_div : "");
-    const html = raw_html.replace(/ID/g, id).replace("DATA_ROW",row_html).replace("COMMENT_LIST", comments_items || "");
-
-    $("#tbody").append(html);
+    const html = raw_html.replace(/ID/g, id).replace("DATA_ROW",row_html).replace("COMMENT_LIST", comments_items || "").replace(/NRO/g, doc_id);
+    //Descomentar esto si funciona mal:
+    return html
+    //$("#tbody").append(html);
   },
-  html_item: '<tr data-toggle="collapse" data-target="#demoID" class="accordion-toggle">\
+  html_item: '<tr id="docNRO" data-toggle="collapse" data-target="#demoID" class="accordion-toggle multi-collapse">\
     DATA_ROW\
   </tr>',
   comment_div:'<tr>\
@@ -171,28 +188,56 @@ $(function(){
       $("#materia").on('changed.bs.select',function(e){
         const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
         $(location).attr('href', url);
-      });
 
+      });
+      var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
+      const file = materia + ".json";
       // Load encuestas data JSON
-      getJSON("analitics/valoraciones_docentes.json", function(data,st){
+      getJSON(Config.cursosPath + file, function(data,st){
+
+        console.log("comments loaded");
         // Prepare keys
-        Results.materias = Utils.get_indexes('mat',data);
-        Results.docentes = Utils.get_indexes('doc',data);
         Results.data = data;
         console.log("data loaded");
         // Load comments
         getJSON("analitics/comentarios_docentes.json", function(data,st){
-          // Decode
           d=data;
-          Results.comentarios = data.map(function(x){
-            x.comentarios = x.comentarios.filter(x=>x).map(b64_to_utf8);
-            return x;
+
+          Results.comentarios = d.map(function(x){
+             x.comentarios = x.comentarios.filter(x=>x).map(b64_to_utf8);
+             return x;
           });
-          console.log("comments loaded");
+          // Decode
+          let html_final ="";
+          var id = 0;
+          Results.data.opciones.forEach(function(x,i){
+            let row_html = "";
+            let raw_html = "";
+            row_html += Table.row_html.replace("TEXT",Calc.roundScore(Calc.score(x.promedio)));
+            row_html += Results.row_docente.replace("TEXT", x.nombre || "");
+            //row_html += Table.row_html.replace("TEXT",Calc.detalle(x.promedio));
+            raw_html = Results.html_docente.replace(/NRO/g, id);
+            html_final += raw_html.replace("DATA_ROW",row_html);
+            var docentes = x.docentes;
+            let html_doc = ""
+            $.each(docentes, function( k, v ) {
+                html_doc += Table.loadTable(x.nombre,k,v);
+
+            });
+            html_final += html_doc;
+            // html2 += html_doc;
+            id++;
+          });
 
           Table.init();
+          $("#tbody").append(html_final);
+          $('[data-toggle="tooltip"]').tooltip();
+
+
+
           // Load equivalent code instead real code - user transparent [sic]
-          Table.filterMateria(Equivalency.getEquivalent($(document).getUrlParam("mat")));
+
+          //Table.filterMateria(Equivalency.getEquivalent($(document).getUrlParam("mat")));
         }).fail(function(err){
           console.log("error loading comments");
           $("#load-fail").slideDown(1000);
