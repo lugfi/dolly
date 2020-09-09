@@ -188,10 +188,10 @@ $(function(){
       $("#materia").on('changed.bs.select',function(e){
         const url = $(location).attr('href').split("?")[0] + "?mat="+$("#materia").val();
         $(location).attr('href', url);
+
       });
       var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
       const file = materia + ".json";
-      console.log(file)
       // Load encuestas data JSON
       getJSON(Config.cursosPath + file, function(data,st){
 
