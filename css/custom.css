@@ -45,3 +45,11 @@
 .table-header-icons span {
   padding: 4px;
 }
+
+.table-header-icons {
+  display: flex;
+}
+
+.table-header-icons span {
+  padding: 4px;
+}

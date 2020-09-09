@@ -12,7 +12,7 @@ $rows_number = 13;
 $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
 #$recaptcha_secret = 'included'; // Insert your secret key here
 $recaptcha_response = $_POST['recaptcha_response'];
- 
+
 // Make the POST request
 $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
 
