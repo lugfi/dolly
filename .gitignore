@@ -3,6 +3,7 @@ gente.txt*
 secret.inc
 analitics/comentarios_docentes.json
 analitics/valoraciones_docentes.json
+analitics/cursos/
 checksum-gente.md5
 
 # Vim

@@ -31,8 +31,9 @@ datafile = "../gente.txt"
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
 def escribir_log(cuatri,mensaje, doc, cuat, mat, linea):
-    with open(cuatri+'log.txt', 'a+') as log:
-        log.write(mensaje + ',' + doc + ',' + cuat + ',' + mat + ',' + linea + '\n')
+    # with open(cuatri+'log.txt', 'a+') as log:
+    #     log.write(mensaje + ',' + doc + ',' + cuat + ',' + mat + ',' + linea + '\n')
+    return
 
 def escribir_json(cuatri,materias, docentes, cursos):
     data = {}
