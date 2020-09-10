@@ -9,19 +9,31 @@ from Curso import Curso
 from Curso import Materia
 
 
+
 def emprolijar_docentes(docentes_raw):
     docentes_raw = docentes_raw.split('-')
     if "A Designar" in docentes_raw:
         docentes_raw.remove("A Designar")
     return docentes_raw
 
+def analizar_equivalencias():
+    equivalencias = {}
+    file = open("../data/equivalencias.json",)
+    eq = json.load(file)
+    for e in eq:
+        for m in e:
+            e_copia = [str(x) for x in e]
+            equivalencias[str(m)] = e_copia
+    return equivalencias
+
 
 datafile = "../gente.txt"
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
 def escribir_log(cuatri,mensaje, doc, cuat, mat, linea):
-    with open(cuatri+'log.txt', 'a+') as log:
-        log.write(mensaje + ',' + doc + ',' + cuat + ',' + mat + ',' + linea + '\n')
+    # with open(cuatri+'log.txt', 'a+') as log:
+    #     log.write(mensaje + ',' + doc + ',' + cuat + ',' + mat + ',' + linea + '\n')
+    return
 
 def escribir_json(cuatri,materias, docentes, cursos):
     data = {}
@@ -31,6 +43,7 @@ def escribir_json(cuatri,materias, docentes, cursos):
         mat = materias[m]
         #data['codigo'] =  mat.get_codigo()
         codigo = mat.get_codigo()
+
         for c in mat.get_cursos():
             #materias['cursos'][c.get_index()] = {}
             curso = {}
@@ -50,12 +63,27 @@ def escribir_json(cuatri,materias, docentes, cursos):
 
 
 
+def buscar_materias_equivalentes(materia, dict_materias, equivalencias):
+    list = []
+    if materia not in equivalencias:
+        return [dict_materias[materia]]
+    for m in equivalencias[materia]:
+        if m not in dict_materias: continue
+        list.append(dict_materias[m])
+    return list
 
-
+def buscar_docente(docente, materias, dict_docentes):
+    for m in materias:
+        if m.tiene_docente(docente):
+            return m.get_docente(docente)
+    doc = Docente(docente)
+    dict_docentes[docente] = doc
+    return doc
 
 
 
 def analizar_cuatri(archivo):
+    equivalencias = analizar_equivalencias()
     print('Analizando cuatri...')
     cuatri = archivo.split('_')
     cuatri = cuatri[-1].split('.')
@@ -69,17 +97,16 @@ def analizar_cuatri(archivo):
     for mat_id in js['materias']:
         mat = Materia(mat_id['codigo'], mat_id['nombre'])
         materias[mat.get_codigo()] = mat
+    for mat_id in js['materias']:
+        mat = materias[mat_id['codigo']]
         for curso_id in mat_id['cursos']:
             curso = Curso(id_actual)
             cursos[id_actual] = curso
             docentes_raw = curso_id['docentes']
             docentes_raw = emprolijar_docentes(docentes_raw)
+            materias_eq = buscar_materias_equivalentes(mat_id['codigo'], materias, equivalencias)
             for d in docentes_raw:
-                if mat.tiene_docente(d):
-                    doc = mat.get_docente(d)
-                else:
-                    doc = Docente(d)
-                    docentes[d] = doc
+                doc = buscar_docente(d, materias_eq, docentes)
                 curso.agregar_docente(doc)
             mat.agregar_curso(curso)
             id_actual += 1
