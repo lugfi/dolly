@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Paterson-Hopwood", "promedio": {}, "docentes": {"Paterson": {"respuestas": 0, "score": 0}, "Hopwood": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Paterson-Hopwood", "promedio": {}, "score": 0, "docentes": {"Paterson": {"respuestas": 0, "score": 0, "nombre": "Paterson"}, "Hopwood": {"respuestas": 0, "score": 0, "nombre": "Hopwood"}}}]}

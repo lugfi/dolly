@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Martinez-Bonelli-Calero", "promedio": {}, "docentes": {"Martinez": {"respuestas": 0, "score": 0}, "Bonelli": {"respuestas": 0, "score": 0}, "Calero": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Martinez-Bonelli-Calero", "promedio": {}, "score": 0, "docentes": {"Martinez": {"respuestas": 0, "score": 0, "nombre": "Martinez"}, "Bonelli": {"respuestas": 0, "score": 0, "nombre": "Bonelli"}, "Calero": {"respuestas": 0, "score": 0, "nombre": "Calero"}}}]}

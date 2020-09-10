@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Medina-Quinteros", "promedio": {}, "docentes": {"Medina": {"respuestas": 0, "score": 0}, "Quinteros": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Medina-Quinteros", "promedio": {}, "score": 0, "docentes": {"Medina": {"respuestas": 0, "score": 0, "nombre": "Medina"}, "Quinteros": {"respuestas": 0, "score": 0, "nombre": "Quinteros"}}}]}

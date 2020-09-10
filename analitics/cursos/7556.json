@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Bettini-Apud-Brollo", "promedio": {}, "docentes": {"Bettini": {"respuestas": 0, "score": 0}, "Apud": {"respuestas": 0, "score": 0}, "Brollo": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Bettini-Apud-Brollo", "promedio": {}, "score": 0, "docentes": {"Bettini": {"respuestas": 0, "score": 0, "nombre": "Bettini"}, "Apud": {"respuestas": 0, "score": 0, "nombre": "Apud"}, "Brollo": {"respuestas": 0, "score": 0, "nombre": "Brollo"}}}]}

@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Rey-Abadal-Chidichimo", "promedio": {}, "docentes": {"Rey": {"respuestas": 0, "score": 0}, "Abadal": {"respuestas": 0, "score": 0}, "Chidichimo": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Rey-Abadal-Chidichimo", "promedio": {}, "score": 0, "docentes": {"Rey": {"respuestas": 0, "score": 0, "nombre": "Rey"}, "Abadal": {"respuestas": 0, "score": 0, "nombre": "Abadal"}, "Chidichimo": {"respuestas": 0, "score": 0, "nombre": "Chidichimo"}}}]}

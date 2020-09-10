@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Antognoli-Razquin", "promedio": {}, "docentes": {"Antognoli": {"respuestas": 0, "score": 0}, "Razquin": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Antognoli-Razquin", "promedio": {}, "score": 0, "docentes": {"Antognoli": {"respuestas": 0, "score": 0, "nombre": "Antognoli"}, "Razquin": {"respuestas": 0, "score": 0, "nombre": "Razquin"}}}]}

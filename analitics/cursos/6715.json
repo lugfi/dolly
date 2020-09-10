@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Costa-Fernandez Galvan-Facal", "promedio": {}, "docentes": {"Costa": {"respuestas": 0, "score": 0}, "Fernandez Galvan": {"respuestas": 0, "score": 0}, "Facal": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Costa-Fernandez Galvan-Facal", "promedio": {}, "score": 0, "docentes": {"Costa": {"respuestas": 0, "score": 0, "nombre": "Costa"}, "Fernandez Galvan": {"respuestas": 0, "score": 0, "nombre": "Fernandez Galvan"}, "Facal": {"respuestas": 0, "score": 0, "nombre": "Facal"}}}]}

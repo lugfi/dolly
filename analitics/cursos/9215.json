@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Jagus-Amaya", "promedio": {}, "docentes": {"Jagus": {"respuestas": 0, "score": 0}, "Amaya": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Jagus-Amaya", "promedio": {}, "score": 0, "docentes": {"Jagus": {"respuestas": 0, "score": 0, "nombre": "Jagus"}, "Amaya": {"respuestas": 0, "score": 0, "nombre": "Amaya"}}}]}

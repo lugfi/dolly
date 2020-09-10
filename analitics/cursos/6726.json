@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Barr-Fumaroni", "promedio": {}, "docentes": {"Barr": {"respuestas": 0, "score": 0}, "Fumaroni": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Barr-Fumaroni", "promedio": {}, "score": 0, "docentes": {"Barr": {"respuestas": 0, "score": 0, "nombre": "Barr"}, "Fumaroni": {"respuestas": 0, "score": 0, "nombre": "Fumaroni"}}}]}

@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Perez", "promedio": {}, "docentes": {"Perez": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Perez", "promedio": {}, "score": 0, "docentes": {"Perez": {"respuestas": 0, "score": 0, "nombre": "Perez"}}}]}

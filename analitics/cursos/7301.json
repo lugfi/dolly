@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Ferrini-Babich", "promedio": {}, "docentes": {"Ferrini": {"respuestas": 0, "score": 0}, "Babich": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Ferrini-Babich", "promedio": {}, "score": 0, "docentes": {"Ferrini": {"respuestas": 0, "score": 0, "nombre": "Ferrini"}, "Babich": {"respuestas": 0, "score": 0, "nombre": "Babich"}}}]}

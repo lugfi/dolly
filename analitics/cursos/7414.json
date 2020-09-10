@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Fava-Fornasier-Balzamo", "promedio": {}, "docentes": {"Fava": {"respuestas": 0, "score": 0}, "Fornasier": {"respuestas": 0, "score": 0}, "Balzamo": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Fava-Fornasier-Balzamo", "promedio": {}, "score": 0, "docentes": {"Fava": {"respuestas": 0, "score": 0, "nombre": "Fava"}, "Fornasier": {"respuestas": 0, "score": 0, "nombre": "Fornasier"}, "Balzamo": {"respuestas": 0, "score": 0, "nombre": "Balzamo"}}}]}

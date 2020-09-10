@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Ierache-Ochoa", "promedio": {}, "docentes": {"Ierache": {"respuestas": 0, "score": 0}, "Ochoa": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Ierache-Ochoa", "promedio": {}, "score": 0, "docentes": {"Ierache": {"respuestas": 0, "score": 0, "nombre": "Ierache"}, "Ochoa": {"respuestas": 0, "score": 0, "nombre": "Ochoa"}}}]}

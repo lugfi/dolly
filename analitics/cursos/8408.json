@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Fazio-Vaquero", "promedio": {}, "docentes": {"Fazio": {"respuestas": 0, "score": 0}, "Vaquero": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Fazio-Vaquero", "promedio": {}, "score": 0, "docentes": {"Fazio": {"respuestas": 0, "score": 0, "nombre": "Fazio"}, "Vaquero": {"respuestas": 0, "score": 0, "nombre": "Vaquero"}}}]}

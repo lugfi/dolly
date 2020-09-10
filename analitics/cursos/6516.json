@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Martinez-Aguero", "promedio": {}, "docentes": {"Martinez": {"respuestas": 0, "score": 0}, "Aguero": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Martinez-Aguero", "promedio": {}, "score": 0, "docentes": {"Martinez": {"respuestas": 0, "score": 0, "nombre": "Martinez"}, "Aguero": {"respuestas": 0, "score": 0, "nombre": "Aguero"}}}]}

@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Sinnewald-Rubinstein", "promedio": {}, "docentes": {"Sinnewald": {"respuestas": 0, "score": 0}, "Rubinstein": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Sinnewald-Rubinstein", "promedio": {}, "score": 0, "docentes": {"Sinnewald": {"respuestas": 0, "score": 0, "nombre": "Sinnewald"}, "Rubinstein": {"respuestas": 0, "score": 0, "nombre": "Rubinstein"}}}]}

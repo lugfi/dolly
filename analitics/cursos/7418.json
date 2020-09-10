@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Amura-Vazquez-Eberle", "promedio": {}, "docentes": {"Amura": {"respuestas": 0, "score": 0}, "Vazquez": {"respuestas": 0, "score": 0}, "Eberle": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Amura-Vazquez-Eberle", "promedio": {}, "score": 0, "docentes": {"Amura": {"respuestas": 0, "score": 0, "nombre": "Amura"}, "Vazquez": {"respuestas": 0, "score": 0, "nombre": "Vazquez"}, "Eberle": {"respuestas": 0, "score": 0, "nombre": "Eberle"}}}]}

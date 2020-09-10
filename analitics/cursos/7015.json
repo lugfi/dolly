@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Montes-Clavijo", "promedio": {}, "docentes": {"Montes": {"respuestas": 0, "score": 0}, "Clavijo": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Montes-Clavijo", "promedio": {}, "score": 0, "docentes": {"Montes": {"respuestas": 0, "score": 0, "nombre": "Montes"}, "Clavijo": {"respuestas": 0, "score": 0, "nombre": "Clavijo"}}}]}

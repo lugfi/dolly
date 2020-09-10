@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Rey Vega-Corizzo-Granell", "promedio": {}, "docentes": {"Rey Vega": {"respuestas": 0, "score": 0}, "Corizzo": {"respuestas": 0, "score": 0}, "Granell": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Rey Vega-Corizzo-Granell", "promedio": {}, "score": 0, "docentes": {"Rey Vega": {"respuestas": 0, "score": 0, "nombre": "Rey Vega"}, "Corizzo": {"respuestas": 0, "score": 0, "nombre": "Corizzo"}, "Granell": {"respuestas": 0, "score": 0, "nombre": "Granell"}}}]}

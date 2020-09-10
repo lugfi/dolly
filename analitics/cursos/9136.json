@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Koll-Pinto", "promedio": {}, "docentes": {"Koll": {"respuestas": 0, "score": 0}, "Pinto": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Koll-Pinto", "promedio": {}, "score": 0, "docentes": {"Koll": {"respuestas": 0, "score": 0, "nombre": "Koll"}, "Pinto": {"respuestas": 0, "score": 0, "nombre": "Pinto"}}}]}

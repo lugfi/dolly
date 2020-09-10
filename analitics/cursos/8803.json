@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Palomar-Sivori-Farah", "promedio": {}, "docentes": {"Palomar": {"respuestas": 0, "score": 0}, "Sivori": {"respuestas": 0, "score": 0}, "Farah": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Palomar-Sivori-Farah", "promedio": {}, "score": 0, "docentes": {"Palomar": {"respuestas": 0, "score": 0, "nombre": "Palomar"}, "Sivori": {"respuestas": 0, "score": 0, "nombre": "Sivori"}, "Farah": {"respuestas": 0, "score": 0, "nombre": "Farah"}}}]}

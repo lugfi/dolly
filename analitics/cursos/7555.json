@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Gabardini-Stampella", "promedio": {}, "docentes": {"Gabardini": {"respuestas": 0, "score": 0}, "Stampella": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Gabardini-Stampella", "promedio": {}, "score": 0, "docentes": {"Gabardini": {"respuestas": 0, "score": 0, "nombre": "Gabardini"}, "Stampella": {"respuestas": 0, "score": 0, "nombre": "Stampella"}}}]}

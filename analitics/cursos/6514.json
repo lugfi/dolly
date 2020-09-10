@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Vinson-Jurado-Vazquez", "promedio": {}, "docentes": {"Vinson": {"respuestas": 0, "score": 0}, "Jurado": {"respuestas": 0, "score": 0}, "Vazquez": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Vinson-Jurado-Vazquez", "promedio": {}, "score": 0, "docentes": {"Vinson": {"respuestas": 0, "score": 0, "nombre": "Vinson"}, "Jurado": {"respuestas": 0, "score": 0, "nombre": "Jurado"}, "Vazquez": {"respuestas": 0, "score": 0, "nombre": "Vazquez"}}}]}

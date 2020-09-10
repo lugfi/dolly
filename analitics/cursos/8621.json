@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Sellerio-Steg", "promedio": {}, "docentes": {"Sellerio": {"respuestas": 0, "score": 0}, "Steg": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Sellerio-Steg", "promedio": {}, "score": 0, "docentes": {"Sellerio": {"respuestas": 0, "score": 0, "nombre": "Sellerio"}, "Steg": {"respuestas": 0, "score": 0, "nombre": "Steg"}}}]}

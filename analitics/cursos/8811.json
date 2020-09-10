@@ -1,1 +1,1 @@
-{"opciones": [{"nombre": "Ante-Fernandez Favaron", "promedio": {}, "docentes": {"Ante": {"respuestas": 0, "score": 0}, "Fernandez Favaron": {"respuestas": 0, "score": 0}}}]}
+{"opciones": [{"nombre": "Ante-Fernandez Favaron", "promedio": {}, "score": 0, "docentes": {"Ante": {"respuestas": 0, "score": 0, "nombre": "Ante"}, "Fernandez Favaron": {"respuestas": 0, "score": 0, "nombre": "Fernandez Favaron"}}}]}
