@@ -4,7 +4,7 @@ Prueba = {
       <h5 class="mb-0">\
         <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSET" aria-expanded="true" >\
         <div class="puntaje-detalle" style="background-color: FONDO; color: black;"" data-toggle="tooltip" data-placement="bottom" title="Puntaje promedio">PUNTAJE</div>\
-          TEXT\
+          <span class="cambiante"> TEXT </span>\
         </button>\
       </h5>\
     </div>\
