@@ -143,7 +143,7 @@ Table = {
     let html_doc = "";
     rows.forEach(function(row){
       if (row.respuestas >0){
-      var comments = Results.comentarios.filter(x => (x.doc == row.nombre && x.mat == materia));
+      var comments = Results.comentarios.filter(x => (x.doc == row.nombre && Equivalency.getEquivalent(x.mat) == materia));
       const comms = [];
       comments.forEach((item, i) => {
         if(item.comentarios && item.editado == 0){

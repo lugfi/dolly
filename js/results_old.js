@@ -71,8 +71,8 @@ Table = {
     Table.clearTable();
   },
   filterMateria(mat){
-    const rows = Results.data.filter(row => (row.mat == mat));
-    const comments = Results.comentarios.filter(x => (x.mat == mat));
+    const rows = Results.data.filter(row => (Equivalency.getEquivalent(row.mat) == mat));
+    const comments = Results.comentarios.filter(x => (Equivalency.getEquivalent(x.mat) == mat));
     Table.loadTable(rows, comments);
   },
   loadTable(rows, comments){
