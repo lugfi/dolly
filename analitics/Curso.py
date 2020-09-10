@@ -27,7 +27,10 @@ class Curso:
         for d in self.docentes:
             lista.append(d.get_nombre())
         sep = '-'
-        return sep.join(lista)
+        final = sep.join(lista)
+        if len(final) > 50:
+            final = final[:50] + '...'
+        return final
     def get_dict_docentes(self):
         dict = {}
         for d in self.docentes:
