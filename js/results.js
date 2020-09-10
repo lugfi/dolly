@@ -1,3 +1,42 @@
+Prueba = {
+  tarjeta: '<div class="card">\
+    <div class="card-header">\
+      <h5 class="mb-0">\
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSET" aria-expanded="true" >\
+          Collapsible Group Item #1\
+        </button>\
+      </h5>\
+    </div>\
+    <div id="collapseSET" class="collapse" data-parent="#accordion">\
+      <div class="card-body">\
+      <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">\
+      <thead>\
+        <tr>\
+          <th class="">Score</th>\
+          <th class="">#Resp</th>\
+          <th class="">Docente</th>\
+          <th class="table-header-icons">\
+            <span><i class="fas fa-calendar-check puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Asistencia a clase"></i></span>\
+            <span><i class="far fa-clock puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Cumple los horarios"></i></span>\
+            <span><i class="fas fa-sitemap puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Sus clases están bien organizadas"></i></span>\
+            <span><i class="fas fa-glasses puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Explica con claridad"></i></span>\
+            <span><i class="fas fa-heart puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Mantiene un trato adecuado"></i></span>\
+            <span><i class="fas fa-hands-helping puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Acepta la crítica fundamentada"></i></span>\
+            <span><i class="far fa-comments puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Fomenta la participación"></i></span>\
+            <span><i class="far fa-envelope-open puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Responde por mail o Campus"></i></span>\
+            <span><i class="fas fa-star puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Presenta un panorama amplio"></i></span>\
+          </th>\
+        </tr>\
+      </thead>\
+      <tbody id="tbody">\
+        CUERPO\
+      </tbody>\
+  </table>\
+      </div>\
+    </div>\
+  </div>'
+};
+
 Results = {
   html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="docNRO" class="accordion-toggle curso">\
     DATA_ROW\
