@@ -1,3 +1,43 @@
+Prueba = {
+  tarjeta: '<div class="card">\
+    <div class="card-header">\
+      <h5 class="mb-0">\
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSET" aria-expanded="true" >\
+        <div class="puntaje-detalle" style="background-color: FONDO; color: black;"" data-toggle="tooltip" data-placement="bottom" title="Puntaje promedio">PUNTAJE</div>\
+          <span class="cambiante"> TEXT </span>\
+        </button>\
+      </h5>\
+    </div>\
+    <div id="collapseSET" class="collapse multi-collapse" >\
+      <div class="card-body">\
+      <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">\
+      <thead>\
+        <tr>\
+          <th class="">Score</th>\
+          <th class="">#Resp</th>\
+          <th class="">Docente</th>\
+          <th class="table-header-icons">\
+            <span><i class="fas fa-calendar-check puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Asistencia a clase"></i></span>\
+            <span><i class="far fa-clock puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Cumple los horarios"></i></span>\
+            <span><i class="fas fa-sitemap puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Sus clases están bien organizadas"></i></span>\
+            <span><i class="fas fa-glasses puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Explica con claridad"></i></span>\
+            <span><i class="fas fa-heart puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Mantiene un trato adecuado"></i></span>\
+            <span><i class="fas fa-hands-helping puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Acepta la crítica fundamentada"></i></span>\
+            <span><i class="far fa-comments puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Fomenta la participación"></i></span>\
+            <span><i class="far fa-envelope-open puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Responde por mail o Campus"></i></span>\
+            <span><i class="fas fa-star puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Presenta un panorama amplio"></i></span>\
+          </th>\
+        </tr>\
+      </thead>\
+      <tbody id="tbody">\
+        CUERPO\
+      </tbody>\
+  </table>\
+      </div>\
+    </div>\
+  </div>'
+};
+
 Results = {
   html_docente: '<tr data-toggle="collapse" data-target=".multi-collapse" aria-expanded="true" aria-controls="docNRO" class="accordion-toggle curso">\
     DATA_ROW\
@@ -36,6 +76,10 @@ Calc = {
     "Responde por mail o Campus",
     "Presenta un panorama amplio"
   ],
+  pickColor(score){
+    var index = Math.floor(Math.abs(score-0.001));
+    return Calc.colors[index];
+  },
   score(data){
     let tot = 0;
     Object.keys(Calc.pesos).forEach(function(k){
@@ -83,30 +127,35 @@ Table = {
   init: function(){
     Table.clearTable();
   },
-  loadTable(materia,nombre,docente, row){
+  loadTable(materia,nombre,rows){
     // Calculate Score
-    var comments = Results.comentarios.filter(x => (x.doc == docente && x.mat == materia));
+
     let blabla = "imprimiendo comments";
     console.log(blabla);
-    console.log(comments);
-    row.score = Calc.score(row);
-    if (row.respuestas == 0){
-      return "";
-    }
-    const comms = [];
-    comments.forEach((item, i) => {
-      if(item.comentarios && item.editado == 0){
-        item.comentarios.forEach((c, j) => {
-          item.comentarios[j] = '(' + item.cuat + ')' + ' - ' + c;
-        });
-        item.editado = 1;
-      }
-      item.comentarios.forEach((c, i) => {
-        comms.push(c);
-      });
+    // console.log(comments);
+    rows.map(function(row){
+      row.score = Calc.score(row);
+      return row;
     });
+    const sorted_rows = rows.sort((a,b) => (b.score-a.score));
+    console.log(sorted_rows);
 
-
+    let html_doc = "";
+    rows.forEach(function(row){
+      if (row.respuestas >0){
+      var comments = Results.comentarios.filter(x => (x.doc == row.nombre && Equivalency.getEquivalent(x.mat) == materia));
+      const comms = [];
+      comments.forEach((item, i) => {
+        if(item.comentarios && item.editado == 0){
+          item.comentarios.forEach((c, j) => {
+            item.comentarios[j] = '(' + item.cuat + ')' + ' - ' + c;
+          });
+          item.editado = 1;
+        }
+        item.comentarios.forEach((c, i) => {
+          comms.push(c);
+        });
+      });
       // Use apropiate users glyphs as row.respuestas grows
       const users_glyph = (row.respuestas<3)?"fas fa-user":
                           (
@@ -114,19 +163,20 @@ Table = {
                           );
 
       const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
-      $('[data-toggle="tooltip"]').tooltip();
-      return Table.addRow(nombre,[
+
+      html_doc += Table.addRow(nombre,[
         {text: Calc.roundScore(row.score), class:""},
         {text: txt_resp, class: ""},
-        {text: docente, class:""},
+        {text: row.nombre, class:""},
         {text: Calc.detalle(row), class:""}
       ],comms);
-
-
-
+    }
+      });
+      $('[data-toggle="tooltip"]').tooltip();
+      return html_doc;
   },
   clearTable(){
-    $("#tbody").empty();
+    $("#accordion").empty();
     Table.lastrow = 0;
   },
   addRow(doc_id,row, comments){
@@ -212,27 +262,37 @@ $(function(){
           // Decode
           let html_final ="";
           var id = 0;
-          Results.data.opciones.forEach(function(x,i){
-            let row_html = "";
+          var cursos = Results.data.opciones;
+          cursos.map(function(c){
+            c.score = Calc.score(c.promedio);
+            return c;
+          });
+          const sorted_cursos = cursos.sort((a,b) => (b.score-a.score));
+          sorted_cursos.forEach(function(x,i){
             let raw_html = "";
-            row_html += Table.row_html.replace("TEXT",Calc.roundScore(Calc.score(x.promedio)));
-            row_html += Results.row_docente.replace("TEXT", x.nombre || "");
-            //row_html += Table.row_html.replace("TEXT",Calc.detalle(x.promedio));
-            raw_html = Results.html_docente.replace(/NRO/g, id);
-            html_final += raw_html.replace("DATA_ROW",row_html);
-            var docentes = x.docentes;
-            let html_doc = ""
-            $.each(docentes, function( k, v ) {
-                html_doc += Table.loadTable(materia,x.nombre,k,v);
+            if (x.score){
+            // row_html += Table.row_html.replace("TEXT",Calc.roundScore(Calc.score(x.promedio)));
+            // row_html += Results.row_docente.replace("TEXT", x.nombre || "");
+            // //row_html += Table.row_html.replace("TEXT",Calc.detalle(x.promedio));
+            // raw_html = Results.html_docente.replace(/NRO/g, id);
+            html_final += Prueba.tarjeta.replace("TEXT",x.nombre).replace(/SET/g,id).replace("PUNTAJE", Calc.roundScore(x.score)).replace("FONDO", Calc.pickColor(x.score));
 
+            var docentes = x.docentes;
+            let html_doc = "";
+            // html_doc += Table.loadTable(materia,x.nombre,docentes);
+            const docs = [];
+            $.each(docentes, function( k, v ) {
+                docs.push(v);
             });
-            html_final += html_doc;
+            html_doc += Table.loadTable(materia,x.nombre,docs);
+            html_final = html_final.replace("CUERPO", html_doc);
             // html2 += html_doc;
             id++;
+          }
           });
 
           Table.init();
-          $("#tbody").append(html_final);
+          $("#accordion").append(html_final);
           $('[data-toggle="tooltip"]').tooltip();
 
 

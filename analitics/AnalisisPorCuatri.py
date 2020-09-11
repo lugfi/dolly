@@ -49,9 +49,11 @@ def escribir_json(cuatri,materias, docentes, cursos):
             curso = {}
             curso['nombre'] = c.get_docentes_str()
             curso['promedio'] = c.get_promedios()
+            curso['score'] = 0
             curso['docentes'] = {}
             for d in c.get_docentes():
-                curso['docentes'][d.get_nombre()] = d.get_valoraciones()
+                dict = {'nombre' : d.get_nombre()}
+                curso['docentes'][d.get_nombre()] = {**d.get_valoraciones(), **dict}
             data['opciones'].append(curso)
 
         file_path = os.path.join(script_dir, 'cursos/' +codigo + '.json')
