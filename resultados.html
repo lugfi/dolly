@@ -106,8 +106,8 @@
     </div>
 
     <div class="table-responsive">
-
-      <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">
+      <button class="btn btn-primary" style="margin-top: 30px;" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Expandir/Contraer Todos</button>
+      <!-- <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">
       <thead>
         <tr>
           <h6>Cursos ordenados segun 1Q 2020</h6>
@@ -137,9 +137,26 @@
       <tbody id="tbody">
         <tr><td>Contando ovejas...</td></tr>
       </tbody>
-  </table>
+  </table> -->
+  <div id="accordion">
+    <span>Contando ovejas...</span>
+</div>
     </div>
   </div>
+  <script>
+  $(".btn-primary").click(function(){
+
+    if ($(this).data("closedAll")) {
+        $(".collapse").collapse("show");
+    }
+    else {
+        $(".collapse").collapse("hide");
+    }
+
+    // save last state
+    $(this).data("closedAll",!$(this).data("closedAll"));
+});
+</script>
 <script id="chatBroEmbedCode">/* Chatbro Widget Embed Code Start */function ChatbroLoader(chats,async){async=!1!==async;var params={embedChatsParameters:chats instanceof Array?chats:[chats],lang:navigator.language||navigator.userLanguage,needLoadCode:'undefined'==typeof Chatbro,embedParamsVersion:localStorage.embedParamsVersion,chatbroScriptVersion:localStorage.chatbroScriptVersion},xhr=new XMLHttpRequest;xhr.withCredentials=!0,xhr.onload=function(){eval(xhr.responseText)},xhr.onerror=function(){console.error('Chatbro loading error')},xhr.open('GET','//www.chatbro.com/embed.js?'+btoa(unescape(encodeURIComponent(JSON.stringify(params)))),async),xhr.send()}/* Chatbro Widget Embed Code End */ChatbroLoader({encodedChatId: '96ieg'});</script>
 </body>
 </html>
