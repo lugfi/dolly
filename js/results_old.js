@@ -88,21 +88,6 @@ Table = {
     // Populate table
     sorted_rows.forEach(function(row){
       const comm = comments.filter(x => x.doc==row.doc);
-<<<<<<< HEAD
-      const comms = [];
-      comm.forEach((item, i) => {
-        if(item.comentarios && item.editado == 0){
-          item.comentarios.forEach((c, j) => {
-            item.comentarios[j] = '(' + item.cuat + ')' + ' - ' + c;
-          });
-          item.editado = 1;
-        }
-        item.comentarios.forEach((c, i) => {
-          comms.push(c);
-        });
-      });
-      console.log(comms);
-=======
        const comms = [];
        comm.forEach((item, i) => {
          if(item.comentarios && item.editado == 0){
@@ -115,7 +100,6 @@ Table = {
            comms.push(c);
          });
        });
->>>>>>> tarjetas
 
       // Use apropiate users glyphs as row.respuestas grows
       const users_glyph = (row.respuestas<3)?"fas fa-user":
