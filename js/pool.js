@@ -20,6 +20,12 @@ Pool = {
     </label>\
   </div></fieldset>',
   header_html: '<form id="formIDX">\
+  <div class="input-group">\
+    <div class="input-group-prepend">\
+      <span class="input-group-text">Comentarios (opcional)</span>\
+    </div>\
+    <textarea class="form-control" name="comments" aria-label="Comentarios"></textarea>\
+  </div>\
         <div class="wrapper">\
           <div class="grid-header">\
             <div class="header-item"></div>\
@@ -32,12 +38,6 @@ Pool = {
             <div class="header-item"><p><i class="far fa-smile"></i></p>5</div>\
           </div>',
   footer_html: '\
-  <div class="input-group">\
-    <div class="input-group-prepend">\
-      <span class="input-group-text">Comentarios (opcional)</span>\
-    </div>\
-    <textarea class="form-control" name="comments" aria-label="Comentarios"></textarea>\
-  </div>\
   </div><button type="submit" class="btn btn-primary send">Listo</button></form>',
 
   createPoolHTML: function(idx){
