@@ -2,13 +2,13 @@ Prueba = {
   tarjeta: '<div class="card">\
     <div class="card-header">\
       <h5 class="mb-0">\
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSET" aria-expanded="true" >\
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSET" aria-expanded="false" >\
         <div class="puntaje-detalle" style="background-color: FONDO; color: black;"" data-toggle="tooltip" data-placement="bottom" title="Puntaje promedio">PUNTAJE</div>\
           <span class="cambiante"> TEXT </span>\
         </button>\
       </h5>\
     </div>\
-    <div id="collapseSET" class="collapse multi-collapse" >\
+    <div id="collapseSET" class="collapse multi-collapse show" >\
       <div class="card-body">\
       <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">\
       <thead>\
