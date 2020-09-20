@@ -18,7 +18,8 @@ $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret .
 
 $recaptcha = json_decode($recaptcha);
 // Take action based on the score returned
-if ($recaptcha->success == true && $recaptcha->score >= 0.5 && $recaptcha->action == 'submit') {
+//if ($recaptcha->success == true && $recaptcha->score >= 0.5 && $recaptcha->action == 'submit') {
+if (True){ // Desactivo captcha
    // This is a human. Insert the message into database OR send a mail
    if( isset($_POST["pio"]) ){
 		$data = trim($_POST["pio"]);
