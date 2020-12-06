@@ -47,7 +47,6 @@
   <script src="./js/equivalency.js"></script>
 
   <meta name="theme-color" content="#ffffff">
-  <link rel="manifest" href="./manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
 
 </head>
@@ -68,12 +67,12 @@
     </div>
     <script src="./js/dark-mode-switch.js"></script>
     <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
-      <a href="index.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Cargar encuesta</a>
-	  <a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i>Resultados por curso</a>
+      <a href="/" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Cargar encuesta</a>
+			<a href="resultados.html" type="button" class="btn btn-warning mr-1"><i class="fas fa-chart-bar"></i> Resultados por curso</a>
       <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa">Acerca de Dolly</a>
   </nav>
 
-  <div class="container">
+  <div class="container" style="margin-top: 20px;">
     <!-- modal -->
    <div class="modal" tabindex="-1" role="dialog" id="modal-dolly-programa">
       <div class="modal-dialog" role="document">
@@ -94,14 +93,13 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    <div class="alert alert-info alert-dismissible" role="alert" id="advertencia">
+      Estos son todos los docentes que alguna vez dieron esta materia (que sepamos)
+    </div>
 
     <div>
       <label for="materia" class="col-sm-2 col-form-label">Materia</label>
       <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
-    </div>
-
-	<div>
-      <h5> Estos son todos los docentes que alguna vez dieron esta materia (que sepamos)</h1>
     </div>
 
     <div class="table-responsive">
