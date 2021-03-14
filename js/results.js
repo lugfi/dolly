@@ -129,16 +129,11 @@ Table = {
   },
   loadTable(materia,nombre,rows){
     // Calculate Score
-
-    let blabla = "imprimiendo comments";
-    console.log(blabla);
-    // console.log(comments);
     rows.map(function(row){
       row.score = Calc.score(row);
       return row;
     });
     const sorted_rows = rows.sort((a,b) => (b.score-a.score));
-    console.log(sorted_rows);
 
     let html_doc = "";
     rows.forEach(function(row){
@@ -243,6 +238,9 @@ $(function(){
 
       });
       var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
+			if (materia == null) {
+				return
+			}
       const file = materia + ".json";
       // Load encuestas data JSON
       getJSON(Config.cursosPath + file, function(data,st){
