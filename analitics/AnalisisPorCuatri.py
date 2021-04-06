@@ -9,12 +9,12 @@ from Curso import Curso
 from Curso import Materia
 
 
-
 def emprolijar_docentes(docentes_raw):
     docentes_raw = docentes_raw.split('-')
     if "A Designar" in docentes_raw:
         docentes_raw.remove("A Designar")
     return docentes_raw
+
 
 def analizar_equivalencias():
     equivalencias = {}
@@ -28,14 +28,16 @@ def analizar_equivalencias():
 
 
 datafile = "../gente.txt"
-script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
 
-def escribir_log(cuatri,mensaje, doc, cuat, mat, linea):
+
+def escribir_log(cuatri, mensaje, doc, cuat, mat, linea):
     # with open(cuatri+'log.txt', 'a+') as log:
     #     log.write(mensaje + ',' + doc + ',' + cuat + ',' + mat + ',' + linea + '\n')
     return
 
-def escribir_json(cuatri,materias, docentes, cursos):
+
+def escribir_json(cuatri, materias, docentes, cursos):
     data = {}
     lista = []
     data['opciones'] = []
@@ -52,17 +54,16 @@ def escribir_json(cuatri,materias, docentes, cursos):
             curso['score'] = 0
             curso['docentes'] = {}
             for d in c.get_docentes():
-                dict = {'nombre' : d.get_nombre()}
-                curso['docentes'][d.get_nombre()] = {**d.get_valoraciones(), **dict}
+                dict = {'nombre': d.get_nombre()}
+                curso['docentes'][d.get_nombre()] = {
+                    **d.get_valoraciones(), **dict}
             data['opciones'].append(curso)
 
-        file_path = os.path.join(script_dir, 'cursos/' +codigo + '.json')
+        file_path = os.path.join(script_dir, 'cursos/' + codigo + '.json')
         with open(file_path, 'w') as outfile:
             json.dump(data, outfile)
         data.clear()
         data['opciones'] = []
-
-
 
 
 def buscar_materias_equivalentes(materia, dict_materias, equivalencias):
@@ -70,9 +71,11 @@ def buscar_materias_equivalentes(materia, dict_materias, equivalencias):
     if materia not in equivalencias:
         return [dict_materias[materia]]
     for m in equivalencias[materia]:
-        if m not in dict_materias: continue
+        if m not in dict_materias:
+            continue
         list.append(dict_materias[m])
     return list
+
 
 def buscar_docente(docente, materias, dict_docentes):
     for m in materias:
@@ -81,7 +84,6 @@ def buscar_docente(docente, materias, dict_docentes):
     doc = Docente(docente)
     dict_docentes[docente] = doc
     return doc
-
 
 
 def analizar_cuatri(archivo):
@@ -106,17 +108,19 @@ def analizar_cuatri(archivo):
             cursos[id_actual] = curso
             docentes_raw = curso_id['docentes']
             docentes_raw = emprolijar_docentes(docentes_raw)
-            materias_eq = buscar_materias_equivalentes(mat_id['codigo'], materias, equivalencias)
+            materias_eq = buscar_materias_equivalentes(
+                mat_id['codigo'], materias, equivalencias)
             for d in docentes_raw:
                 doc = buscar_docente(d, materias_eq, docentes)
                 curso.agregar_docente(doc)
             mat.agregar_curso(curso)
             id_actual += 1
         id_actual = 0
-    analizar_valoraciones(cuatri,datafile, materias)
-    escribir_json(cuatri,materias, docentes, cursos)
+    analizar_valoraciones(cuatri, datafile, materias, equivalencias)
+    escribir_json(cuatri, materias, docentes, cursos)
 
-def analizar_valoraciones(cuatri,archivo, materias):
+
+def analizar_valoraciones(cuatri, archivo, materias, equivalencias):
     docentes_valorados = []
     with open(archivo, mode='r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
@@ -126,13 +130,21 @@ def analizar_valoraciones(cuatri,archivo, materias):
                 line_count += 1
                 continue
             if row['mat'] not in materias:
-                escribir_log(cuatri, 'La siguiente materia no fue encontrada: ',row['mat'], row['cuat'], row['mat'],str(line_count))
+                escribir_log(cuatri, 'La siguiente materia no fue encontrada: ',
+                             row['mat'], row['cuat'], row['mat'], str(line_count))
                 line_count += 1
                 continue
-            mat = materias[row['mat']]
-            docente = mat.get_docente(row['doc'])
+            mat_code = row['mat']
+            materias_eq = buscar_materias_equivalentes(
+                mat_code, materias, equivalencias)
+            docente = None
+            for mat in materias_eq:
+                docente = mat.get_docente(row['doc'])
+                if not docente is None:
+                    break
             if docente is None:
-                escribir_log(cuatri,'El siguiente docente no se encontro: ',row['doc'], row['cuat'], row['mat'], str(line_count))
+                escribir_log(cuatri, 'El siguiente docente no se encontro: ',
+                             row['doc'], row['cuat'], row['mat'], str(line_count))
                 line_count += 1
                 continue
             for q in questions:

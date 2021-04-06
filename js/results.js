@@ -237,7 +237,8 @@ $(function(){
         $(location).attr('href', url);
 
       });
-      var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
+      //var materia = Equivalency.getEquivalent($(document).getUrlParam("mat"));
+      var materia = $(document).getUrlParam("mat");
 			if (materia == null) {
 				return
 			}
