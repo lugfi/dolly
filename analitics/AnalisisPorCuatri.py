@@ -18,7 +18,7 @@ def emprolijar_docentes(docentes_raw):
 
 def analizar_equivalencias():
     equivalencias = {}
-    file = open("../data/equivalencias.json",)
+    file = open("../data/equivalencias.json", encoding="utf8")
     eq = json.load(file)
     for e in eq:
         for m in e:
@@ -60,7 +60,7 @@ def escribir_json(cuatri, materias, docentes, cursos):
             data['opciones'].append(curso)
 
         file_path = os.path.join(script_dir, 'cursos/' + codigo + '.json')
-        with open(file_path, 'w') as outfile:
+        with open(file_path, 'w', encoding="utf8") as outfile:
             json.dump(data, outfile)
         data.clear()
         data['opciones'] = []
@@ -92,7 +92,7 @@ def analizar_cuatri(archivo):
     cuatri = archivo.split('_')
     cuatri = cuatri[-1].split('.')
     cuatri = cuatri[0]
-    f = open(archivo,)
+    f = open(archivo, encoding="utf8")
     js = json.load(f)
     id_actual = 0
     materias = {}
@@ -122,7 +122,7 @@ def analizar_cuatri(archivo):
 
 def analizar_valoraciones(cuatri, archivo, materias, equivalencias):
     docentes_valorados = []
-    with open(archivo, mode='r') as csv_file:
+    with open(archivo, mode='r', encoding="utf8") as csv_file:
         csv_reader = csv.DictReader(csv_file)
         line_count = 0
         for row in csv_reader:
