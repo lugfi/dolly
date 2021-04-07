@@ -13,8 +13,9 @@ Prueba = {
       <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">\
       <thead>\
         <tr>\
-          <th class="">Score</th>\
-          <th class="">#Resp</th>\
+          <th class="">Nota</th>\
+          <th class="">#Pers</th>\
+		  <th class="">#Com</th>\
           <th class="">Docente</th>\
           <th class="table-header-icons">\
             <span><i class="fas fa-calendar-check puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Asistencia a clase"></i></span>\
@@ -157,11 +158,12 @@ Table = {
                             (row.respuestas<10)?"fas fa-user-friends":"fas fa-users"
                           );
 
-      const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
-
+      const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>";
+	  const txt_com= (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
       html_doc += Table.addRow(nombre,[
         {text: Calc.roundScore(row.score), class:""},
         {text: txt_resp, class: ""},
+		{text: txt_com, class:""},
         {text: row.nombre, class:""},
         {text: Calc.detalle(row), class:""}
       ],comms);
