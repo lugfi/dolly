@@ -106,11 +106,13 @@ Table = {
                           (
                             (row.respuestas<10)?"fas fa-user-friends":"fas fa-users"
                           );
-
-      const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>" + (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
+                    
+      const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>";
+      const txt_com = (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
       Table.addRow([
         {text: Calc.roundScore(row.score), class:""},
         {text: txt_resp, class: ""},
+        {text: txt_com, class:""},
         {text: row.doc, class:""},
         {text: Calc.detalle(row), class:""}
       ],comms);
