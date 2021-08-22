@@ -56,10 +56,11 @@
 </head>
 <body>
 	<!-- Navigation -->
-	<nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
+	<nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="/">
-				<img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
+				<img style="width: 35px; height: 35px"  src="./img/DOLLY_imagen.png" width="100">
+				<img style="height: 35px" src="./img/DOLLY_LOGO.png" ></img>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
 				<span class="navbar-toggler-icon"></span>
@@ -67,7 +68,7 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active">
-						<a href="/" class="nav-link" data-toggle="tab"><i class="fas fa-chart-bar fa-fw"></i> Cargar encuesta</a>
+						<a href="/" class="nav-link text-dark" data-toggle="tab"><i class="fas fa-chart-bar fa-fw"></i> Cargar encuesta</a>
 					</li>
 					<li class="nav-item">
 						<a href="resultados.html" class="nav-link"><i class="fas fa-users fa-fw"></i> Resultados por <b>CURSO</b></a>
@@ -83,34 +84,20 @@
 		</div>
 	</nav>
 
-  <div class="container">
-    <!-- modal -->
-   <div class="modal" tabindex="-1" role="dialog" id="modal-dolly-programa">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body" align="center"  >
-            <img src="./img/ovejas_simpsons.gif" align="center" >
-            <p>Más <strike>deliciosa</strike> tierna info en el <a href="https://github.com/lugfi/dolly">repo</a>.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Owww</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  <div class="alert alert-success" role="alert">
-  <h4 class="alert-heading">Cargar encuesta</h4>
-  <p>Abajo podés ir llenando la encuesta. Asegúrate de no sólo puntuar los docentes sino también de en lo posible dejar tu reseña. </p>
-  <hr>
-  <p class="mb-0">Cualquier inconveniente o sugerencia, avisanos por el chat o abre un issue en el <a href="https://github.com/lugfi/dolly" class="alert-link">repositorio de Github</a></p>
-</div>
+  <div class="container mt-3">
+
+		<div class="alert alert-success" role="alert">
+			<h4 class="alert-heading">Cargar encuesta</h4>
+			<p>Abajo podés ir llenando la encuesta. Asegúrate de no sólo puntuar los docentes sino también de en lo posible dejar tu reseña. </p>
+			<hr>
+			<p class="mb-0">Cualquier inconveniente o sugerencia, avisanos por el chat o abre un issue en el <a href="https://github.com/lugfi/dolly" class="alert-link">repositorio de Github</a></p>
+		</div>
 
     <!-- form -->
-
     <form id="form-course">
       <div class="form-group">
-        <label class="col-sm-2 col-form-label" for="cuatri">Cuatrimestre</label>
-        <select id="cuatri" class="col-sm-10 custom-select custom-select-lg mb-3">
+        <label class="col-form-label" for="cuatri">Cuatrimestre</label>
+        <select id="cuatri" class="custom-select custom-select-lg mb-3">
           <option value="" hidden >Elija el cuatrimestre</option>
         </select>
       </div>
@@ -130,10 +117,10 @@
       <!-- couse selector -->
       <div class="form-group collapse" id="course-gruop">
         <label for="materia" class="col-sm-2 col-form-label">Materia</label>
-        <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled>
+        <select id="materia" class="col-sm-12 selectpicker show-tick" data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled>
         </select>
         <label for="curso" class="col-sm-2 col-form-label">Curso</label>
-        <select id="curso" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí el curso" disabled>
+        <select id="curso" class="col-sm-12 selectpicker show-tick" data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí el curso" disabled>
         </select>
       </div>
     </form>
@@ -150,9 +137,24 @@
         <a href="#" id="sendButton" class="btn btn-light mt-3">Enviar encuesta</a>
       </div>
     </div>
+	</div>
 
 
     <!-- modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="modal-dolly-programa">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body" align="center">
+            <img class="img-fluid" src="./img/ovejas_simpsons.gif" >
+            <p>Más <strike>deliciosa</strike> tierna info en el <a href="https://github.com/lugfi/dolly">repo</a>.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Owww</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal" tabindex="-1" role="dialog" id="okModal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
