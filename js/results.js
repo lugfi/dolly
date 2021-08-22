@@ -134,12 +134,16 @@ Table = {
       row.score = Calc.score(row);
       return row;
     });
-    const sorted_rows = rows.sort((a,b) => (b.score-a.score));
+    rows.sort((a,b) => (b.score-a.score));
 
     let html_doc = "";
     rows.forEach(function(row){
       if (row.respuestas >0){
       var comments = Results.comentarios.filter(x => (x.doc == row.nombre && x.mat == Equivalency.getEquivalent(materia)));
+
+			// Ordeno comentarios segun cuatrimestre (descendente)
+			comments.sort(sortComentariosPorCuatriDescendente)
+
       const comms = [];
       comments.forEach((item, i) => {
         if(item.comentarios && item.editado == 0){
