@@ -50,35 +50,47 @@
 
 </head>
 <body>
-  <nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
-    <div class="navbar-brand" href="./index.html">
-      <img style="width: 64px; height: 64px"  src="./img/DOLLY_imagen.png" width="100">
-      <img style="height: 45px" src="./img/DOLLY_LOGO.png" ></img>
-      <small><p class="pb-0 mb-0 cambiante">Sistema Automatizado de Encuestas Fiubenses</p></small>
-    </div>
+	<!-- Navigation -->
+	<nav class="navbar sticky-top navbar-expand-sm navbar-light bg-light justify-content-between">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">
+				<img style="width: 35px; height: 35px"  src="./img/DOLLY_imagen.png" width="100">
+				<img style="height: 35px" src="./img/DOLLY_LOGO.png" ></img>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a href="/" class="nav-link"><i class="fas fa-chart-bar fa-fw"></i> Cargar encuesta</a>
+					</li>
+					<li class="nav-item active">
+						<a href="resultados.html" class="nav-link"><i class="fas fa-users fa-fw"></i> Resultados por <b>CURSO</b></a>
+					</li>
+					<li class="nav-item">
+						<a href="resultados_old.html" class="nav-link"><i class="fas fa-user-graduate fa-fw"></i> Resultados por <b>DOCENTE</b></a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link" data-toggle="modal" data-target="#modal-dolly-programa"><i class="far fa-question-circle fa-fw"></i></a>
+					</li>
+				</ul>
+				<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" id="darkSwitch">
+					<label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+				</div>
+				<script src="./js/dark-mode-switch.js"></script>
+			</div>
+		</div>
+	</nav>
 
-
-    <!-- options menu -->
-    <!--<button type="button" class="btn btn-outline-default btn-circle"><img class="img-circle" src="files/img/note.png"./></button>-->
-    <div class="custom-control custom-switch">
-      <input type="checkbox" class="custom-control-input" id="darkSwitch">
-      <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
-    </div>
-    <script src="./js/dark-mode-switch.js"></script>
-    <div class="navbar-nav dropdown" style="display: flex; flex-direction: row;">
-      <a href="/" type="button" class="btn btn-primary"><i class="fas fa-chart-bar"></i> Cargar encuesta</a>
-      <a href="resultados_old.html" type="button" class="btn btn-success"><i class="fas fa-user-graduate"></i> Resultados por <b>DOCENTE</b> </a>
-      <a href="https://fede.dm/FIUBA-Plan/" target="_blank" type="button" class="btn btn-warning"><i class="far fa-calendar-alt"></i> <b>Organizador de Horarios</b></a>
-      <a class="btn btn-secondary" type="button" href="#" data-toggle="modal" data-target="#modal-dolly-programa"><i class="far fa-question-circle"></i></a>
-  </nav>
-
-  <div class="container" style="margin-top: 20px;">
+  <div class="container mt-3">
     <!-- modal -->
    <div class="modal" tabindex="-1" role="dialog" id="modal-dolly-programa">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-body" align="center"  >
-            <img src="./img/ovejas_simpsons.gif" align="center" >
+          <div class="modal-body" align="center">
+            <img class="img-fluid" src="./img/ovejas_simpsons.gif">
             <p>Más <strike>deliciosa</strike> tierna info en el <a href="https://github.com/lugfi/dolly">repo</a>.</p>
           </div>
           <div class="modal-footer">
@@ -99,11 +111,11 @@
     </div>
     <div>
       <label for="materia" class="col-sm-2 col-form-label">Materia</label>
-      <select id="materia" class="col-sm-10 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
+      <select id="materia" class="col-sm-12 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
     </div>
 
     <div class="table-responsive">
-      <button class="btn btn-primary" style="margin-top: 30px;" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Expandir/Contraer Todos</button>
+      <button class="btn btn-primary mb-3" style="margin-top: 30px;" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Expandir/Contraer Todos</button>
       <!-- <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">
       <thead>
         <tr>
