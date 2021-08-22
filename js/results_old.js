@@ -90,7 +90,22 @@ Table = {
       const comm = comments.filter(x => x.doc==row.doc);
 
 			// Ordeno comentarios segun cuatrimestre (descendente)
-			comm.sort(sortComentariosPorCuatriDescendente)
+			comm.sort((a, b) => {
+				const [cuatriA, anioA] = a.cuat.split("Q")
+				const [cuatriB, anioB] = b.cuat.split("Q")
+				
+				if (anioA > anioB) {
+					return -1
+				} else if (anioA < anioB) {
+					return 1
+				} else {
+					if (cuatriA > cuatriB) {
+						return -1
+					} else {
+						return 1
+					}
+				}
+			})
 
 			const comms = [];
 			comm.forEach((item, i) => {

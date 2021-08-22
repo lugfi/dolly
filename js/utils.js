@@ -20,23 +20,6 @@ function b64_to_utf8( str ) {
   return res;
 }
 
-const sortComentariosPorCuatriDescendente = (a, b) => {
-	const [cuatriA, anioA] = a.cuat.split("Q")
-	const [cuatriB, anioB] = b.cuat.split("Q")
-	
-	if (anioA > anioB) {
-		return -1
-	} else if (anioA < anioB) {
-		return 1
-	} else {
-		if (cuatriA > cuatriB) {
-			return -1
-		} else {
-			return 1
-		}
-	}
-}
-
 Stats = {
   stats: function(x){
     const mean = x.reduce((sum, value) => sum + value) /x.length;

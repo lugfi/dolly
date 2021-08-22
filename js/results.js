@@ -142,7 +142,22 @@ Table = {
       var comments = Results.comentarios.filter(x => (x.doc == row.nombre && x.mat == Equivalency.getEquivalent(materia)));
 
 			// Ordeno comentarios segun cuatrimestre (descendente)
-			comments.sort(sortComentariosPorCuatriDescendente)
+			comments.sort((a, b) => {
+				const [cuatriA, anioA] = a.cuat.split("Q")
+				const [cuatriB, anioB] = b.cuat.split("Q")
+				
+				if (anioA > anioB) {
+					return -1
+				} else if (anioA < anioB) {
+					return 1
+				} else {
+					if (cuatriA > cuatriB) {
+						return -1
+					} else {
+						return 1
+					}
+				}
+			})
 
       const comms = [];
       comments.forEach((item, i) => {
