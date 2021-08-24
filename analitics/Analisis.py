@@ -50,7 +50,7 @@ del df['separador']
 
 # Defino los cuatrimestres para filtar
 cuatrimestres = ['1Q2014', '2Q2014', '1Q2015', '2Q2015', '1Q2016', '2Q2016',
-                 '1Q2017', '2Q2017', '1Q2018', '2Q2018', '1Q2019', '2Q2019', '1Q2020', '2Q2020', '1Q2021']
+                 '1Q2017', '2Q2017', '1Q2018', '2Q2018', '1Q2019', '2Q2019', '1Q2020', '2Q2020', '1Q2021', '2Q2021']
 listas_df = []
 for c in cuatrimestres:
     listas_df.append(df.loc[df['cuat'] == c])
@@ -117,4 +117,4 @@ comentarios = df.groupby(['mat', 'doc', 'cuat', 'editado'])[
 with open(out_comentarios, mode="w", encoding="utf8") as f:
     f.write(comentarios.reset_index().to_json(orient='records'))
 
-analizar_cuatri('../data/Horarios_1Q2021.json')
+analizar_cuatri('../data/Horarios_2Q2021.json')
