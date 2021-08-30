@@ -160,14 +160,8 @@ Table = {
 			})
 
       const comms = [];
-      comments.forEach((item, i) => {
-        if(item.comentarios && item.editado == 0){
-          item.comentarios.forEach((c, j) => {
-            item.comentarios[j] = '(' + item.cuat + ')' + ' - ' + c;
-          });
-          item.editado = 1;
-        }
-        item.comentarios.forEach((c, i) => {
+      comments.forEach((item) => {
+        item.comentarios.forEach((c) => {
           comms.push(c);
         });
       });
@@ -178,14 +172,14 @@ Table = {
                           );
 
       const txt_resp = ""+row.respuestas+" <i class='"+users_glyph+"'></i>";
-	  const txt_com= (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
+      const txt_com= (comms.length>0?"<span class='ml-3'>"+comms.length+" <i class='fas fa-comment-dots'></i></span>":"");
       html_doc += Table.addRow(nombre,[
         {text: Calc.roundScore(row.score), class:""},
         {text: txt_resp, class: ""},
-		{text: txt_com, class:""},
+        {text: txt_com, class:""},
         {text: row.nombre, class:""},
         {text: Calc.detalle(row), class:""}
-      ],comms);
+      ], comments);
     }
       });
       $('[data-toggle="tooltip"]').tooltip();
@@ -195,16 +189,33 @@ Table = {
     $("#accordion").empty();
     Table.lastrow = 0;
   },
-  addRow(doc_id,row, comments){
+  addRow(doc_id, row, items){
     // row = [{text:"", class:""}...{}]
     // comments = []
+		const comments = [];
+		items.forEach((item) => {
+			item.comentarios.forEach((c) => {
+				const comment = {
+					comment: c,
+					cuatri: item.cuat
+				}
+				comments.push(comment);
+			});
+		});
 
     const id = Table.lastrow++;
 
+		const CUATRIS_VIRTUALES = Config.json_list.filter(e => e.virtual).map(e => e.ref)
+
     // Create comments html
     let comments_items = "";
-    comments && comments.forEach(function(comment){
-      comments_items += Table.comment_html.replace("COMMENT", Utils.escapeHtml(comment));
+    comments && comments.forEach((comment) => {
+			badges = Table.cuatri_badge_html.replace("CUATRI", comment.cuatri)
+			if (CUATRIS_VIRTUALES.includes(comment.cuatri)) {
+				badges += Table.virtual_badge_html
+			}
+
+      comments_items += Table.comment_html.replace("COMMENT", Utils.escapeHtml(comment.comment)).replace("BADGES", badges);
     });
 
     // Create row html
@@ -230,7 +241,9 @@ Table = {
       </td>\
   </tr>',
   row_html: '<td class="CLASS">TEXT</td>',
-  comment_html: '<div class="col-12 zebra">COMMENT</div>'
+  comment_html: '<div class="col-12 zebra pt-2"><h6>BADGES</h6>COMMENT</div>',
+	cuatri_badge_html: '<span class="badge badge-secondary mr-2">CUATRI</span>',
+	virtual_badge_html: '<span class="badge badge-secondary mr-2">VIRTUAL</span>'
 }
 
 // Hooks and init
