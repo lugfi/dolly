@@ -117,4 +117,4 @@ comentarios = df.groupby(['mat', 'doc', 'cuat', 'editado'])[
 with open(out_comentarios, mode="w", encoding="utf8") as f:
     f.write(comentarios.reset_index().to_json(orient='records'))
 
-analizar_cuatri('../data/Horarios_2Q2021.json')
+analizar_cuatri('../data/Horarios_1Q2021.json')
