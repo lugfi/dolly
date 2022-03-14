@@ -163,7 +163,7 @@ Table = {
 				badges += Table.virtual_badge_html
 			}
 
-      comments_items += Table.comment_html.replace("COMMENT", Utils.escapeHtml(comment.comment)).replace("BADGES", badges);
+      comments_items += Table.comment_html.replace("COMMENT", Utils.escapeHtml(comment.comment).trim()).replace("BADGES", badges);
     });
 
     // Create row html
@@ -188,7 +188,7 @@ Table = {
       </td>\
   </tr>',
   row_html: '<td class="CLASS">TEXT</td>',
-  comment_html: '<div class="col-12 zebra pt-2"><h6>BADGES</h6>COMMENT</div>',
+  comment_html: '<div class="col-12 zebra pt-2 pb-2"><h6>BADGES</h6><div style="white-space: pre-wrap;">COMMENT</div></div>',
 	cuatri_badge_html: '<span class="badge badge-secondary mr-2">CUATRI</span>',
 	virtual_badge_html: '<span class="badge badge-secondary mr-2">VIRTUAL</span>'
 }
