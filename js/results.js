@@ -1,5 +1,5 @@
 Prueba = {
-  tarjeta: '<div class="card">\
+  tarjeta: '<div class="card mb-2">\
     <div class="card-header">\
       <h5 class="mb-0">\
         <button class="btn btn-link" data-toggle="collapse" data-target="#collapseSET" aria-expanded="false" >\
@@ -8,7 +8,7 @@ Prueba = {
         </button>\
       </h5>\
     </div>\
-    <div id="collapseSET" class="collapse multi-collapse show" >\
+    <div id="collapseSET" class="collapse multi-collapse show results-table" >\
       <div class="card-body">\
       <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">\
       <thead>\

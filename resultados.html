@@ -117,57 +117,34 @@
       <select id="materia" class="col-sm-12 selectpicker show-tick " data-container="body" data-live-search="true" data-style="btn-primary" title="Elegí la materia" disabled> </select>
     </div>
 
+    <button
+      id="toggleAccordion"
+      class="btn btn-primary mb-3 mt-4"
+      type="button"
+    >
+      Expandir / Contraer Todos
+    </button>
+
     <div class="table-responsive">
-      <button class="btn btn-primary mb-3" style="margin-top: 30px;" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Expandir/Contraer Todos</button>
-      <!-- <table class="table cambiante" style="border-collapse:collapse; width: 0 auto;">
-      <thead>
-        <tr>
-          <h6>Cursos ordenados segun 2Q 2020 :)</h6>
-          <p>Si, como Dolly puntúa docentes te arma estadísticas para los cursos nuevos también :D </p>
-        </tr>
-
-      </thead>
-      <thead>
-        <tr>
-          <th class="">Score</th>
-          <th class="">#Resp</th>
-          <th class="">Docente</th>
-          <th class="table-header-icons">
-            <span><i class="fas fa-calendar-check puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Asistencia a clase"></i></span>
-            <span><i class="far fa-clock puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Cumple los horarios"></i></span>
-            <span><i class="fas fa-sitemap puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Sus clases están bien organizadas"></i></span>
-            <span><i class="fas fa-glasses puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Explica con claridad"></i></span>
-            <span><i class="fas fa-heart puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Mantiene un trato adecuado"></i></span>
-            <span><i class="fas fa-hands-helping puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Acepta la crítica fundamentada"></i></span>
-            <span><i class="far fa-comments puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Fomenta la participación"></i></span>
-            <span><i class="far fa-envelope-open puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Responde por mail o Campus"></i></span>
-            <span><i class="fas fa-star puntaje fa-fw cambiante" data-toggle="tooltip" data-placement="bottom" title="Presenta un panorama amplio"></i></span>
-          </th>
-        </tr>
-
-      </thead>
-      <tbody id="tbody">
-        <tr><td>Contando ovejas...</td></tr>
-      </tbody>
-  </table> -->
-  <div id="accordion">
-    <span>Contando ovejas...</span>
-</div>
+      <div id="accordion">
+        <span>Contando ovejas...</span>
+      </div>
     </div>
   </div>
+
   <script>
-  $(".btn-primary").click(function(){
+    $("#toggleAccordion").click(() => {
 
-    if ($(this).data("closedAll")) {
-        $(".collapse").collapse("show");
-    }
-    else {
-        $(".collapse").collapse("hide");
-    }
+      if ($(this).data("closedAll")) {
+        $(".results-table").collapse("show");
+      } else {
+        $(".results-table").collapse("hide");
+      }
 
-    // save last state
-    $(this).data("closedAll",!$(this).data("closedAll"));
-});
-</script>
-<script id="chatBroEmbedCode">/* Chatbro Widget Embed Code Start */function ChatbroLoader(chats,async){async=!1!==async;var params={embedChatsParameters:chats instanceof Array?chats:[chats],lang:navigator.language||navigator.userLanguage,needLoadCode:'undefined'==typeof Chatbro,embedParamsVersion:localStorage.embedParamsVersion,chatbroScriptVersion:localStorage.chatbroScriptVersion},xhr=new XMLHttpRequest;xhr.withCredentials=!0,xhr.onload=function(){eval(xhr.responseText)},xhr.onerror=function(){console.error('Chatbro loading error')},xhr.open('GET','//www.chatbro.com/embed.js?'+btoa(unescape(encodeURIComponent(JSON.stringify(params)))),async),xhr.send()}/* Chatbro Widget Embed Code End */ChatbroLoader({encodedChatId: '98FYi'});</script></body>
+      // save last state
+      $(this).data("closedAll", !$(this).data("closedAll"));
+    });
+  </script>
+  <script id="chatBroEmbedCode">/* Chatbro Widget Embed Code Start */function ChatbroLoader(chats,async){async=!1!==async;var params={embedChatsParameters:chats instanceof Array?chats:[chats],lang:navigator.language||navigator.userLanguage,needLoadCode:'undefined'==typeof Chatbro,embedParamsVersion:localStorage.embedParamsVersion,chatbroScriptVersion:localStorage.chatbroScriptVersion},xhr=new XMLHttpRequest;xhr.withCredentials=!0,xhr.onload=function(){eval(xhr.responseText)},xhr.onerror=function(){console.error('Chatbro loading error')},xhr.open('GET','//www.chatbro.com/embed.js?'+btoa(unescape(encodeURIComponent(JSON.stringify(params)))),async),xhr.send()}/* Chatbro Widget Embed Code End */ChatbroLoader({encodedChatId: '98FYi'});</script>
+</body>
 </html>
