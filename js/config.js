@@ -18,7 +18,8 @@ Config = {
     {name: "1º Cuat 2020", ref: "1Q2020", virtual: true},
     {name: "2º Cuat 2020", ref: "2Q2020", virtual: true},
     {name: "1º Cuat 2021", ref: "1Q2021", virtual: true},
-    {name: "2º Cuat 2021", ref: "2Q2021", virtual: true}
+    {name: "2º Cuat 2021", ref: "2Q2021", virtual: true},
+    {name: "1º Cuat 2022", ref: "1Q2022", virtual: true}
   ],
   CSVDelim: ","
 }
