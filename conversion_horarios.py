@@ -13,12 +13,12 @@ convertirlos a .json
 
 data = {}
 
-with open('carreras.json') as carreras:
+with open('carreras.json', encoding='utf-8') as carreras:
     carreras_json = json.load(carreras)
     data['carreras'] = carreras_json
     
 
-with open('horarios.json') as horarios_file:
+with open('horarios.json', encoding='utf-8') as horarios_file:
     horarios = json.load(horarios_file)
     cuatrimestre = horarios['cuatrimestre']
     cursos = {}
