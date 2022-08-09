@@ -1,22 +1,39 @@
 [data-theme="dark"] {
-  background-color: #4d4d4d !important;
-  color: #eee;
+  background-color: rgb(24, 26, 27) !important;
+  color: rgb(209, 205, 199);
 }
 
 [data-theme="dark"] .bg-light {
-  background-color: #333 !important;
+    background-color: rgb(27, 30, 31) !important;
 }
 
 [data-theme="dark"] .bg-white {
-  background-color: #4d4d4d !important;
+  background-color: rgb(24, 26, 27) !important;
 }
 
 [data-theme="dark"] .bg-black {
-  background-color: #eee !important;
+  background-color: rgb(209, 205, 199) !important;
+}
+
+[data-theme="dark"] .alert-info {
+    color: rgb(142, 227, 241);
+    background-color: rgb(20, 59, 67);
+    border-color: rgb(30, 89, 97);
+}
+
+[data-theme="dark"] .alert-success {
+    color: rgb(153, 230, 171);
+    background-color: rgb(26, 62, 41);
+    border-color: rgb(37, 90, 50);
+}
+
+
+[data-theme="dark"] .alert-success .alert-link {
+    color: rgb(214, 210, 205);
 }
 
 [data-theme="dark"] .cambiante{
-  color: #f2f2f2;
+  color: rgb(142, 227, 241);
 }
 
 [data-theme="dark"] .table {
@@ -24,11 +41,11 @@
 }
 
 [data-theme="dark"] .zebra:nth-child(odd) {
-    background-color: #333333 !important;
+    background-color: rgb(31, 34, 35) !important;
 }
 
 [data-theme="dark"] .card {
-  background-color: #4d4d4d;
+  background-color: #131516;
 }
 
 [data-theme='dark'] .modal-content {
@@ -44,9 +61,29 @@
 }
 
 [data-theme='dark'] a.nav-link {
-  color: #fff !important;
+  color: #e8e6e3 !important;
 }
 
 [data-theme='dark'] .navbar-toggler-icon {
   background: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+[data-theme='dark'] .puntaje_color_5 {
+  background-color: #2bad00 !important;
+}
+
+[data-theme='dark'] .puntaje_color_4 {
+  background-color: #598f00 !important;
+}
+
+[data-theme='dark'] .puntaje_color_3 {
+  background-color: #828200 !important;
+}
+
+[data-theme='dark'] .puntaje_color_2 {
+  background-color: #cc6600 !important;
+}
+
+[data-theme='dark'] .puntaje_color_1 {
+  background-color: #cc6600 !important;
 }

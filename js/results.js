@@ -61,10 +61,10 @@ Calc = {
     const res = Object.keys(Calc.pesos).map(k => data[k]);
     colors = res.map(x => Calc.colors[Math.floor(Math.abs(x-0.001))]);
 
-    const number_html = "<div class='puntaje-detalle' style='background-color: FONDO; color: black;' data-toggle='tooltip' data-placement='bottom' title='TOOLTIP'>NUMBER</div>";
+    const number_html = "<div class='puntaje-detalle puntaje_color_NRO color: black;' data-toggle='tooltip' data-placement='bottom' title='TOOLTIP'>NUMBER</div>";
     let html="";
     res.forEach(function(n,i){
-      html += number_html.replace("FONDO", colors[i]).replace("NUMBER", Calc.roundScoreFix(n)).replace("TOOLTIP", Calc.tooltips[i]);
+      html += number_html.replace("NRO", Math.floor(Math.abs(n-0.001))+1).replace("NUMBER", Calc.roundScoreFix(n)).replace("TOOLTIP", Calc.tooltips[i]);
     });
     return html;
   },
@@ -90,13 +90,14 @@ Calc = {
     });
     return tot/Calc.sum(Calc.pesos);
   },
-  colors:[
+  colors: [
     '#ff0000', //:(
     '#ff8000',
     '#ffff33', //:|
     '#b2ff66',
     '#33ff33'  //:D
   ],
+  
   pesos: {
     'asistencia': 1,
     'cumple_horarios': 1,
