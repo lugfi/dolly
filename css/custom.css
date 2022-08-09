@@ -74,3 +74,23 @@
 .curso {
   background-color:rgba(0, 0, 0, 0.2);
 }
+
+.puntaje_color_5 {
+  background-color: #33ff33 !important;
+}
+
+.puntaje_color_4 {
+  background-color: #b2ff66 !important;
+}
+
+.puntaje_color_3 {
+  background-color: #ffff33 !important;
+}
+
+.puntaje_color_2 {
+  background-color: #ff8000 !important;
+}
+
+.puntaje_color_1 {
+  background-color: #ff0000 !important;
+}
