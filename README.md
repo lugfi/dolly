@@ -42,7 +42,7 @@ selector de materias, se filtra la información correspondiente.
 ## Setup (Docker)
 * Instalar [Docker](https://docs.docker.com/engine/install/)
 * Instalar [Docker compose](https://docs.docker.com/compose/install/)
-* Correr `docker-compose up` en la carpeta root del proyecto.
+* Correr `LETSENCRYPT_EMAIL="correoadmin@d.com" DOLLY_DOMAIN="dominiodlly.com"  docker-compose up --build -d` en la carpeta root del proyecto.
 
 ## Decisiones de diseño
 Hay información en la [wiki](https://github.com/lugfi/dolly/wiki).
