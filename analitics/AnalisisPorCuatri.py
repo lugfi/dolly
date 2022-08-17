@@ -69,11 +69,19 @@ def escribir_json(cuatri, materias, docentes, cursos):
 def buscar_materias_equivalentes(materia, dict_materias, equivalencias):
     list = []
     if materia not in equivalencias:
-        return [dict_materias[materia]]
+        return [dict_materias[materia]] if materia in dict_materias else None
     for m in equivalencias[materia]:
         if m not in dict_materias:
             continue
         list.append(dict_materias[m])
+    return list
+
+
+def buscar_codigos_materias_equivalentes(materia, equivalencias):
+    list = []
+    for m in equivalencias.get(materia, []):
+        if m != materia:
+            list.append(m)
     return list
 
 
@@ -101,6 +109,16 @@ def analizar_cuatri(archivo):
     for mat_id in js['materias']:
         mat = Materia(mat_id['codigo'], mat_id['nombre'])
         materias[mat.get_codigo()] = mat
+
+    for mat_codigo in [k for k in materias.keys()]:
+        materias_eq = buscar_codigos_materias_equivalentes(
+            mat_codigo, equivalencias)
+        if not materias_eq:
+            continue
+        for m in materias_eq:
+            if m not in materias:
+                materias[m] = Materia(m, materias[mat_codigo].nombre)
+
     for mat_id in js['materias']:
         mat = materias[mat_id['codigo']]
         for curso_id in mat_id['cursos']:
@@ -113,7 +131,8 @@ def analizar_cuatri(archivo):
             for d in docentes_raw:
                 doc = buscar_docente(d, materias_eq, docentes)
                 curso.agregar_docente(doc)
-            mat.agregar_curso(curso)
+            for m in materias_eq:
+                m.agregar_curso(curso)
             id_actual += 1
         id_actual = 0
     analizar_valoraciones(cuatri, datafile, materias, equivalencias)
@@ -129,14 +148,11 @@ def analizar_valoraciones(cuatri, archivo, materias, equivalencias):
             if line_count == 0:
                 line_count += 1
                 continue
-            if row['mat'] not in materias:
-                escribir_log(cuatri, 'La siguiente materia no fue encontrada: ',
-                             row['mat'], row['cuat'], row['mat'], str(line_count))
-                line_count += 1
-                continue
             mat_code = row['mat']
             materias_eq = buscar_materias_equivalentes(
                 mat_code, materias, equivalencias)
+            if materias_eq is None:
+                continue
             docente = None
             for mat in materias_eq:
                 docente = mat.get_docente(row['doc'])
