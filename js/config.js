@@ -5,6 +5,7 @@ Config = {
   cursosPath: "./analitics/cursos/",
   equivalencyData: "equivalencias.json",
   json_list: [  // File names: Horarios_REF.json
+    {name: "2º Cuat 2022", ref: "2Q2022", virtual: false},
     {name: "1º Cuat 2022", ref: "1Q2022", virtual: false},
     {name: "2º Cuat 2021", ref: "2Q2021", virtual: true},
     {name: "1º Cuat 2021", ref: "1Q2021", virtual: true},
