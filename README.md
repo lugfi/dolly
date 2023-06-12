@@ -1,57 +1,53 @@
-# Dolly - Sistema Automatizado de Encuestas Fiubenses
+## DOLLY NEXT
 
-## Idea
-El concepto es sencillo: un sitio web estático (hosteado en github.io) que
-permite al usuario llenar una encuesta sobre los docentes de un curso,
-y por otro lado, mostrar los resultados de las encuestas de docentes
-para una materia en particular.
+## System Requirements
 
-## Filosofía
-Dolly es actualmente una prueba de concepto, por lo cual, está todo atado
-con alambre.
+- Node.js 16.8 or later;
+- macOS, Windows (including WSL), and Linux are supported.
 
-El backend se encarga de persistir los datos crudos de las encuestas
-enviadas por los usuarios en un CSV, y de procesarlas regularmente
-para crearlas estadísticas (almacenadas en un json).
+## 💻 Programming languages and technologies
 
-El frontend se encarga de traer los json del servidor, procesarlos,
-realizar los filtrados correspondientes respecto a docentes, materias,
-etc, y de enviar la información de las encuestas al servidor.
-Así tambien, se encarga de levantar los json con los resultados
-de las estadísticas y los comentarios, para mostrárselos al usuario
-que lo requiera.
+- [NextJS](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Chakra UI](https://chakra-ui.com/)
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Husky](https://typicode.github.io/husky/#/)
+- [Lint-staged](https://github.com/okonet/lint-staged)
+- [Cypress](https://www.cypress.io/)
 
-## Funcionamiento
-Para garantizar que el estudiante conteste las encuestas de los docentes
-auxiliares (JTP y Ayudantes), se le pide que ingrese la materia y el
-cuatrimestre que la cursó. Con esta información, se busca en el listado
-de materias robado del Organizador de Materias de Lugfi (un json)
-y se listan todos los docentes de los cursos.
+## RUN
 
-Luego de completar toda la encuesta, la información se manda en texto
-plano al servidor, por medio de POST. El servidor realiza una pequeña
-validación, y persiste la información en la base de datos (``gente.txt``).
+- Clone repository
 
-Un crontab se encarga de ejecutar el script ``analitics\analisis.sh``,
-el cual procesa la información de ``gente.txt`` y guarda los resultados
-en los archivos ``analitics/valoraciones_docentes.json`` y
-``analitics/comentarios_docentes.json``. Cuando el usuario quiere ver
-los resultados, dichos json son levantados por el frontend, y con el 
-selector de materias, se filtra la información correspondiente.
+`$ git clone https://github.com/lugfi/dolly.git`
 
-## Setup (Docker)
-* Instalar [Docker](https://docs.docker.com/engine/install/)
-* Instalar [Docker compose](https://docs.docker.com/compose/install/)
-* Correr `LETSENCRYPT_EMAIL="correoadmin@d.com" DOLLY_DOMAIN="dominiodlly.com"  docker-compose up --build -d` en la carpeta root del proyecto.
+- Install dependencies
 
-## Decisiones de diseño
-Hay información en la [wiki](https://github.com/lugfi/dolly/wiki).
+`$ yarn` OR `$ npm i`
 
-## Colaboradores y diseñadores
-Vero: [verosupervero](https://github.com/verosupervero)
+- Put the Husky to work
 
-Fer: [fndk](https://github.com/fdnk)
+`$ yarn husky-install` OR `$ npm run husky-install`
 
-Lucas: [sotlucas](https://github.com/sotlucas)
+- Run the development server
 
-Luis: [LuisCusihuaman](https://github.com/LuisCusihuaman)
+`$ yarn dev` OR `$ npm run dev`
+
+```
+    1. Open (http://localhost:3000) with your browser to see the result.
+    2. You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+
+## Terminal commands
+
+- `dev`: runs your application on `localhost:3000`;
+- `build`: creates the production build version;
+- `start`: starts a simple server with the build production code;
+- `prettier`: runs the prettier commands in all components and pages;
+- `lint`: runs the lintering commands in all components and pages;
+- `lint-staged`: runs the linting & prettier commands to those files which are changed not all the project files;
+- `husky-install`: initialize the husky;
+- `type-check`: runs the linter in all components and pages;
+- `cypress:open`: runs cypress on browser to check e2e and components tests;
+- `cypress:run`: runs cypress on terminal to check e2e and components tests.
