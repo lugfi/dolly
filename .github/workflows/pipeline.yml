@@ -1,0 +1,31 @@
+name: Lint, Format, and Test
+
+on:
+  push:
+    branches:
+      - next-dolly
+  pull_request:
+    branches:
+      - next-dolly
+
+jobs:
+  lint-format-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint and Format
+        run: npm run type-check && npm run lint-staged
+
+      - name: Run Tests
+        run: npm run test

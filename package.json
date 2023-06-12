@@ -2,6 +2,9 @@
   "name": "dolly-next",
   "description": "dolly-next",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +15,8 @@
     "husky-install": "husky install",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit && eslint --fix . && prettier --write .",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run && cypress run --component"
+    "cypress:run": "cypress run && cypress run --component",
+    "test": "jest"
   },
   "dependencies": {
     "@chakra-ui/react": "2.7.0",
