@@ -3,10 +3,10 @@ name: Lint, Format, and Test
 on:
   push:
     branches:
-      - next-dolly
+      - dolly-next
   pull_request:
     branches:
-      - next-dolly
+      - dolly-next
 
 jobs:
   lint-format-test:
