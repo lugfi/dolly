@@ -1,37 +1,41 @@
 import { readFileSync, writeFileSync } from "fs";
+import { groupBy, mean } from "lodash";
 import {
   ComentariosData,
+  PuntajeData,
   PuntajesData,
-  QuestionData,
   RowData,
   ValoracionData,
 } from "./types";
 
+// TODO: editado never was used, deleted from all code!
 export function readCSVFile(filepath: string): RowData[] {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
-  const csvData = readFileSync(filepath, "utf8");
-  const rows: RowData[] = csvData
+  const csvData: string = readFileSync(filepath, "utf8");
+  const rows: Array<Array<string>> = csvData
     .split("\n")
+    .slice(1) // Skip the first line
     .map((line) => line.split(","))
-    .filter((values) => values.length >= 13)
-    .map((values) => ({
-      doc: values[0].trim(),
-      mat: values[1].trim(),
-      cuat: values[2].trim(),
-      asistencia: parseFloat(values[3].trim()),
-      cumple_horarios: parseFloat(values[4].trim()),
-      buen_trato: parseFloat(values[5].trim()),
-      clase_organizada: parseFloat(values[6].trim()),
-      claridad: parseFloat(values[7].trim()),
-      fomenta_participacion: parseFloat(values[8].trim()),
-      panorama_amplio: parseFloat(values[9].trim()),
-      acepta_critica: parseFloat(values[10].trim()),
-      responde_mails: parseFloat(values[11].trim()),
-      comentarios: values[12].trim(),
-      editado: values[13].trim(), // Add the 'editado' property
-    }));
+    .filter((values) => values.length >= 14);
+  const data: RowData[] = rows.map((values) => ({
+    doc: values[0].trim(),
+    mat: values[1].trim(),
+    cuat: values[2].trim(),
+    timestamp: parseInt(values[3].trim(), 10),
+    asistencia: parseFloat(values[4].trim()),
+    cumple_horarios: parseFloat(values[5].trim()),
+    buen_trato: parseFloat(values[6].trim()),
+    clase_organizada: parseFloat(values[7].trim()),
+    claridad: parseFloat(values[8].trim()),
+    fomenta_participacion: parseFloat(values[9].trim()),
+    panorama_amplio: parseFloat(values[10].trim()),
+    acepta_critica: parseFloat(values[11].trim()),
+    responde_mails: parseFloat(values[12].trim()),
+    comentarios: values[13]?.trim(),
+    editado: values[14]?.trim() || "",
+  }));
 
-  return rows;
+  return data;
 }
 
 export function filterDesignarDocente(rows: RowData[]): RowData[] {
@@ -39,43 +43,25 @@ export function filterDesignarDocente(rows: RowData[]): RowData[] {
 }
 
 export function calculateScore(rows: RowData[]): PuntajesData {
-  const pesos: QuestionData = {
-    asistencia: 1,
-    cumple_horarios: 1,
-    clase_organizada: 0.7,
-    claridad: 0.7,
-    buen_trato: 0.5,
-    acepta_critica: 0.5,
-    fomenta_participacion: 0.5,
-    responde_mails: 0.5,
-    panorama_amplio: 0.5,
-    editado: "",
-  };
+  const groupKey = (row: RowData) => `${row.mat}-${row.doc}`;
+  const groupData = groupBy(rows, groupKey);
 
-  const features = Object.keys(pesos);
-  const w = Object.values(pesos);
-  const wn = w.map((value) => value / w.reduce((sum, val) => sum + val, 0));
+  return Object.keys(groupData).reduce((acc, key) => {
+    const rows = groupData[`${key}`];
+    const puntajeData: PuntajeData = {
+      asistencia: mean(rows.map((row) => row.asistencia)),
+      cumple_horarios: mean(rows.map((row) => row.cumple_horarios)),
+      clase_organizada: mean(rows.map((row) => row.clase_organizada)),
+      claridad: mean(rows.map((row) => row.claridad)),
+      buen_trato: mean(rows.map((row) => row.buen_trato)),
+      acepta_critica: mean(rows.map((row) => row.acepta_critica)),
+      fomenta_participacion: mean(rows.map((row) => row.fomenta_participacion)),
+      responde_mails: mean(rows.map((row) => row.responde_mails || 0)),
+      panorama_amplio: mean(rows.map((row) => row.panorama_amplio)),
+    };
 
-  const puntajes: PuntajesData = {};
-  const respuestas: { [key: string]: number } = {}; // Updated type
-
-  for (const row of rows) {
-    const key = `${row.mat}-${row.doc}`;
-    const values = features.map((feature) => row[feature]);
-    const score = Math.sqrt(
-      values.reduce((sum, val, index) => sum + val ** 2 * wn[index], 0)
-    );
-
-    if (!puntajes[key]) {
-      puntajes[key] = 0;
-      respuestas[key] = 0;
-    }
-
-    puntajes[key] += score;
-    respuestas[key]++; // Updated access to respuestas[key]
-  }
-
-  return puntajes;
+    return { ...acc, [key]: puntajeData };
+  }, {});
 }
 
 export function prepareValoracionesData(
@@ -88,19 +74,17 @@ export function prepareValoracionesData(
 }
 
 export function prepareComentariosData(rows: RowData[]): ComentariosData {
-  const comentarios = rows.reduce((result, row) => {
+  return rows.reduce((result, row) => {
     const key = `${row.mat}-${row.doc}-${row.cuat}`;
     const comment = { comentarios: row.comentarios, editado: row.editado || 0 };
 
-    if (!result[key]) {
-      result[key] = [];
-    }
+    const updatedResult: ComentariosData = {
+      ...result,
+      [key]: [...(result[`${key}`] || []), comment],
+    };
 
-    result[key].push(comment);
-    return result;
+    return updatedResult;
   }, {} as ComentariosData);
-
-  return comentarios;
 }
 
 export function writeJSONToFile(filepath: string, data: any) {

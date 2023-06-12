@@ -15,7 +15,7 @@ import {
 
 describe("readCSVFile", () => {
   test("should correctly read and parse the CSV file", () => {
-    const filepath = "./test.csv";
+    const filepath = "gente.txt";
     // Create a sample CSV file for testing
 
     const expectedRows: RowData[] = [
@@ -29,9 +29,7 @@ describe("readCSVFile", () => {
 
 describe("filterDesignarDocente", () => {
   test("should filter out 'A Designar' docentes from the rows", () => {
-    const rows: RowData[] = [
-      // Define some sample rows including 'A Designar' docentes
-    ];
+    const rows = readCSVFile("gente.txt");
 
     const filteredRows = filterDesignarDocente(rows);
     // Define the expected rows after filtering
@@ -43,9 +41,7 @@ describe("filterDesignarDocente", () => {
 
 describe("calculateScore", () => {
   test("should calculate the scores correctly based on the rows", () => {
-    const rows: RowData[] = [
-      // Define some sample rows with ratings for different features
-    ];
+    const rows = readCSVFile("gente.txt");
 
     const expectedPuntajes: PuntajesData = {
       // Define the expected puntajes based on the sample rows
@@ -58,14 +54,12 @@ describe("calculateScore", () => {
 
 describe("prepareValoracionesData", () => {
   test("should prepare the valoraciones data correctly from the puntajes", () => {
-    const puntajes: PuntajesData = {
-      // Define some sample puntajes
-    };
-
     const expectedValoraciones: ValoracionData[] = [
       // Define the expected valoraciones based on the sample puntajes
     ];
 
+    const rows = readCSVFile("gente.txt");
+    const puntajes = calculateScore(rows);
     const valoraciones = prepareValoracionesData(puntajes);
     expect(valoraciones).equals(expectedValoraciones);
   });
@@ -73,14 +67,10 @@ describe("prepareValoracionesData", () => {
 
 describe("prepareComentariosData", () => {
   test("should prepare the comentarios data correctly from the rows", () => {
-    const rows: RowData[] = [
-      // Define some sample rows with comentarios and editado values
-    ];
-
     const expectedComentarios: ComentariosData = {
       // Define the expected comentarios based on the sample rows
     };
-
+    const rows = readCSVFile("gente.txt");
     const comentarios = prepareComentariosData(rows);
     expect(comentarios).equals(expectedComentarios);
   });

@@ -1,4 +1,3 @@
-// Read and sanitize the data from the CSV file
 import {
   analizarCuatri,
   calculateScore,
@@ -31,6 +30,7 @@ const puntajes: PuntajesData = calculateScore(filteredRows);
 
 // Prepare the data for writing to JSON files
 const valoraciones: ValoracionData[] = prepareValoracionesData(puntajes);
+//    # agrupa los comentarios by CODIGOMATERIA/DOCENTE/Cuatrimestre/editado - comentarios {"string"/NAN}
 const comentarios: ComentariosData = prepareComentariosData(filteredRows);
 
 // Write data to JSON files
