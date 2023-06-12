@@ -1,5 +1,4 @@
 import {
-  analizarCuatri,
   calculateScore,
   filterDesignarDocente,
   prepareComentariosData,
@@ -38,4 +37,4 @@ writeJSONToFile(outValoraciones, valoraciones);
 writeJSONToFile(outComentarios, comentarios);
 
 // Function to analyze the data by cuatrimestre
-analizarCuatri();
+// analizarCuatri();
