@@ -34,11 +34,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <meta property="og:image:type" content="image/jpeg" key="image:type" />
         <meta property="og:image:width" content="1200" key="image:width" />
         <meta property="og:image:height" content="630" key="image:height" />
-        <meta
-          property="og:image:alt"
-          content="DOLLY NEXT"
-          key="image:alt"
-        />
+        <meta property="og:image:alt" content="DOLLY NEXT" key="image:alt" />
         <link
           rel="apple-touch-icon"
           type="image/png"

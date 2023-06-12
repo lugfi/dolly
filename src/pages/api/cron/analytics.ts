@@ -38,4 +38,4 @@ writeJSONToFile(outValoraciones, valoraciones);
 writeJSONToFile(outComentarios, comentarios);
 
 // Function to analyze the data by cuatrimestre
-analizarCuatri("../data/Horarios_2Q2022.json");
+analizarCuatri();

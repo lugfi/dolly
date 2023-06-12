@@ -90,8 +90,7 @@ describe("writeJSONToFile", () => {
 
 describe("analizarCuatri", () => {
   test("should analyze the cuatrimestre data correctly", () => {
-    const jsonFile = "./cuatrimestre.json";
-
+    // const jsonFile = "./cuatrimestre.json";
     // Invoke the analizarCuatri function with the JSON file
     // Implement the necessary assertions to check the analysis results
   });

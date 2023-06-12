@@ -87,12 +87,13 @@ export function prepareComentariosData(rows: RowData[]): ComentariosData {
   }, {} as ComentariosData);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function writeJSONToFile(filepath: string, data: any) {
   // eslint-disable-next-line security/detect-non-literal-fs-filename
   writeFileSync(filepath, JSON.stringify(data, null, 2));
 }
 
-export function analizarCuatri(jsonFile: string) {
+export function analizarCuatri() {
   // Implementation for analyzing cuatrimestre data
   // ...
 }

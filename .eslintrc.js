@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  ignorePatterns: ["old/"],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
@@ -7,7 +8,6 @@ module.exports = {
       jsx: true,
     },
   },
-
   env: {
     browser: true,
     node: true,
