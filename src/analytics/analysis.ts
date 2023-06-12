@@ -28,6 +28,7 @@ export function readCSVFile(filepath: string): RowData[] {
       acepta_critica: parseFloat(values[10].trim()),
       responde_mails: parseFloat(values[11].trim()),
       comentarios: values[12].trim(),
+      editado: values[13].trim(), // Add the 'editado' property
     }));
 
   return rows;
@@ -48,6 +49,7 @@ export function calculateScore(rows: RowData[]): PuntajesData {
     fomenta_participacion: 0.5,
     responde_mails: 0.5,
     panorama_amplio: 0.5,
+    editado: "",
   };
 
   const features = Object.keys(pesos);
@@ -55,7 +57,7 @@ export function calculateScore(rows: RowData[]): PuntajesData {
   const wn = w.map((value) => value / w.reduce((sum, val) => sum + val, 0));
 
   const puntajes: PuntajesData = {};
-  const respuestas: { [key: string]: number } = {};
+  const respuestas: { [key: string]: number } = {}; // Updated type
 
   for (const row of rows) {
     const key = `${row.mat}-${row.doc}`;
@@ -70,7 +72,7 @@ export function calculateScore(rows: RowData[]): PuntajesData {
     }
 
     puntajes[key] += score;
-    respuestas[key]++;
+    respuestas[key]++; // Updated access to respuestas[key]
   }
 
   return puntajes;
