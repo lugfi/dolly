@@ -3,7 +3,7 @@
   "description": "dolly-next",
   "version": "0.1.0",
   "engines": {
-    "node": ">=18.16.0"
+    "node": ">=18.12.0"
   },
   "scripts": {
     "dev": "next dev",
