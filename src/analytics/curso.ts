@@ -1,8 +1,8 @@
 import {mean} from "lodash";
 
 
-const questions: string[] = ["asistencia", "cumple_horarios", "buen_trato", "clase_organizada", "claridad", "fomenta_participacion",
-	"panorama_amplio", "acepta_critica", "responde_mails"];
+// const questions: string[] = ["asistencia", "cumple_horarios", "buen_trato", "clase_organizada", "claridad", "fomenta_participacion",
+//	"panorama_amplio", "acepta_critica", "responde_mails"];
 
 export class Curso {
 	id: number;

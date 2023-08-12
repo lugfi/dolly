@@ -170,8 +170,20 @@ describe("Docente", () => {
 
 describe("Materia", () => {
 	let materia: Materia;
+	let curso1: Curso;
+	let curso2: Curso;
+	let docente1: Docente;
+	let docente2: Docente;
 	beforeEach(() => {
-		materia = new Materia("CS101", "Introduction to Computer Science");
+		materia = new Materia("MATH101", "Mathematics");
+		curso1 = new Curso(1);
+		curso2 = new Curso(2);
+		docente1 = new Docente("Bob");
+		docente2 = new Docente("Alice");
+		curso1.agregar_docente(docente1);
+		curso2.agregar_docente(docente2);
+		materia.agregar_curso(curso1);
+		materia.agregar_curso(curso2);
 	});
 
 	it("agregar_curso should add a curso", () => {
@@ -188,5 +200,26 @@ describe("Materia", () => {
 		expect(materia.tiene_docente("John")).toBe(true);
 	});
 
-	// Add more test cases for other methods
+	it("get_docente should return the correct docente by name", () => {
+		const foundDocente = materia.get_docente("Alice");
+		expect(foundDocente).toBe(docente2);
+	});
+
+	it("get_docente should return null if docente is not found", () => {
+		const foundDocente = materia.get_docente("Voldemort");
+		expect(foundDocente).toBeNull();
+	});
+
+	it("get_cursos should return the list of cursos", () => {
+		const cursos = materia.get_cursos();
+		expect(cursos).toEqual([curso1, curso2]);
+	});
+
+	it("get_all_docentes should return a dictionary of all docentes", () => {
+		const allDocentes = materia.get_all_docentes();
+		expect(allDocentes).toEqual({
+			"Bob": docente1,
+			"Alice": docente2
+		});
+	});
 });
