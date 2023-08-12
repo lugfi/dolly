@@ -19,7 +19,60 @@ describe("Curso", () => {
 		expect(curso.tiene_docente("John")).toBe(true);
 	});
 
-	// Add more test cases for other methods
+	it("get_promedios should calculate the mean of valoraciones for each question", () => {
+		let docente1 = new Docente("John");
+		let docente2 = new Docente("Jane");
+		curso.agregar_docente(docente1);
+		curso.agregar_docente(docente2);
+
+		// Add the provided input
+		docente1.agregar_valoracion("asistencia", "5");
+		docente1.agregar_valoracion("asistencia", "5");
+		docente1.agregar_valoracion("cumple_horarios", "5");
+		docente1.agregar_valoracion("cumple_horarios", "5");
+		docente1.agregar_valoracion("buen_trato", "5");
+		docente1.agregar_valoracion("buen_trato", "4");
+		docente1.agregar_valoracion("clase_organizada", "5");
+		docente1.agregar_valoracion("clase_organizada", "5");
+		docente1.agregar_valoracion("claridad", "5");
+		docente1.agregar_valoracion("claridad", "5");
+		docente1.agregar_valoracion("fomenta_participacion", "4");
+		docente1.agregar_valoracion("fomenta_participacion", "3");
+		docente1.agregar_valoracion("panorama_amplio", "4");
+		docente1.agregar_valoracion("panorama_amplio", "3");
+		docente1.agregar_valoracion("acepta_critica", "4");
+		docente1.agregar_valoracion("acepta_critica", "4");
+		docente1.agregar_valoracion("responde_mails", "3");
+		docente1.agregar_valoracion("responde_mails", "3");
+		docente1.calcular_puntaje(); // must be called before get_promedios
+
+		//{'asistencia': [5, 4], 'cumple_horarios': [5, 4], 'buen_trato': [5, 4], 'clase_organizada': [5, 4], 'claridad': [5, 4], 'fomenta_participacion': [4, 3], 'panorama_amplio': [3, 3], 'acepta_critica': [4, 3], 'responde_mails': [3, 1]}
+		docente2.agregar_valoracion("asistencia", "5");
+		docente2.agregar_valoracion("asistencia", "4");
+		docente2.agregar_valoracion("cumple_horarios", "5");
+		docente2.agregar_valoracion("cumple_horarios", "4");
+		docente2.agregar_valoracion("buen_trato", "5");
+		docente2.agregar_valoracion("buen_trato", "4");
+		docente2.agregar_valoracion("clase_organizada", "5");
+		docente2.agregar_valoracion("clase_organizada", "4");
+		docente2.agregar_valoracion("claridad", "5");
+		docente2.agregar_valoracion("claridad", "4");
+		docente2.agregar_valoracion("fomenta_participacion", "4");
+		docente2.agregar_valoracion("fomenta_participacion", "3");
+		docente2.agregar_valoracion("panorama_amplio", "3");
+		docente2.agregar_valoracion("panorama_amplio", "3");
+		docente2.agregar_valoracion("acepta_critica", "4");
+		docente2.agregar_valoracion("acepta_critica", "3");
+		docente2.agregar_valoracion("responde_mails", "3");
+		docente2.agregar_valoracion("responde_mails", "1");
+		docente2.calcular_puntaje(); // must be called before get_promedios
+
+
+		const promedios = curso.get_promedios();
+		const expected = {'acepta_critica': 3.75, 'asistencia': 4.75, 'buen_trato': 4.5, 'claridad': 4.75, 'clase_organizada': 4.75, 'cumple_horarios': 4.75, 'fomenta_participacion': 3.5, 'panorama_amplio': 3.25, 'responde_mails': 2.5};
+
+		expect(promedios).toEqual(expected);
+	});
 });
 
 describe("Docente", () => {
