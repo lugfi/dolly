@@ -73,6 +73,35 @@ describe("Curso", () => {
 
 		expect(promedios).toEqual(expected);
 	});
+	it("get_docentes should return the list of docentes", () => {
+		let docente1 = new Docente("John");
+		let docente2 = new Docente("Alice");
+		curso.agregar_docente(docente1);
+		curso.agregar_docente(docente2);
+		const docentes = curso.get_docentes();
+		expect(docentes).toEqual([docente1, docente2]);
+	});
+
+	it("get_docentes_str should return a formatted string of docente names", () => {
+		let docente1 = new Docente("John");
+		let docente2 = new Docente("Alice");
+		curso.agregar_docente(docente1);
+		curso.agregar_docente(docente2);
+		const docentesStr = curso.get_docentes_str();
+		expect(docentesStr).toEqual("John-Alice");
+	});
+
+	it("get_docentes_str should truncate names that are too long", () => {
+		let docente1 = new Docente("John");
+		let docente2 = new Docente("Alice");
+		const longNameDocente = new Docente("ThisIsAVeryLongDocenteNameThatExceedsFiftyCharacters");
+		curso.agregar_docente(docente1);
+		curso.agregar_docente(docente2);
+		curso.agregar_docente(longNameDocente);
+
+		const docentesStr = curso.get_docentes_str();
+		expect(docentesStr).toEqual("John-Alice-ThisIsAVeryLongDocenteNameThatExceedsFi...");
+	});
 });
 
 describe("Docente", () => {
@@ -123,7 +152,7 @@ describe("Docente", () => {
 		// Since there are no valoraciones, the mean should be NaN
 		expect(valoraciones["asistencia"]).toBeUndefined();
 	});
-	// Add more test cases for other methods
+
 });
 
 describe("Materia", () => {

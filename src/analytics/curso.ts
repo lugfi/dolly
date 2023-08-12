@@ -25,10 +25,6 @@ export class Curso {
 		return this.docentes.find(doc => doc.get_nombre() === d) || null;
 	}
 
-	get_index(): string {
-		return this.id.toString();
-	}
-
 	get_docentes(): Docente[] {
 		return this.docentes;
 	}
