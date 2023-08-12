@@ -5,3 +5,14 @@ export function emprolijar_docentes(docentes_raw: string): string[] {
 	}
 	return docentes_raw_list;
 }
+
+export function analizar_equivalencias(eq: number[][]): { [key: string]: string[] } {
+	const equivalencias: { [key: string]: string[] } = {};
+	for (const equivalenciaGroup of eq) {
+		for (const materia of equivalenciaGroup) {
+			equivalencias[materia.toString()] = equivalenciaGroup.map(x => x.toString());
+		}
+	}
+	return equivalencias;
+}
+
