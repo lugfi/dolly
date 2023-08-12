@@ -102,6 +102,19 @@ describe("Curso", () => {
 		const docentesStr = curso.get_docentes_str();
 		expect(docentesStr).toEqual("John-Alice-ThisIsAVeryLongDocenteNameThatExceedsFi...");
 	});
+
+	it("get_docente should return the correct docente by name", () => {
+		let docente1 = new Docente("Alice");
+		curso.agregar_docente(docente1);
+
+		const foundDocente = curso.get_docente("Alice");
+		expect(foundDocente).toBe(docente1);
+	});
+
+	it("get_docente should return null if docente is not found", () => {
+		const foundDocente = curso.get_docente("Bob");
+		expect(foundDocente).toBeNull();
+	});
 });
 
 describe("Docente", () => {
