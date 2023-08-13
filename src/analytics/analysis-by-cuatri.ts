@@ -1,4 +1,6 @@
-import {Materia} from "~/analytics/curso";
+import {Docente, Materia} from "./curso";
+import {readCSVFile} from "~/analytics/analysis";
+import {RowData} from "~/analytics/types";
 
 export function emprolijar_docentes(docentes_raw: string): string[] {
 	const docentes_raw_list = docentes_raw.split('-');
@@ -58,4 +60,47 @@ export function buscar_materias_equivalentes(
 	}
 
 	return equivalentMaterias;
+}
+
+
+export function analizar_valoraciones(
+	cuatri: string,
+	archivo: string,
+	materias: { [key: string]: Materia },
+	equivalencias: { [key: string]: string[] }
+): void {
+	const docentes_valorados: Docente[] = [];
+
+	const rows: RowData[] = readCSVFile(archivo);
+	for (const row of rows) {
+		const materias_eq = buscar_materias_equivalentes(row.mat, materias, equivalencias);
+		if (materias_eq === null) {
+			continue;
+		}
+
+		let docente: Docente | null = null;
+		for (const mat of materias_eq) {
+			docente = mat.get_docente(row.doc);
+			if (docente !== null) {
+				break;
+			}
+		}
+
+		if (docente === null) {
+			console.log(cuatri, 'El siguiente docente no se encontro: ',
+				row.doc, row.cuat, row.mat);
+			continue;
+		}
+
+
+		for (const rating in row) {
+			if (!docentes_valorados.includes(docente)) {
+				docentes_valorados.push(docente);
+			}
+			docente.agregar_valoracion(row.doc, rating);
+		}
+	}
+	for (const d of docentes_valorados) {
+		d.calcular_puntaje();
+	}
 }
