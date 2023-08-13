@@ -1,5 +1,11 @@
 import {describe, expect} from "@jest/globals";
-import {analizar_equivalencias, buscar_codigos_materias_equivalentes, emprolijar_docentes} from "./analysis-by-cuatri";
+import {
+	analizar_equivalencias,
+	buscar_codigos_materias_equivalentes,
+	buscar_materias_equivalentes,
+	emprolijar_docentes
+} from "./analysis-by-cuatri";
+import {Materia} from "./curso";
 
 describe('emprolijar_docentes', () => {
 	it('should remove "A Designar" from docentes_raw list', () => {
@@ -46,12 +52,44 @@ describe("buscar_codigos_materias_equivalentes", () => {
 	it("should return equivalent materia codes", () => {
 		const materia = "7504";
 		const equivalentCodes = buscar_codigos_materias_equivalentes(materia, equivalencias);
-		expect(equivalentCodes).toEqual(["9512"]);
+		expect(equivalentCodes).toEqual(["7504","9512"]);
 	});
 
 	it("should handle non-existent materia", () => {
 		const materia = "9999"; // Non-existent
 		const equivalentCodes = buscar_codigos_materias_equivalentes(materia, equivalencias);
 		expect(equivalentCodes).toEqual([]);
+	});
+});
+
+
+describe("buscar_materias_equivalentes", () => {
+	const dict_materias = {
+		"7533": new Materia("7533", "Materia 1"),
+		"7543": new Materia("7543", "Materia 2"),
+	};
+
+	const equivalencias = {
+		"7533": ["7533", "7543", "9560"],
+		"7541": ["7541", "9515"],
+	};
+
+	it("should return equivalent Materia instances", () => {
+		const materia = "7533";
+		const equivalentMaterias = buscar_materias_equivalentes(materia, dict_materias, equivalencias);
+		const expectedEquivalentMaterias = [dict_materias["7533"], dict_materias["7543"]];
+		expect(equivalentMaterias).toEqual(expectedEquivalentMaterias);
+	});
+
+	it("should handle non-existent materia", () => {
+		const materia = "9999"; // Non-existent
+		const equivalentMaterias = buscar_materias_equivalentes(materia, dict_materias, equivalencias);
+		expect(equivalentMaterias).toBeNull();
+	});
+
+	it("should return empty array for non-equivalent materia", () => {
+		const materia = "7541"; // Has no equivalent Materia instances
+		const equivalentMaterias = buscar_materias_equivalentes(materia, dict_materias, equivalencias);
+		expect(equivalentMaterias).toEqual([]);
 	});
 });
