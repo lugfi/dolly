@@ -1,3 +1,5 @@
+import {Materia} from "~/analytics/curso";
+
 export function emprolijar_docentes(docentes_raw: string): string[] {
 	const docentes_raw_list = docentes_raw.split('-');
 	if (docentes_raw_list.includes("A Designar")) {
@@ -16,3 +18,17 @@ export function analizar_equivalencias(eq: number[][]): { [key: string]: string[
 	return equivalencias;
 }
 
+export function buscar_codigos_materias_equivalentes(
+	materia: string,
+	equivalencias: { [key: string]: string[] }
+): string[] {
+	const equivalentMateriaCodigos: string[] = [];
+
+	for (const m of equivalencias[materia] || []) {
+		if (m !== materia) {
+			equivalentMateriaCodigos.push(m);
+		}
+	}
+
+	return equivalentMateriaCodigos;
+}
