@@ -1,6 +1,6 @@
 import {Docente, Materia} from "./curso";
-import {readCSVFile} from "~/analytics/analysis";
-import {RowData} from "~/analytics/types";
+import {readCSVFile} from "./analysis";
+import {RowData} from "./types";
 
 export function emprolijar_docentes(docentes_raw: string): string[] {
 	const docentes_raw_list = docentes_raw.split('-');
@@ -104,3 +104,21 @@ export function analizar_valoraciones(
 		d.calcular_puntaje();
 	}
 }
+
+export function buscar_docente(
+	docente: string,
+	materias: Materia[],
+	dict_docentes: { [key: string]: Docente }
+): Docente {
+	for (const materia of materias) {
+		if (materia.tiene_docente(docente)) {
+			return materia.get_docente(docente) as Docente;
+		}
+	}
+	const newDocente = new Docente(docente);
+	dict_docentes[docente] = newDocente;
+	return newDocente;
+}
+
+
+

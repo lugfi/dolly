@@ -1,11 +1,11 @@
 import {describe, expect} from "@jest/globals";
 import {
 	analizar_equivalencias,
-	buscar_codigos_materias_equivalentes,
+	buscar_codigos_materias_equivalentes, buscar_docente,
 	buscar_materias_equivalentes,
 	emprolijar_docentes
 } from "./analysis-by-cuatri";
-import {Materia} from "./curso";
+import {Curso, Materia} from "./curso";
 
 describe('emprolijar_docentes', () => {
 	it('should remove "A Designar" from docentes_raw list', () => {
@@ -52,7 +52,7 @@ describe("buscar_codigos_materias_equivalentes", () => {
 	it("should return equivalent materia codes", () => {
 		const materia = "7504";
 		const equivalentCodes = buscar_codigos_materias_equivalentes(materia, equivalencias);
-		expect(equivalentCodes).toEqual(["7504","9512"]);
+		expect(equivalentCodes).toEqual(["7504", "9512"]);
 	});
 
 	it("should handle non-existent materia", () => {
@@ -91,5 +91,30 @@ describe("buscar_materias_equivalentes", () => {
 		const materia = "7541"; // Has no equivalent Materia instances
 		const equivalentMaterias = buscar_materias_equivalentes(materia, dict_materias, equivalencias);
 		expect(equivalentMaterias).toEqual([]);
+	});
+});
+
+describe('buscar_docente function', () => {
+	it('should return an existing docente', () => {
+		const docenteName = 'John Doe';
+		const materia = new Materia('MATH101', 'Mathematics');
+		materia.agregar_curso(new Curso(0));
+
+		const result = buscar_docente(docenteName, [materia], {});
+
+		expect(result.nombre).toBe(docenteName);
+	});
+
+	it('should create a new docente if not found', () => {
+		const docenteName = 'Jane Smith';
+		const materias: Materia[] = [];
+		const dict_docentes: {
+			[key: string]: any
+		} = {};
+
+		const result = buscar_docente(docenteName, materias, dict_docentes);
+
+		expect(result.nombre).toBe(docenteName);
+		expect(dict_docentes[docenteName]).toBeDefined();
 	});
 });
