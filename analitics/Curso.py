@@ -65,8 +65,8 @@ class Docente:
         try:
             valor_int = int(valor)
             self.valoraciones[question].append(valor_int)
-        except ValueError:
-            print('No se puede pasar a numero')
+        except ValueError as e:
+            print(f'Error: No se puede convertir "{valor}" a número para la pregunta "{question}". Detalles del error: {e}')
 
     def get_nombre(self):
         return self.nombre
